@@ -66,6 +66,23 @@ public:
     const ContainerType<T>& value() const { return m_value; }
     void setValue(const ContainerType<T> &value) { copy(value); }
 
+    // Element access
+    constexpr reference at(size_type pos) { return m_value.at(pos); }
+    constexpr const_reference at(const size_type pos) const { return m_value.at(pos); }
+
+    constexpr reference operator[](size_type pos) { return m_value[pos]; }
+    constexpr const_reference operator[](size_type pos) const { return m_value[pos]; }
+
+    constexpr reference front() { return m_value.front(); }
+    constexpr const_reference front() const { return m_value.front(); }
+
+    constexpr reference back() { return m_value.back(); }
+    constexpr const_reference back() const { return m_value.back(); }
+
+    // Capacity
+    constexpr bool empty() const noexcept { return m_value.empty(); }
+    constexpr size_type size() const noexcept { return m_value.size(); }
+
     // Modifiers
     constexpr void clear() { m_value.clear(); }
 
@@ -86,6 +103,9 @@ public:
             m_value = otherValue;
         }
     }
+
+    constexpr void push_back(const T& value) { m_value.push_back(value); }
+    constexpr void push_back(T&& value) { m_value.push_back(std::move(value)); };
 
 protected:
     virtual bool isEqual(const BasicTag &other) const override

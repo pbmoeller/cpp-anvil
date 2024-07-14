@@ -6,6 +6,7 @@ add_executable(tests
     "nbt/test_types.cpp"
     "nbt/test_endtag.cpp"
     "nbt/test_bytetag.cpp"
+    "nbt/test_bytearraytag.cpp"
 )
 
 target_include_directories(tests
