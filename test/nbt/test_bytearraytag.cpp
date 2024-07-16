@@ -92,13 +92,13 @@ TEST(ByteArrayTag, push_back)
     EXPECT_TRUE(arrayTag.empty());
     EXPECT_EQ(arrayTag.size(), 0);
 
-    arrayTag.push_back(0xAB);
+    EXPECT_TRUE(arrayTag.push_back(0xAB));
     EXPECT_NE(arrayTag.value(), vec);
     EXPECT_NE(arrayTag.value(), vec2);
     EXPECT_FALSE(arrayTag.empty());
     EXPECT_EQ(arrayTag.size(), 1);
 
-    arrayTag.push_back(0xAB);
+    EXPECT_TRUE(arrayTag.push_back(0xAB));
     EXPECT_NE(arrayTag.value(), vec);
     EXPECT_EQ(arrayTag.value(), vec2);
     EXPECT_FALSE(arrayTag.empty());
@@ -147,7 +147,7 @@ TEST(ByteArrayTag, Front_Back)
     EXPECT_EQ(arrayTag.front(), 10);
     EXPECT_EQ(arrayTag.back(), 40);
 
-    arrayTag.push_back(0x34);
+    EXPECT_TRUE(arrayTag.push_back(0x34));
     EXPECT_EQ(arrayTag.back(), 0x34);
 }
 

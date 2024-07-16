@@ -97,15 +97,21 @@ public:
 
             // Clone other data elements
             for(size_t i = 0; i < otherValue.size(); ++i) {
-                m_value[i] = otherValue[i]->clone();
+                m_value[i] = std::move(otherValue[i]->clone());
             }
         } else {
             m_value = otherValue;
         }
     }
 
-    constexpr void push_back(const T& value) { m_value.push_back(value); }
-    constexpr void push_back(T&& value) { m_value.push_back(std::move(value)); };
+    constexpr bool push_back(const T& value) { 
+        m_value.push_back(value);
+        return true;
+    }
+    constexpr bool push_back(T&& value) {
+        m_value.push_back(std::move(value));
+        return true;
+    };
 
 protected:
     virtual bool isEqual(const BasicTag &other) const override
@@ -115,7 +121,7 @@ protected:
             && m_value == m_value;
     }
 
-private:
+protected:
     ContainerType<T> m_value{};
 };
 

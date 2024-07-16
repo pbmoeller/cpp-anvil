@@ -5,13 +5,16 @@
 #include <cpp-anvil/nbt/collection_tag.hpp>
 #include <cpp-anvil/nbt/types.hpp>
 
+// STL
+#include <stdexcept>
+
 namespace nbt {
 
 // -------------------------------------------------------------------------------------------------
 //      ListTag
 // -------------------------------------------------------------------------------------------------
 
-class ListTag : public CollectionTag<ListType, TagType::List>
+class ListTag : public CollectionTag<std::unique_ptr<ListType>, TagType::List>
 {
 public:
     ListTag() = default;
@@ -31,6 +34,58 @@ public:
     virtual std::unique_ptr<BasicTag> clone() const override {
         return std::make_unique<ListTag>(*this);
     }
+
+    constexpr TagType listType() const {
+        return m_listType;
+    }
+
+    bool push_back(const std::unique_ptr<ListType> value) {
+        if(value) {
+            if(empty()) {
+                m_listType = value->type();
+            }
+            if(value->type() == m_listType) {
+                m_value.push_back(value->clone());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool push_back(ListType *value) {
+        if(value) {
+            if(empty()) {
+                m_listType = value->type();
+            }
+            if(value->type() == m_listType) {
+                m_value.push_back(std::unique_ptr<ListType>(value));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool push_back(const ListType &value) {
+        if(empty()) {
+            m_listType = value.type();
+        }
+        if(value.type() == m_listType) {
+            m_value.push_back(value.clone());
+            return true;
+        }
+        return false;
+    }
+
+protected:
+    virtual bool isEqual(const BasicTag &other) const override
+    {
+        const ListTag &otherTag = static_cast<const ListTag&>(other);
+        return m_listType == otherTag.m_listType
+            && CollectionTag::isEqual(other);
+    }
+
+private:
+    TagType m_listType{TagType::End};
 };
 
 } // namespace nbt

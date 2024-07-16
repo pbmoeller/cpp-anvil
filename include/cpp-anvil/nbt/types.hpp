@@ -43,8 +43,8 @@ using DoubleType    = double;
 using StringType    = std::string;
 template<typename T>
 using ContainerType = std::vector<T>;
-using ListType      = BasicTag*;
-using CompoundType  = BasicTag*;
+using ListType      = BasicTag;
+using CompoundType  = BasicTag;
 
 // -------------------------------------------------------------------------------------------------
 //      Traits

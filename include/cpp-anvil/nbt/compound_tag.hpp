@@ -11,7 +11,7 @@ namespace nbt {
 //      CompoundTag
 // -------------------------------------------------------------------------------------------------
 
-class CompoundTag : public CollectionTag<CompoundType, TagType::Compound>
+class CompoundTag : public CollectionTag<std::unique_ptr<CompoundType>, TagType::Compound>
 {
 public:
     CompoundTag() = default;
@@ -21,8 +21,8 @@ public:
         : CollectionTag(name) {}
     explicit CompoundTag(const ContainerType<value_type> &value)
         : CollectionTag(value) {}
-    explicit CompoundTag(const std::string &name, const ContainerType<value_type> &value) noexcept
-        : CollectionTag(name, value) {}
+     explicit CompoundTag(const std::string &name, const ContainerType<value_type> &value) noexcept
+         : CollectionTag(name, value) {}
     virtual ~CompoundTag() = default;
 
     CompoundTag& operator=(const CompoundTag &other) = default;

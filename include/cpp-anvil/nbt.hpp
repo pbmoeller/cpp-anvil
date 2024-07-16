@@ -103,8 +103,6 @@ namespace nbt_old {
 // //    constexpr const_reverse_iterator crend() const noexcept { return m_value.crend(); }
 // //
 // //    // Capacity
-// //    constexpr bool empty() const noexcept { m_value.empty(); }
-// //    constexpr size_type size() const noexcept { m_value.size(); }
 // //    constexpr size_type maxSize() const noexcept { m_value.max_size(); }
 // //    void reserve(size_type newCapacity) { m_value.reserve(newCapacity); }
 // //
@@ -130,9 +128,6 @@ namespace nbt_old {
 // //    constexpr iterator insert(const_iterator pos, std::initializer_list<T> ilist) {
 // //        return m_value.insert(pos, ilist);
 // //    }
-// //
-// //    constexpr void push_back(const T& value) { m_value.push_back(value); }
-// //    constexpr void push_back(T&& value) { m_value.push_back(std::move(value)); };
 // //
 // //    constexpr void resize(size_type count) { m_value.resize(count); }
 // //    constexpr void resize(size_type count, const value_type& value) { m_value.resize(count, value); }
