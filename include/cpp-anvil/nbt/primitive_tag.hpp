@@ -4,7 +4,7 @@
 // cpp-anvil
 #include <cpp-anvil/nbt/basic_tag.hpp>
 #include <cpp-anvil/nbt/types.hpp>
-#include <cpp-anvil/nbt/detail/math.hpp>
+#include <cpp-anvil/nbt/detail/floating_point.hpp>
 
 namespace nbt {
 

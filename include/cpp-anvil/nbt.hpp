@@ -6,7 +6,6 @@
 #include <cpp-anvil/nbt/collection_tag.hpp>
 #include <cpp-anvil/nbt/compound_tag.hpp>
 #include <cpp-anvil/nbt/list_tag.hpp>
-#include <cpp-anvil/nbt/detail/math.hpp>
 #include <cpp-anvil/nbt/primitive_tag.hpp>
 #include <cpp-anvil/nbt/types.hpp>
 

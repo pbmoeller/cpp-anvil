@@ -15,7 +15,7 @@ set(CPP_ANVIL_HEADERS
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/list_tag.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/primitive_tag.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/types.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/detail/math.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/detail/floating_point.hpp"
 )
 
 # lib
