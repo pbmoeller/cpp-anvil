@@ -14,7 +14,8 @@ namespace io {
 std::unique_ptr<CompoundTag> loadFile(const std::string &filename);
 std::unique_ptr<CompoundTag> loadFile(const std::string &filename,
                                       CompressionType &compressionType);
-std::unique_ptr<CompoundTag> loadData(std::vector<unsigned char> &data);
+
+std::unique_ptr<CompoundTag> readData(std::vector<unsigned char> &data);
 
 std::string printTag(const BasicTag *compoundTag, int indent = 2, bool printArrayContent = false);
 

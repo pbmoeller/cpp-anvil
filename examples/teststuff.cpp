@@ -1,4 +1,4 @@
-#include <cpp-anvil/io/byte_stream.hpp>
+#include <cpp-anvil/io/nbt_byte_stream.hpp>
 
 #include <algorithm>
 #include <ostream>

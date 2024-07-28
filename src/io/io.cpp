@@ -77,7 +77,7 @@ std::unique_ptr<CompoundTag> loadFile(const std::string &filename,
             return std::unique_ptr<CompoundTag>();
         }
 
-        return loadData(data);
+        return readData(data);
     }
 
     return std::unique_ptr<CompoundTag>();
@@ -208,7 +208,7 @@ std::unique_ptr<BasicTag> readChildTag(NbtByteStream &byteStream,
     return tag;
 }
 
-std::unique_ptr<CompoundTag> loadData(std::vector<unsigned char> &data)
+std::unique_ptr<CompoundTag> readData(std::vector<unsigned char> &data)
 {
     NbtByteStream byteStream(data);
     TagType tag = byteStream.read<TagType>();

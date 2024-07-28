@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 
     // auto ctag = nbt::io::loadFile(R"(C:\Users\sonla\Coding\Projects\libAwesomeMC\test\testdata\nbt\bigtest.nbt)");
 
-    auto ctag = nbt::io::loadData(bigtestUncompressedData);
+    auto ctag = nbt::io::readData(bigtestUncompressedData);
 
     std::cout << nbt::io::printTag(ctag.get());
 
