@@ -1,5 +1,5 @@
-#ifndef CPP_ANVIL_NBT_MATH_HPP
-#define CPP_ANVIL_NBT_MATH_HPP
+#ifndef CPP_ANVIL_NBT_DETAIL_MATH_HPP
+#define CPP_ANVIL_NBT_DETAIL_MATH_HPP
 
 // STL
 #include <cstdint>
@@ -58,4 +58,4 @@ inline bool almostEqualUlps(T a, T b, IntType maxUlps)
 } // namespace detail
 } // namespace nbt
 
-#endif // CPP_ANVIL_NBT_MATH_HPP
+#endif // CPP_ANVIL_NBT_DETAIL_MATH_HPP

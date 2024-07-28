@@ -3,8 +3,8 @@
 
 // cpp-anvil
 #include <cpp-anvil/nbt/basic_tag.hpp>
-#include <cpp-anvil/nbt/math.hpp>
 #include <cpp-anvil/nbt/types.hpp>
+#include <cpp-anvil/nbt/detail/math.hpp>
 
 namespace nbt {
 
@@ -41,7 +41,7 @@ public:
         return std::make_unique<PrimitiveTag<T, TAG>>(*this);
     }
 
-    T value() { return m_value; }
+    T value() const { return m_value; }
     const T& value() const requires(detail::IsStringType<T>) { return m_value; }
     void setValue(const T &value) { m_value = value; }
 
@@ -65,6 +65,10 @@ using LongTag   = PrimitiveTag<LongType,    TagType::Long>;
 using FloatTag  = PrimitiveTag<FloatType,   TagType::Float>;
 using DoubleTag = PrimitiveTag<DoubleType,  TagType::Double>;
 using StringTag = PrimitiveTag<StringType,  TagType::String>;
+
+// -------------------------------------------------------------------------------------------------
+//      FloatingPoint comparison
+// -------------------------------------------------------------------------------------------------
 
 template<>
 inline bool FloatTag::isEqual(const BasicTag &other) const

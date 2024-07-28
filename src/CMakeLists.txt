@@ -5,8 +5,14 @@ endif()
 
 set(CPP_ANVIL_HEADER_PATH "${CPP_ANVIL_SOURCE_DIR}/include")
 set(CPP_ANVIL_HEADERS
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/io/io.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/io/compression.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/io/nbt_byte_stream.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/basic_tag.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/collection_tag.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/compound_tag.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/list_tag.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/math.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/primitive_tag.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/types.hpp"
@@ -15,6 +21,10 @@ set(CPP_ANVIL_HEADERS
 # lib
 add_library(cpp_anvil SHARED
     ${CPP_ANVIL_HEADERS}
+    "io/compression.cpp"
+    "io/io.cpp"
+    "io/nbt_byte_stream.cpp"
+    "nbt/list_tag.cpp"
     "nbt/types.cpp"
 )
 

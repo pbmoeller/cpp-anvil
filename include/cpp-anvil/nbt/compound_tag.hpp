@@ -31,6 +31,22 @@ public:
     virtual std::unique_ptr<BasicTag> clone() const override {
         return std::make_unique<CompoundTag>(*this);
     }
+
+    bool push_back(std::unique_ptr<CompoundType> value) {
+        if(value) {
+            m_value.push_back(std::move(value));
+            return true;
+        }
+        return false;
+    }
+
+    bool push_back(CompoundType *value) {
+        if(value) {
+            m_value.push_back(std::unique_ptr<CompoundType>(value));
+            return true;
+        }
+        return false;
+    }
 };
 
 } // namespace nbt

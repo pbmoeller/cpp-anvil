@@ -67,6 +67,14 @@ constexpr bool IsUniquePtr_v = IsUniquePtr<T>::value;
 
 namespace detail {
 
+template<typename, template<typename...> typename>
+inline constexpr bool isSpecialization = false;
+template<template<typename...> typename T, typename... Args>
+inline constexpr bool isSpecialization<T<Args...>, T> = true;
+
+template<typename T>
+concept StdVector = isSpecialization<T, std::vector>;
+
 template<typename T>
 concept IsStringType = std::same_as<T, StringType>;
 

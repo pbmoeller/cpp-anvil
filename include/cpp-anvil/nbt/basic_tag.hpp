@@ -71,6 +71,18 @@ inline T tag_cast(const BasicTag *item)
         || (item && int(Item::Type) == int(item->type())) ? static_cast<T>(item) : nullptr;
 }
 
+template<typename T>
+inline std::unique_ptr<T> tag_cast(std::unique_ptr<BasicTag> &&item)
+{
+    typedef typename std::remove_cv<typename std::remove_pointer<T>::type>::type Item;
+    if(int(T::Type) == int(Item::Type)
+       || (item && int(T::Type) == int(item->type()))) {
+        T *t = static_cast<T*>(item.release());
+        return std::unique_ptr<T>(t);
+    }
+    return nullptr;
+}
+
 // -------------------------------------------------------------------------------------------------
 //      EndTag
 // -------------------------------------------------------------------------------------------------

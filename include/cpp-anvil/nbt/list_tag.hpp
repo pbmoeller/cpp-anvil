@@ -22,6 +22,9 @@ public:
     ListTag(ListTag &&other) noexcept = default;
     explicit ListTag(const std::string &name)
         : CollectionTag(name) {}
+    explicit ListTag(const std::string &name, TagType listTagType)
+        : CollectionTag(name)
+        , m_listType(listTagType) {}
     explicit ListTag(const ContainerType<value_type> &value)
         : CollectionTag(value) {}
     explicit ListTag(const std::string &name, const ContainerType<value_type> &value) noexcept
@@ -39,13 +42,13 @@ public:
         return m_listType;
     }
 
-    bool push_back(const std::unique_ptr<ListType> value) {
+    bool push_back(std::unique_ptr<ListType> value) {
         if(value) {
             if(empty()) {
                 m_listType = value->type();
             }
             if(value->type() == m_listType) {
-                m_value.push_back(value->clone());
+                m_value.push_back(std::move(value));
                 return true;
             }
         }

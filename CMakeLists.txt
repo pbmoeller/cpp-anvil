@@ -5,7 +5,8 @@ project(cpp_nbt
     LANGUAGES   C CXX
 )
 
-option(BUILD_TESTS "Build unit tests for cpp-anvil" TRUE)
+option(BUILD_EXAMPLES   "Build examples for cpp-anvil" TRUE)
+option(BUILD_TESTS      "Build unit tests for cpp-anvil" TRUE)
 
 ### Additional flags
 set(CMAKE_CXX_STANDARD 20)
@@ -16,6 +17,11 @@ find_package(ZLIB REQUIRED)
 set(CPP_ANVIL_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_subdirectory("src")
+
+### Build Examples
+if(BUILD_EXAMPLES)
+    add_subdirectory("examples")
+endif()
 
 ### Build Unit Tests
 if(BUILD_TESTS)

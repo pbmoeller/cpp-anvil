@@ -46,6 +46,11 @@ public:
     {
         copy(value);
     }
+    explicit CollectionTag(ContainerType<T> &&value)
+        : NamedTag()
+    {
+        m_value = std::move(value);
+    }
     explicit CollectionTag(const std::string &name, const ContainerType<T> &value) noexcept
         : NamedTag(name)
     {
@@ -65,6 +70,23 @@ public:
     ContainerType<T>& value() { return m_value; }
     const ContainerType<T>& value() const { return m_value; }
     void setValue(const ContainerType<T> &value) { copy(value); }
+
+    // Iterators
+    constexpr iterator begin() noexcept { return m_value.begin(); }
+    constexpr const_iterator begin() const noexcept { return m_value.begin(); }
+    constexpr const_iterator cbegin() const noexcept { return m_value.cbegin(); }
+    
+    constexpr iterator end() noexcept { return m_value.end(); }
+    constexpr const_iterator end() const noexcept { return m_value.end(); }
+    constexpr const_iterator cend() const noexcept { return m_value.cend(); }
+    
+    constexpr reverse_iterator rbegin() noexcept { return m_value.rbegin(); }
+    constexpr const_reverse_iterator rbegin() const noexcept { return m_value.rbegin(); }
+    constexpr const_reverse_iterator crbegin() const noexcept { return m_value.crbegin(); }
+    
+    constexpr reverse_iterator rend() noexcept { return m_value.rend(); }
+    constexpr const_reverse_iterator rend() const noexcept { return m_value.rend(); }
+    constexpr const_reverse_iterator crend() const noexcept { return m_value.crend(); }
 
     // Element access
     constexpr reference at(size_type pos) { return m_value.at(pos); }
