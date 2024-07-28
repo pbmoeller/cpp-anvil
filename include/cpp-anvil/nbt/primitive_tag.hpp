@@ -75,7 +75,7 @@ inline bool FloatTag::isEqual(const BasicTag &other) const
 {
     const FloatTag &otherTag = static_cast<const FloatTag&>(other);
     return NamedTag::isEqual(other)
-        && detail::almostEqualUlps(m_value, otherTag.m_value, 10);
+        && detail::almostEqual<FloatType>(m_value, otherTag.m_value);
 }
 
 template<>
@@ -83,7 +83,7 @@ inline bool DoubleTag::isEqual(const BasicTag &other) const
 {
     const DoubleTag &otherTag = static_cast<const DoubleTag&>(other);
     return NamedTag::isEqual(other)
-        && detail::almostEqualUlps(m_value, otherTag.m_value, 10LL);
+        && detail::almostEqual<DoubleType>(m_value, otherTag.m_value);
 }
 
 } // namespace nbt
