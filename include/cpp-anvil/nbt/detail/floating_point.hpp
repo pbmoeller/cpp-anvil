@@ -1,5 +1,5 @@
-#ifndef CPP_ANVIL_NBT_DETAIL_MATH_HPP
-#define CPP_ANVIL_NBT_DETAIL_MATH_HPP
+#ifndef CPP_ANVIL_NBT_DETAIL_FLOATING_POINT_HPP
+#define CPP_ANVIL_NBT_DETAIL_FLOATING_POINT_HPP
 
 // STL
 #include <cstdint>
@@ -118,4 +118,4 @@ bool almostEqual(T lhsValue, T rhsValue) {
 } // namespace detail
 } // namespace nbt
 
-#endif // CPP_ANVIL_NBT_DETAIL_MATH_HPP
+#endif // CPP_ANVIL_NBT_DETAIL_FLOATING_POINT_HPP
