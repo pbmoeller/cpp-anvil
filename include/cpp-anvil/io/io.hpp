@@ -16,8 +16,9 @@ std::unique_ptr<CompoundTag> loadFile(const std::string &filename,
                                       CompressionType &compressionType);
 
 std::unique_ptr<CompoundTag> readData(std::vector<unsigned char> &data);
+std::vector<unsigned char> writeData(const BasicTag *tag);
 
-std::string printTag(const BasicTag *compoundTag, int indent = 2, bool printArrayContent = false);
+std::string printTag(const BasicTag *tag, int indent = 2, bool printArrayContent = false);
 
 } // namespace io
 } // namespace nbt

@@ -116,5 +116,17 @@ int main(int argc, char **argv)
 
     std::cout << nbt::io::printTag(ctag.get());
 
+    auto writtenBytes = nbt::io::writeData(ctag.get());
+
+    // Check for equality
+    bool error = false;
+    for(size_t i = 0; i < writtenBytes.size(); ++i) {
+        if(bigtestUncompressedData[i] != writtenBytes[i]) {
+            std::cout << "Error found difference! Index: '" << i <<"'" << std::endl;
+            error = true;
+        }
+    }
+    if(!error) std::cout << "No error found." << std::endl;
+
     return 0;
 }

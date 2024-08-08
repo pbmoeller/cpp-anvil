@@ -67,7 +67,7 @@ inline auto bswap(std::floating_point auto value) noexcept {
 
 } // namespace detail
 
-class NbtByteStream
+class NbtInputByteStream
 {
     using char_type     = unsigned char;
     using pointer       = char_type *;
@@ -77,7 +77,7 @@ class NbtByteStream
     static constexpr auto EndOfStream{static_cast<size_type>(0)};
 
 public:
-    explicit NbtByteStream(std::vector<char_type> &data)
+    explicit NbtInputByteStream(std::vector<char_type> &data)
         : m_buffer(data)
         , m_pos(0)
     { }
@@ -91,7 +91,6 @@ public:
         } else {
             return size() - m_pos;
         }
-        return m_buffer.size();
     }
     constexpr bool isEof() const noexcept {
         return availableBytes() > 0;
@@ -164,6 +163,135 @@ public:
     }
 
 private:
+    template<typename T>
+    void swapEndian(T &value) {
+        if constexpr(std::endian::native == std::endian::little) {
+            value = detail::bswap(value);
+        }
+    }
+
+private:
+    std::vector<char_type>  &m_buffer;
+    size_type               m_pos;
+};
+
+class NbtOutputByteStream
+{
+    using char_type     = unsigned char;
+    using pointer       = char_type *;
+    using const_pointer = const char_type *;
+    using size_type     = std::size_t;
+
+    static constexpr auto EndOfStream{static_cast<size_type>(0)};
+
+public:
+    explicit NbtOutputByteStream(std::vector<char_type> &data)
+        : m_buffer(data)
+        , m_pos(0)
+    { }
+
+    constexpr size_type capacity() const noexcept {
+        return m_buffer.size();
+    }
+
+    constexpr size_type size() const noexcept {
+        return m_pos;
+    }
+
+    size_type getPosition() const noexcept {
+        return m_pos;
+    }
+    void setPosition(size_type pos) noexcept {
+        m_pos = pos;
+    }
+
+    constexpr size_type availableBytes() const noexcept {
+        if(m_pos >= capacity()) {
+            return EndOfStream;
+        } else {
+            return capacity() - m_pos;
+        }
+    }
+
+    void write(TagType tagType) {
+        const size_type len = sizeof(TagType);
+        if(availableBytes() < len) {
+            grow(len);
+        }
+        m_buffer[m_pos] = static_cast<unsigned char>(tagType);
+        m_pos += len;
+    }
+
+    void write(const std::string &str) {
+        int16_t str_len = static_cast<int16_t>(str.length());
+        swapEndian(str_len);
+
+        const size_type data_len = str.length() + sizeof(int16_t);
+        if(availableBytes() < data_len) {
+            grow(data_len);
+        }
+        // Copy string length 
+        std::memcpy(&m_buffer[m_pos], &str_len, sizeof(int16_t));
+        m_pos += sizeof(int16_t);
+        // Copy string content
+        std::copy(str.begin(), str.end(), &m_buffer[m_pos]);
+        m_pos += str.length();
+    }
+
+    template<typename T>
+    requires std::integral<T>
+    void write(T value) {
+        const size_type len = sizeof(T);
+        if(availableBytes() < len) {
+            grow(len);
+        }
+        swapEndian(value);
+        std::memcpy(&m_buffer[m_pos], &value, len);
+        m_pos += len;
+    }
+
+    template<typename T>
+    requires std::floating_point<T>
+    void write(T value) {
+        const size_type len = sizeof(T);
+        if(availableBytes() < len) {
+            grow(len);
+        }
+        swapEndian(value);
+        std::memcpy(&m_buffer[m_pos], &value, len);
+        m_pos += len;
+    }
+
+private:
+    size_type calculateGrowth(const size_type newSize) {
+        const size_type oldCapacity = m_buffer.capacity();
+        const size_type maxSize     = m_buffer.max_size();
+
+        // Geometric growth would overflow
+        if(oldCapacity > maxSize - oldCapacity / 2) {
+            return maxSize;
+        }
+
+        const size_type geometric = oldCapacity + oldCapacity / 2;
+
+        // Geometric growth is not enough => take new size
+        if(geometric < newSize) {
+            return newSize;
+        }
+
+        return geometric;
+    }
+
+    void grow(const size_type count) {
+        if(count > m_buffer.max_size() - m_buffer.size()) {
+            throw std::runtime_error("ByteStream can not grow. Buffer too long.");
+        }
+
+        size_type newSize = m_buffer.size() + count;
+        size_type newCapycity = calculateGrowth(newSize);
+        m_buffer.resize(newCapycity);
+    }
+
     template<typename T>
     void swapEndian(T &value) {
         if constexpr(std::endian::native == std::endian::little) {
