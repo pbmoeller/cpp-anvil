@@ -53,8 +53,6 @@ constexpr bool isUncompressed(const std::vector<unsigned char> &data) {
 //! @return CompressionType of data sequence.
 CompressionType testCompression(const std::vector<unsigned char> &data);
 
-bool uncompress(std::ifstream &strm, std::vector<unsigned char> &data);
-
 //! @brief Uncompresses gzip data stream into byte vector.
 //! 
 //! @param strm The stream to read compressed data bytes from.
