@@ -110,6 +110,13 @@ public:
     virtual std::unique_ptr<BasicTag> clone() const override {
         return std::make_unique<EndTag>(*this);
     }
+
+    virtual bool isEqual(const BasicTag &other) const {
+        if(this == &other) {
+            return true;
+        }
+        return type() == other.type();
+    }
 };
 
 } // namespace nbt
