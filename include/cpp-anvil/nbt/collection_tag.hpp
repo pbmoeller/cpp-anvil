@@ -12,7 +12,7 @@ namespace nbt {
 // -------------------------------------------------------------------------------------------------
 
 template<typename T, TagType TAG>
-class CollectionTag : public NamedTag
+class CollectionTag : public BasicTag
 {
 public:
     using value_type        = T;
@@ -34,25 +34,25 @@ public:
 public:
     CollectionTag() = default;
     CollectionTag(const CollectionTag &other)
-        : NamedTag(other)
+        : BasicTag(other)
     {
         copy(other.m_value);
     }
     CollectionTag(CollectionTag &&other) noexcept = default;
     explicit CollectionTag(const std::string &name)
-        : NamedTag(name) {};
+        : BasicTag(name) {};
     explicit CollectionTag(const ContainerType<T> &value)
-        : NamedTag()
+        : BasicTag()
     {
         copy(value);
     }
     explicit CollectionTag(ContainerType<T> &&value)
-        : NamedTag()
+        : BasicTag()
     {
         m_value = std::move(value);
     }
     explicit CollectionTag(const std::string &name, const ContainerType<T> &value) noexcept
-        : NamedTag(name)
+        : BasicTag(name)
     {
         copy(value);
     }
@@ -139,7 +139,7 @@ protected:
     virtual bool isEqual(const BasicTag &other) const override
     {
         const CollectionTag<T, TAG> &otherTag = static_cast<const CollectionTag<T, TAG>&>(other);
-        return NamedTag::isEqual(other)
+        return BasicTag::isEqual(other)
             && m_value == m_value;
     }
 

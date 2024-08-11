@@ -23,6 +23,7 @@ add_library(cpp_anvil SHARED
     "io/compression.cpp"
     "io/io.cpp"
     "nbt/list_tag.cpp"
+    "nbt/compound_tag.cpp"
     "nbt/types.cpp"
 )
 

@@ -32,21 +32,14 @@ public:
         return std::make_unique<CompoundTag>(*this);
     }
 
-    bool push_back(std::unique_ptr<CompoundType> value) {
-        if(value) {
-            m_value.push_back(std::move(value));
-            return true;
-        }
-        return false;
-    }
-
-    bool push_back(CompoundType *value) {
-        if(value) {
-            m_value.push_back(std::unique_ptr<CompoundType>(value));
-            return true;
-        }
-        return false;
-    }
+    //
+    bool hasChild(const std::string &name) const;
+    BasicTag* getChildByName(const std::string &name);
+    const BasicTag* getChildByName(const std::string &name) const;
+    
+    //
+    bool push_back(std::unique_ptr<CompoundType> value);
+    bool push_back(CompoundType *value);
 };
 
 } // namespace nbt

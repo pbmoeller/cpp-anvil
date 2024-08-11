@@ -24,6 +24,10 @@ public:
     BasicTag() = default;
     BasicTag(const BasicTag &other) = default;
     BasicTag(BasicTag &&other) noexcept = default;
+    explicit BasicTag(const StringType &name)
+        : m_name(name) {};
+    explicit BasicTag(StringType &&name) noexcept
+        : m_name(std::move(name)) {};
     virtual ~BasicTag() = default;
 
     BasicTag& operator=(const BasicTag &other) = default;
@@ -35,14 +39,17 @@ public:
 
     virtual std::unique_ptr<BasicTag> clone() const = 0;
 
-    // virtual std::vector<unsigned char> data() = 0;
+    StringType name() { return m_name; }
+    const StringType& name() const { return m_name; }
+    void setName(const StringType &name) { m_name = name; }
 
 protected:
     virtual bool isEqual(const BasicTag &other) const {
         if(this == &other) {
             return true;
         }
-        return type() == other.type();
+        return type() == other.type()
+            && m_name == other.m_name;
     }
 
     friend bool operator==(const BasicTag &lhs, const BasicTag &rhs) {
@@ -53,6 +60,9 @@ protected:
                            const BasicTag &rhs) {
         return !(lhs == rhs);
     }
+
+private:
+    StringType m_name;
 };
 
 template<typename T>
@@ -100,47 +110,6 @@ public:
     virtual std::unique_ptr<BasicTag> clone() const override {
         return std::make_unique<EndTag>(*this);
     }
-};
-
-// -------------------------------------------------------------------------------------------------
-//      NamedTag
-// -------------------------------------------------------------------------------------------------
-
-class NamedTag : public BasicTag
-{
-public:
-    enum { Type = static_cast<int>(TagType::Unknown) };
-
-public:
-    NamedTag() = default;
-    NamedTag(const NamedTag &other) = default;
-    NamedTag(NamedTag &&other) noexcept = default;
-    explicit NamedTag(const std::string &name) 
-        : BasicTag(), m_name(name) {};
-    explicit NamedTag(std::string &&name) noexcept
-        : BasicTag(), m_name(std::move(name)) {};
-    virtual ~NamedTag() = default;
-
-    NamedTag& operator=(const NamedTag &other) = default;
-    NamedTag& operator=(NamedTag &&other) noexcept = default;
-
-    constexpr virtual TagType type() const {
-        return TagType::Unknown;
-    }
-
-    std::string name() { return m_name; }
-    const std::string& name() const { return m_name; }
-    void setName(const std::string &name) { m_name = name; }
-
-protected:
-    virtual bool isEqual(const BasicTag &other) const override {
-        const NamedTag &otherTag = static_cast<const NamedTag&>(other);
-        return BasicTag::isEqual(other)
-            && m_name == otherTag.m_name;
-    }
-
-private:
-    std::string m_name;
 };
 
 } // namespace nbt

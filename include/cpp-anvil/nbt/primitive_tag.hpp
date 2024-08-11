@@ -13,7 +13,7 @@ namespace nbt {
 // -------------------------------------------------------------------------------------------------
 
 template<typename T, TagType TAG>
-class PrimitiveTag : public NamedTag
+class PrimitiveTag : public BasicTag
 {
 public:
     using value_type = T;
@@ -25,11 +25,11 @@ public:
     PrimitiveTag(const PrimitiveTag &other) = default;
     PrimitiveTag(PrimitiveTag &&other) noexcept = default;
     explicit PrimitiveTag(const std::string &name) requires(!detail::IsStringType<T>)
-        : NamedTag(name) {};
+        : BasicTag(name) {};
     explicit PrimitiveTag(const T &value)
-        : NamedTag(), m_value(value) {};
+        : BasicTag(), m_value(value) {};
     explicit PrimitiveTag(const std::string &name, const T &value) noexcept
-        : NamedTag(name), m_value(value) {};
+        : BasicTag(name), m_value(value) {};
     virtual ~PrimitiveTag() = default;
 
     PrimitiveTag& operator=(const PrimitiveTag &other) = default;
@@ -50,7 +50,7 @@ protected:
     {
         const PrimitiveTag<T, TAG> &otherTag = static_cast<const PrimitiveTag<T, TAG>&>(other);
 
-        return NamedTag::isEqual(other)
+        return BasicTag::isEqual(other)
             && m_value == otherTag.m_value;
     }
 
@@ -74,7 +74,7 @@ template<>
 inline bool FloatTag::isEqual(const BasicTag &other) const
 {
     const FloatTag &otherTag = static_cast<const FloatTag&>(other);
-    return NamedTag::isEqual(other)
+    return BasicTag::isEqual(other)
         && detail::almostEqual<FloatType>(m_value, otherTag.m_value);
 }
 
@@ -82,7 +82,7 @@ template<>
 inline bool DoubleTag::isEqual(const BasicTag &other) const
 {
     const DoubleTag &otherTag = static_cast<const DoubleTag&>(other);
-    return NamedTag::isEqual(other)
+    return BasicTag::isEqual(other)
         && detail::almostEqual<DoubleType>(m_value, otherTag.m_value);
 }
 
