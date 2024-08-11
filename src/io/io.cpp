@@ -1,7 +1,7 @@
 // cpp-anvil
 #include <cpp-anvil/io/io.hpp>
 #include <cpp-anvil/io/compression.hpp>
-#include <cpp-anvil/io/nbt_byte_stream.hpp>
+#include "io/nbt_byte_stream.hpp"
 
 // STL
 #include <fstream>
@@ -46,12 +46,12 @@ std::unique_ptr<CompoundTag> loadFile(const std::string &filename,
     std::ifstream file(filename, std::ios::binary);
     if(file.is_open())
     {
-        // Read first 2 bytes in binary data. These bytes indicate if the file is uncompressed or
+        // Read first 2 bytes from binary data. These bytes indicate if the file is uncompressed or
         // either Zlib or Gzip compressed.
         std::vector<unsigned char> buffer(2, 0);
         file.read(reinterpret_cast<char*>(&buffer[0]), 2);
         if(!file || file.gcount() != 2) {
-            return std::unique_ptr<CompoundTag>();
+            return false;
         }
         compressionType = testCompression(buffer);
         file.seekg(0);

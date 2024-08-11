@@ -7,7 +7,6 @@ set(CPP_ANVIL_HEADER_PATH "${CPP_ANVIL_SOURCE_DIR}/include")
 set(CPP_ANVIL_HEADERS
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/io/io.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/io/compression.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/io/nbt_byte_stream.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/basic_tag.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/collection_tag.hpp"
@@ -28,7 +27,9 @@ add_library(cpp_anvil SHARED
 )
 
 target_include_directories(cpp_anvil
-    PRIVATE ${ZLIB_INCLUDE_DIRS}
+    PRIVATE 
+        ${ZLIB_INCLUDE_DIRS}
+        ${CMAKE_CURRENT_SOURCE_DIR}
     PUBLIC $<BUILD_INTERFACE:${CPP_ANVIL_HEADER_PATH}>
            # $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            # $<INSTALL_INTERFACE:${AwesomeMC_INSTALL_INCLUDE_DIR}>
