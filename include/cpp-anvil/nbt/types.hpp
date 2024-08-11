@@ -41,10 +41,11 @@ using LongType      = std::int64_t;
 using FloatType     = float;
 using DoubleType    = double;
 using StringType    = std::string;
-template<typename T>
-using ContainerType = std::vector<T>;
 using ListType      = BasicTag;
 using CompoundType  = BasicTag;
+
+template<typename T>
+using ContainerType = std::vector<T>;
 
 // -------------------------------------------------------------------------------------------------
 //      Traits
