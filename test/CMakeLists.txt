@@ -20,7 +20,7 @@ target_include_directories(tests
 
 target_link_libraries(tests 
     PRIVATE
-        cpp_anvil
+        cppAnvil
         ${GTEST_LIBRARIES}
 )
 

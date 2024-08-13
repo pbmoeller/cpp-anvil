@@ -18,7 +18,7 @@ set(CPP_ANVIL_HEADERS
 )
 
 # lib
-add_library(cpp_anvil SHARED
+add_library(cppAnvil SHARED
     ${CPP_ANVIL_HEADERS}
     "io/compression.cpp"
     "io/io.cpp"
@@ -27,20 +27,51 @@ add_library(cpp_anvil SHARED
     "nbt/types.cpp"
 )
 
-target_include_directories(cpp_anvil
+target_include_directories(cppAnvil
     PRIVATE 
         ${ZLIB_INCLUDE_DIRS}
         ${CMAKE_CURRENT_SOURCE_DIR}
-    PUBLIC $<BUILD_INTERFACE:${CPP_ANVIL_HEADER_PATH}>
-           # $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-           # $<INSTALL_INTERFACE:${AwesomeMC_INSTALL_INCLUDE_DIR}>
+    PUBLIC
+        $<BUILD_INTERFACE:${CPP_ANVIL_HEADER_PATH}>
+        $<INSTALL_INTERFACE:${cpp_nbt_INSTALL_INCLUDE_DIR}>
 )
-target_link_libraries(cpp_anvil
+target_link_libraries(cppAnvil
     PRIVATE
         ${ZLIB_LIBRARIES}
 )
 
-set_target_properties(cpp_anvil 
+set_target_properties(cppAnvil 
     PROPERTIES 
         RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
 )
+
+### Install
+install(TARGETS cppAnvil 
+    EXPORT cppAnvilTargets
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+    INCLUDES DESTINATION include
+)
+install(EXPORT cppAnvilTargets
+    FILE cppAnvilTargets.cmake
+    NAMESPACE cppAnvil::
+    DESTINATION "lib/${cpp_nbt_VERSION}/${CMAKE_BUILD_TYPE}"
+)
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "cppAnvilConfigVersion.cmake"
+    VERSION ${cpp_nbt_VERSION}
+    COMPATIBILITY AnyNewerVersion
+)
+
+install(DIRECTORY ${CPP_ANVIL_HEADER_PATH}/cpp-anvil
+    DESTINATION include
+)
+install(FILES 
+        "${PROJECT_SOURCE_DIR}/cmake/cppAnvilConfig.cmake"
+        "${PROJECT_BINARY_DIR}/src/cppAnvilConfigVersion.cmake" 
+    DESTINATION 
+        "lib/${cpp_nbt_VERSION}/${CMAKE_BUILD_TYPE}"
+)
+

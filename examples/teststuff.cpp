@@ -1,5 +1,3 @@
-#include <cpp-anvil/io/nbt_byte_stream.hpp>
-
 #include <algorithm>
 #include <ostream>
 #include <vector>
