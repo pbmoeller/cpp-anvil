@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-namespace nbt {
+namespace anvil {
 namespace io {
 
 namespace detail {
@@ -147,7 +147,7 @@ public:
     }
 
     template<typename T>
-    requires nbt::detail::StdVector<T>
+    requires anvil::detail::StdVector<T>
     T read() {
         T vec;
 
@@ -305,6 +305,6 @@ private:
 };
 
 } // namespace io
-} // namespace nbt
+} // namespace anvil
 
 #endif // CPP_ANVIL_IO_NBT_BYTE_STREAM_HPP

@@ -7,7 +7,7 @@
 #include <string_view>
 #include <vector>
 
-namespace nbt {
+namespace anvil {
 
 // -------------------------------------------------------------------------------------------------
 //      Types
@@ -139,6 +139,6 @@ constexpr bool isValidTag(TagType type)
 std::string_view getTagTypeName(TagType type);
 std::string_view getTagName(TagType type);
 
-} // namespace nbt
+} // namespace anvil
 
 #endif // CPP_ANVIL_NBT_TYPES_HPP

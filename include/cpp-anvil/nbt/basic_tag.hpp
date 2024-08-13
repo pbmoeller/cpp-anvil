@@ -9,7 +9,7 @@
 #include <type_traits>
 #include <memory>
 
-namespace nbt {
+namespace anvil {
 
 // -------------------------------------------------------------------------------------------------
 //      BasicTag
@@ -119,6 +119,6 @@ public:
     }
 };
 
-} // namespace nbt
+} // namespace anvil
 
 #endif // CPP_ANVIL_NBT_BASIC_TAG_HPP

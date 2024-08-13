@@ -5,7 +5,7 @@
 #include <fstream>
 #include <vector>
 
-namespace nbt {
+namespace anvil {
 namespace io {
 
 //! @brief The supported compression types.
@@ -75,6 +75,6 @@ bool deflate_gzip(std::ifstream &strm, std::vector<unsigned char> &data);
 bool deflate_zlib(std::ifstream &strm, std::vector<unsigned char> &data);
 
 } // namespace io
-} // namespace nbt
+} // namespace anvil
 
 #endif // CPP_ANVIL_IO_COMPRESSION_HPP

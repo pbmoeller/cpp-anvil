@@ -6,7 +6,7 @@
 #include <cpp-anvil/nbt/types.hpp>
 #include <cpp-anvil/nbt/detail/floating_point.hpp>
 
-namespace nbt {
+namespace anvil {
 
 // -------------------------------------------------------------------------------------------------
 //      PrimitiveTag
@@ -86,6 +86,6 @@ inline bool DoubleTag::isEqual(const BasicTag &other) const
         && detail::almostEqual<DoubleType>(m_value, otherTag.m_value);
 }
 
-} // namespace nbt
+} // namespace anvil
 
 #endif // CPP_ANVIL_NBT_PRIMITIVE_TAG_HPP

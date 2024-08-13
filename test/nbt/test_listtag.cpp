@@ -4,10 +4,10 @@
 
 TEST(ListTag, Constructor)
 {
-    nbt::ListTag listTag;
-    EXPECT_EQ(listTag.type(), nbt::TagType::List);
+    anvil::ListTag listTag;
+    EXPECT_EQ(listTag.type(), anvil::TagType::List);
     EXPECT_EQ(listTag.name(), "");
-    EXPECT_EQ(listTag.listType(), nbt::TagType::End);
+    EXPECT_EQ(listTag.listType(), anvil::TagType::End);
     EXPECT_TRUE(listTag.empty());
     EXPECT_EQ(listTag.size(), 0);
 }
@@ -16,10 +16,10 @@ TEST(ListTag, Constructor_Name)
 {
     const std::string name = "Some Name";
 
-    nbt::ListTag listTag(name);
-    EXPECT_EQ(listTag.type(), nbt::TagType::List);
+    anvil::ListTag listTag(name);
+    EXPECT_EQ(listTag.type(), anvil::TagType::List);
     EXPECT_EQ(listTag.name(), name);
-    EXPECT_EQ(listTag.listType(), nbt::TagType::End);
+    EXPECT_EQ(listTag.listType(), anvil::TagType::End);
     EXPECT_TRUE(listTag.empty());
     EXPECT_EQ(listTag.size(), 0);
 }
@@ -57,27 +57,27 @@ TEST(ListTag, Move_Assign)
 
 TEST(ListTag, push_back)
 {
-    nbt::ListTag listTag;
-    EXPECT_EQ(listTag.type(), nbt::TagType::List);
+    anvil::ListTag listTag;
+    EXPECT_EQ(listTag.type(), anvil::TagType::List);
     EXPECT_EQ(listTag.name(), "");
-    EXPECT_EQ(listTag.listType(), nbt::TagType::End);
+    EXPECT_EQ(listTag.listType(), anvil::TagType::End);
     EXPECT_TRUE(listTag.empty());
     EXPECT_EQ(listTag.size(), 0);
 
-    auto byteTag = std::make_unique<nbt::ByteTag>(0xAA);
+    auto byteTag = std::make_unique<anvil::ByteTag>(0xAA);
 
     EXPECT_TRUE(listTag.push_back(std::move(byteTag)));
-    EXPECT_EQ(listTag.listType(), nbt::TagType::Byte);
+    EXPECT_EQ(listTag.listType(), anvil::TagType::Byte);
     EXPECT_FALSE(listTag.empty());
     EXPECT_EQ(listTag.size(), 1);
 
-    auto byteTag2 = std::make_unique<nbt::ByteTag>(0xAC);
+    auto byteTag2 = std::make_unique<anvil::ByteTag>(0xAC);
 
     EXPECT_TRUE(listTag.push_back(std::move(byteTag2)));
     EXPECT_FALSE(listTag.empty());
     EXPECT_EQ(listTag.size(), 2);
 
-    auto intTag = std::make_unique<nbt::IntTag>(0xACFB1234);
+    auto intTag = std::make_unique<anvil::IntTag>(0xACFB1234);
     EXPECT_FALSE(listTag.push_back(std::move(intTag)));
     EXPECT_FALSE(listTag.empty());
     EXPECT_EQ(listTag.size(), 2);

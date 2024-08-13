@@ -8,7 +8,7 @@
 // STL
 #include <stdexcept>
 
-namespace nbt {
+namespace anvil {
 
 // -------------------------------------------------------------------------------------------------
 //      ListTag
@@ -91,6 +91,6 @@ private:
     TagType m_listType{TagType::End};
 };
 
-} // namespace nbt
+} // namespace anvil
 
 #endif // CPP_ANVIL_NBT_LIST_TAG_HPP

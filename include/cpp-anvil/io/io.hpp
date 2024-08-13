@@ -8,7 +8,7 @@
 // STL
 #include <memory>
 
-namespace nbt {
+namespace anvil {
 namespace io {
 
 //! @brief Tries to load a NBT file.
@@ -56,6 +56,6 @@ std::vector<unsigned char> writeData(const BasicTag *tag);
 std::string printTag(const BasicTag *tag, int indent = 2, bool printArrayContent = false);
 
 } // namespace io
-} // namespace nbt
+} // namespace anvil
 
 #endif // CPP_ANVIL_IO_IO_HPP

@@ -1,7 +1,7 @@
 // cpp-avil
 #include <cpp-anvil/nbt/types.hpp>
 
-namespace nbt {
+namespace anvil {
 
 const char * TagTypeNames[14] = {
     "End",
@@ -55,4 +55,4 @@ std::string_view getTagName(TagType type)
     }
 }
 
-} // namespace nbt
+} // namespace anvil

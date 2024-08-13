@@ -4,31 +4,31 @@
 
 TEST(ByteArrayTag, Constructor)
 {
-    std::vector<nbt::ByteType> vec;
+    std::vector<anvil::ByteType> vec;
 
-    nbt::ByteArrayTag arrayTag;
-    EXPECT_EQ(arrayTag.type(), nbt::TagType::ByteArray);
+    anvil::ByteArrayTag arrayTag;
+    EXPECT_EQ(arrayTag.type(), anvil::TagType::ByteArray);
     EXPECT_EQ(arrayTag.name(), "");
     EXPECT_EQ(arrayTag.value(), vec);
 }
 
 TEST(ByteArrayTag, Constructor_Name)
 {
-    std::vector<nbt::ByteType> vec;
+    std::vector<anvil::ByteType> vec;
 
     const std::string name = "Some Name";
-    nbt::ByteArrayTag arrayTag(name);
-    EXPECT_EQ(arrayTag.type(), nbt::TagType::ByteArray);
+    anvil::ByteArrayTag arrayTag(name);
+    EXPECT_EQ(arrayTag.type(), anvil::TagType::ByteArray);
     EXPECT_EQ(arrayTag.name(), name);
     EXPECT_EQ(arrayTag.value(), vec);
 }
 
 TEST(ByteArrayTag, Constructor_Value)
 {
-    const std::vector<nbt::ByteType> vec{0x45};
+    const std::vector<anvil::ByteType> vec{0x45};
 
-    nbt::ByteArrayTag arrayTag(vec);
-    EXPECT_EQ(arrayTag.type(), nbt::TagType::ByteArray);
+    anvil::ByteArrayTag arrayTag(vec);
+    EXPECT_EQ(arrayTag.type(), anvil::TagType::ByteArray);
     EXPECT_EQ(arrayTag.name(), "");
     EXPECT_EQ(arrayTag.value(), vec);
 }
@@ -36,10 +36,10 @@ TEST(ByteArrayTag, Constructor_Value)
 TEST(ByteArrayTag, Constructor_Name_Value)
 {
     const std::string name = "Some Name";
-    const std::vector<nbt::ByteType> vec{0x35};
+    const std::vector<anvil::ByteType> vec{0x35};
 
-    nbt::ByteArrayTag arrayTag(name, vec);
-    EXPECT_EQ(arrayTag.type(), nbt::TagType::ByteArray);
+    anvil::ByteArrayTag arrayTag(name, vec);
+    EXPECT_EQ(arrayTag.type(), anvil::TagType::ByteArray);
     EXPECT_EQ(arrayTag.name(), name);
     EXPECT_EQ(arrayTag.value(), vec);
 }
@@ -47,15 +47,15 @@ TEST(ByteArrayTag, Constructor_Name_Value)
 TEST(ByteArrayTag, Constructor_Copy)
 {
     const std::string name = "Copy Test";
-    const std::vector<nbt::ByteType> vec{0x35};
+    const std::vector<anvil::ByteType> vec{0x35};
 
-    nbt::ByteArrayTag arrayTagA(name, vec);
-    EXPECT_EQ(arrayTagA.type(), nbt::TagType::ByteArray);
+    anvil::ByteArrayTag arrayTagA(name, vec);
+    EXPECT_EQ(arrayTagA.type(), anvil::TagType::ByteArray);
     EXPECT_EQ(arrayTagA.name(), name);
     EXPECT_EQ(arrayTagA.value(), vec);
 
-    nbt::ByteArrayTag arrayTagB(arrayTagA);
-    EXPECT_EQ(arrayTagB.type(), nbt::TagType::ByteArray);
+    anvil::ByteArrayTag arrayTagB(arrayTagA);
+    EXPECT_EQ(arrayTagB.type(), anvil::TagType::ByteArray);
     EXPECT_EQ(arrayTagB.name(), name);
     EXPECT_EQ(arrayTagB.value(), vec);
 
@@ -65,15 +65,15 @@ TEST(ByteArrayTag, Constructor_Copy)
 TEST(ByteArrayTag, Constructor_Move)
 {
     const std::string name = "Move Test";
-    const std::vector<nbt::ByteType> vec{0x64};
+    const std::vector<anvil::ByteType> vec{0x64};
 
-    nbt::ByteArrayTag arrayTagA(name, vec);
-    EXPECT_EQ(arrayTagA.type(), nbt::TagType::ByteArray);
+    anvil::ByteArrayTag arrayTagA(name, vec);
+    EXPECT_EQ(arrayTagA.type(), anvil::TagType::ByteArray);
     EXPECT_EQ(arrayTagA.name(), name);
     EXPECT_EQ(arrayTagA.value(), vec);
 
-    nbt::ByteArrayTag arrayTagB(std::move(arrayTagA));
-    EXPECT_EQ(arrayTagB.type(), nbt::TagType::ByteArray);
+    anvil::ByteArrayTag arrayTagB(std::move(arrayTagA));
+    EXPECT_EQ(arrayTagB.type(), anvil::TagType::ByteArray);
     EXPECT_EQ(arrayTagB.name(), name);
     EXPECT_EQ(arrayTagB.value(), vec);
 
@@ -82,11 +82,11 @@ TEST(ByteArrayTag, Constructor_Move)
 
 TEST(ByteArrayTag, push_back)
 {
-    std::vector<nbt::ByteType> vec;
-    std::vector<nbt::ByteType> vec2(2, 0xAB);
+    std::vector<anvil::ByteType> vec;
+    std::vector<anvil::ByteType> vec2(2, 0xAB);
 
-    nbt::ByteArrayTag arrayTag;
-    EXPECT_EQ(arrayTag.type(), nbt::TagType::ByteArray);
+    anvil::ByteArrayTag arrayTag;
+    EXPECT_EQ(arrayTag.type(), anvil::TagType::ByteArray);
     EXPECT_EQ(arrayTag.name(), "");
     EXPECT_EQ(arrayTag.value(), vec);
     EXPECT_TRUE(arrayTag.empty());
@@ -108,8 +108,8 @@ TEST(ByteArrayTag, push_back)
 TEST(ByteArrayTag, at)
 {
     const std::string name{"Test"};
-    const std::vector<nbt::ByteType> vec{10, 20, 30, 40};
-    nbt::ByteArrayTag arrayTag(name, vec);
+    const std::vector<anvil::ByteType> vec{10, 20, 30, 40};
+    anvil::ByteArrayTag arrayTag(name, vec);
     
     EXPECT_FALSE(arrayTag.empty());
     EXPECT_EQ(arrayTag.size(), 4);
@@ -123,8 +123,8 @@ TEST(ByteArrayTag, at)
 TEST(ByteArrayTag, Operator_Subscript)
 {
     const std::string name{"Test"};
-    const std::vector<nbt::ByteType> vec{10, 20, 30, 40};
-    nbt::ByteArrayTag arrayTag(name, vec);
+    const std::vector<anvil::ByteType> vec{10, 20, 30, 40};
+    anvil::ByteArrayTag arrayTag(name, vec);
 
     EXPECT_FALSE(arrayTag.empty());
     EXPECT_EQ(arrayTag.size(), 4);
@@ -138,8 +138,8 @@ TEST(ByteArrayTag, Operator_Subscript)
 TEST(ByteArrayTag, Front_Back)
 {
     const std::string name{"Test"};
-    const std::vector<nbt::ByteType> vec{10, 20, 30, 40};
-    nbt::ByteArrayTag arrayTag(name, vec);
+    const std::vector<anvil::ByteType> vec{10, 20, 30, 40};
+    anvil::ByteArrayTag arrayTag(name, vec);
 
     EXPECT_FALSE(arrayTag.empty());
     EXPECT_EQ(arrayTag.size(), 4);
@@ -154,8 +154,8 @@ TEST(ByteArrayTag, Front_Back)
 TEST(ByteArrayTag, clear)
 {
     const std::string name{"Test"};
-    const std::vector<nbt::ByteType> vec{10, 20, 30, 40};
-    nbt::ByteArrayTag arrayTag(name, vec);
+    const std::vector<anvil::ByteType> vec{10, 20, 30, 40};
+    anvil::ByteArrayTag arrayTag(name, vec);
 
     EXPECT_FALSE(arrayTag.empty());
     EXPECT_EQ(arrayTag.size(), 4);

@@ -112,11 +112,11 @@ int main(int argc, char **argv)
 
     // auto ctag = nbt::io::loadFile(R"(C:\Users\sonla\Coding\Projects\libAwesomeMC\test\testdata\nbt\bigtest.nbt)");
 
-    auto ctag = nbt::io::readData(bigtestUncompressedData);
+    auto ctag = anvil::io::readData(bigtestUncompressedData);
 
-    std::cout << nbt::io::printTag(ctag.get());
+    std::cout << anvil::io::printTag(ctag.get());
 
-    auto writtenBytes = nbt::io::writeData(ctag.get());
+    auto writtenBytes = anvil::io::writeData(ctag.get());
 
     // Check for equality
     bool error = false;

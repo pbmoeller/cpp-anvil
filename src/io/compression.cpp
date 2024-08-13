@@ -4,7 +4,7 @@
 // zlib
 #include <zlib.h>
 
-namespace nbt {
+namespace anvil {
 namespace io {
 
 constexpr size_t GzipChunkSize = 32768;
@@ -83,4 +83,4 @@ bool deflate_zlib(std::ifstream &strm, std::vector<unsigned char> &data)
 }
 
 } // namespace io
-} // namespace nbt
+} // namespace anvil

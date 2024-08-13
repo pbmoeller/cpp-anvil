@@ -22,7 +22,6 @@ find_package(ZLIB REQUIRED)
 
 set(CPP_ANVIL_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-
 add_subdirectory("src")
 
 ### Build Examples

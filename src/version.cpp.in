@@ -1,7 +1,7 @@
 // cpp-anvil
 #include <cpp-anvil/version.hpp>
 
-namespace nbt {
+namespace anvil {
 
 unsigned int getCppAnvilVersionMajor()
 {
@@ -23,4 +23,4 @@ const char * getCppAnvilVersion()
     return "@CPPANVIL_VERSION@";
 }
 
-} // namespace nbt
+} // namespace anvil

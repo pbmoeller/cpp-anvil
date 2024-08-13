@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <cmath>
 
-namespace nbt {
+namespace anvil {
 
 // -------------------------------------------------------------------------------------------------
 //      FloatingPoint
@@ -116,6 +116,6 @@ bool almostEqual(T lhsValue, T rhsValue) {
 }
 
 } // namespace detail
-} // namespace nbt
+} // namespace anvil
 
 #endif // CPP_ANVIL_NBT_DETAIL_FLOATING_POINT_HPP

@@ -1,7 +1,7 @@
 // cpp-avil
 #include <cpp-anvil/nbt/compound_tag.hpp>
 
-namespace nbt {
+namespace anvil {
 
 bool CompoundTag::hasChild(const std::string &name) const
 {
@@ -49,4 +49,4 @@ bool CompoundTag::push_back(BasicTag *value) {
     return false;
 }
 
-} // namespace nbt
+} // namespace anvil

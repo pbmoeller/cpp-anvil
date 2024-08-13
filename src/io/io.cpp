@@ -10,7 +10,7 @@
 #include <memory>
 #include <vector>
 
-namespace nbt {
+namespace anvil {
 namespace io {
 
 bool readFile(std::ifstream &strm, std::vector<unsigned char> &data)
@@ -524,4 +524,4 @@ std::string printTag(const BasicTag *tag, int indent, bool printArrayContent)
 }
 
 } // namespace io
-} // namespace nbt
+} // namespace anvil

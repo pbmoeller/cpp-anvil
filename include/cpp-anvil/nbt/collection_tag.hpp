@@ -5,7 +5,7 @@
 #include <cpp-anvil/nbt/basic_tag.hpp>
 #include <cpp-anvil/nbt/types.hpp>
 
-namespace nbt {
+namespace anvil {
 
 // -------------------------------------------------------------------------------------------------
 //      CollectionTag
@@ -161,6 +161,6 @@ using ByteArrayTag  = CollectionTag<ByteType,    TagType::ByteArray>;
 using IntArrayTag   = CollectionTag<IntType,     TagType::IntArray>;
 using LongArrayTag  = CollectionTag<LongType,    TagType::LongArray>;
 
-} // namespace nbt
+} // namespace anvil
 
 #endif // CPP_ANVIL_NBT_COLLECTION_TAG_HPP

@@ -5,7 +5,7 @@
 #include <cpp-anvil/nbt/collection_tag.hpp>
 #include <cpp-anvil/nbt/types.hpp>
 
-namespace nbt {
+namespace anvil {
 
 // -------------------------------------------------------------------------------------------------
 //      CompoundTag
@@ -42,6 +42,6 @@ public:
     bool push_back(BasicTag *value);
 };
 
-} // namespace nbt
+} // namespace anvil
 
 #endif // CPP_ANVIL_NBT_COMPOUND_TAG_HPP
