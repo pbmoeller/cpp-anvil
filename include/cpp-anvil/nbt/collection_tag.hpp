@@ -108,6 +108,25 @@ public:
     // Modifiers
     constexpr void clear() { m_value.clear(); }
 
+    constexpr bool push_back(const T& value) { 
+        m_value.push_back(value);
+        return true;
+    }
+    constexpr bool push_back(T&& value) {
+        m_value.push_back(std::move(value));
+        return true;
+    };
+
+    bool eraseAt(size_type index) {
+        if(index >= size()) {
+            return false;
+        } else {
+            m_value.erase(m_value.begin() + index);
+            return true;
+        }
+    }
+
+
     //
     void copy(const ContainerType<T> &otherValue)
     {
@@ -125,15 +144,6 @@ public:
             m_value = otherValue;
         }
     }
-
-    constexpr bool push_back(const T& value) { 
-        m_value.push_back(value);
-        return true;
-    }
-    constexpr bool push_back(T&& value) {
-        m_value.push_back(std::move(value));
-        return true;
-    };
 
 protected:
     virtual bool isEqual(const BasicTag &other) const override
