@@ -1,0 +1,26 @@
+// cpp-anvil
+#include <cpp-anvil/version.hpp>
+
+namespace nbt {
+
+unsigned int getCppAnvilVersionMajor()
+{
+    return @CPPANVIL_VERSION_MAJOR@;
+}
+
+unsigned int getCppAnvilVersionMinor()
+{
+    return @CPPANVIL_VERSION_MINOR@;
+}
+
+unsigned int getCppAnvilVersionPatch()
+{
+    return @CPPANVIL_VERSION_PATCH@;
+}
+
+const char * getCppAnvilVersion()
+{
+    return "@CPPANVIL_VERSION@";
+}
+
+} // namespace nbt

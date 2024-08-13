@@ -5,8 +5,14 @@ project(cpp_nbt
     LANGUAGES   C CXX
 )
 
-option(BUILD_EXAMPLES   "Build examples for cpp-anvil" TRUE)
-option(BUILD_TESTS      "Build unit tests for cpp-anvil" TRUE)
+option(BUILD_EXAMPLES   "Build examples for cpp-anvil"      TRUE)
+option(BUILD_TESTS      "Build unit tests for cpp-anvil"    TRUE)
+
+### Version
+set(CPPANVIL_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPPANVIL_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPPANVIL_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPPANVIL_VERSION ${CPPANVIL_VERSION_MAJOR}.${CPPANVIL_VERSION_MINOR}.${CPPANVIL_VERSION_PATCH})
 
 ### Additional flags
 set(CMAKE_CXX_STANDARD 20)
@@ -28,4 +34,3 @@ endif()
 if(BUILD_TESTS)
     add_subdirectory("test")
 endif()
-

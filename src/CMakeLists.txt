@@ -3,11 +3,18 @@ if(MSVC)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 endif()
 
+configure_file(
+    version.cpp.in
+    version.cpp
+    @ONLY
+)
+
 set(CPP_ANVIL_HEADER_PATH "${CPP_ANVIL_SOURCE_DIR}/include")
 set(CPP_ANVIL_HEADERS
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/io/io.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/io/compression.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/version.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/io/compression.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/io/io.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/basic_tag.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/collection_tag.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/compound_tag.hpp"
@@ -25,6 +32,7 @@ add_library(cppAnvil SHARED
     "nbt/list_tag.cpp"
     "nbt/compound_tag.cpp"
     "nbt/types.cpp"
+    "version.cpp"
 )
 
 target_include_directories(cppAnvil
