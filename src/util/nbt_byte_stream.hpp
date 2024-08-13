@@ -63,7 +63,7 @@ public:
         T value;
         std::memcpy(&value, &m_buffer[m_pos], width);
         m_pos += width;
-        swapEndian(value);
+        value = detail::swapEndian(value);
         return value;
     }
 
@@ -110,14 +110,6 @@ public:
             vec[i] = read<typename T::value_type>();
         }
         return vec;
-    }
-
-private:
-    template<typename T>
-    void swapEndian(T &value) {
-        if constexpr(std::endian::native == std::endian::little) {
-            value = detail::bswap(value);
-        }
     }
 
 private:
@@ -174,7 +166,7 @@ public:
 
     void write(const std::string &str) {
         int16_t str_len = static_cast<int16_t>(str.length());
-        swapEndian(str_len);
+        str_len = detail::swapEndian(str_len);
 
         const size_type data_len = str.length() + sizeof(int16_t);
         if(availableBytes() < data_len) {
@@ -195,7 +187,7 @@ public:
         if(availableBytes() < len) {
             grow(len);
         }
-        swapEndian(value);
+        value = detail::swapEndian(value);
         std::memcpy(&m_buffer[m_pos], &value, len);
         m_pos += len;
     }
@@ -207,7 +199,7 @@ public:
         if(availableBytes() < len) {
             grow(len);
         }
-        swapEndian(value);
+        value = detail::swapEndian(value);
         std::memcpy(&m_buffer[m_pos], &value, len);
         m_pos += len;
     }
@@ -240,13 +232,6 @@ private:
         size_type newSize = m_buffer.size() + count;
         size_type newCapycity = calculateGrowth(newSize);
         m_buffer.resize(newCapycity);
-    }
-
-    template<typename T>
-    void swapEndian(T &value) {
-        if constexpr(std::endian::native == std::endian::little) {
-            value = detail::bswap(value);
-        }
     }
 
 private:

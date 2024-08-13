@@ -57,6 +57,13 @@ inline auto bswap(std::floating_point auto value) noexcept {
 }
 #endif
 
+template<typename T>
+[[nodiscard]] T swapEndian(T value) {
+    if constexpr(std::endian::native == std::endian::little) {
+        return detail::bswap(value);
+    }
+}
+
 } // namespace detail
 } // namespace anvil
 
