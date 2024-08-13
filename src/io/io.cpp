@@ -1,7 +1,7 @@
 // cpp-anvil
 #include <cpp-anvil/io/io.hpp>
 #include <cpp-anvil/io/compression.hpp>
-#include "io/nbt_byte_stream.hpp"
+#include "util/nbt_byte_stream.hpp"
 
 // STL
 #include <fstream>
