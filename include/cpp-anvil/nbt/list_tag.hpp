@@ -14,7 +14,7 @@ namespace nbt {
 //      ListTag
 // -------------------------------------------------------------------------------------------------
 
-class ListTag : public CollectionTag<std::unique_ptr<ListType>, TagType::List>
+class ListTag : public CollectionTag<std::unique_ptr<BasicTag>, TagType::List>
 {
 public:
     ListTag() = default;
@@ -42,7 +42,7 @@ public:
         return m_listType;
     }
 
-    bool push_back(std::unique_ptr<ListType> value) {
+    bool push_back(std::unique_ptr<BasicTag> value) {
         if(value) {
             if(empty()) {
                 m_listType = value->type();
@@ -55,20 +55,20 @@ public:
         return false;
     }
 
-    bool push_back(ListType *value) {
+    bool push_back(BasicTag *value) {
         if(value) {
             if(empty()) {
                 m_listType = value->type();
             }
             if(value->type() == m_listType) {
-                m_value.push_back(std::unique_ptr<ListType>(value));
+                m_value.push_back(std::unique_ptr<BasicTag>(value));
                 return true;
             }
         }
         return false;
     }
 
-    bool push_back(const ListType &value) {
+    bool push_back(const BasicTag &value) {
         if(empty()) {
             m_listType = value.type();
         }

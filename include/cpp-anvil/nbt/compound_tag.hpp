@@ -11,7 +11,7 @@ namespace nbt {
 //      CompoundTag
 // -------------------------------------------------------------------------------------------------
 
-class CompoundTag : public CollectionTag<std::unique_ptr<CompoundType>, TagType::Compound>
+class CompoundTag : public CollectionTag<std::unique_ptr<BasicTag>, TagType::Compound>
 {
 public:
     CompoundTag() = default;
@@ -38,8 +38,8 @@ public:
     const BasicTag* getChildByName(const std::string &name) const;
     
     //
-    bool push_back(std::unique_ptr<CompoundType> value);
-    bool push_back(CompoundType *value);
+    bool push_back(std::unique_ptr<BasicTag> value);
+    bool push_back(BasicTag *value);
 };
 
 } // namespace nbt

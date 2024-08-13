@@ -33,7 +33,7 @@ const BasicTag* CompoundTag::getChildByName(const std::string &name) const
     return nullptr;
 }
 
-bool CompoundTag::push_back(std::unique_ptr<CompoundType> value) {
+bool CompoundTag::push_back(std::unique_ptr<BasicTag> value) {
     if(value) {
         m_value.push_back(std::move(value));
         return true;
@@ -41,9 +41,9 @@ bool CompoundTag::push_back(std::unique_ptr<CompoundType> value) {
     return false;
 }
 
-bool CompoundTag::push_back(CompoundType *value) {
+bool CompoundTag::push_back(BasicTag *value) {
     if(value) {
-        m_value.push_back(std::unique_ptr<CompoundType>(value));
+        m_value.push_back(std::unique_ptr<BasicTag>(value));
         return true;
     }
     return false;
