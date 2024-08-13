@@ -10,7 +10,11 @@
 
 namespace anvil {
 
-Region::Region() = default;
+Region::Region()
+    : m_loadedChunks(Chunks, false)
+{
+
+}
 
 void Region::loadFromFile(const std::string &filename)
 {
@@ -45,14 +49,49 @@ void Region::loadPartiallyFromFile(const std::string &filename)
     m_filename = filename;
 }
 
-void Region::loadChunkAt(int index)
+void Region::loadChunkAt(size_t index)
 {
+    if(index >= Chunks) {
+        throw std::out_of_range("Index is out of range.");
+    }
 
+    // If the chunk is already loaded or the chunk is marked as empty, we are done here
+    if(m_loadedChunks[index] || m_regionHeader->empty(index)) {
+        return;
+    }
+
+    // Open filestream
+    std::ifstream stream(m_filename, std::ios::binary);
+    if(!stream.is_open()) {
+        throw std::runtime_error("Failed to open region file.");
+    }
+
+    readChunkData(stream, index);
 }
 
 void Region::loadAllChunks()
 {
+    // Open filestream
+    std::ifstream stream(m_filename, std::ios::binary);
+    if(!stream.is_open()) {
+        throw std::runtime_error("Failed to open region file.");
+    }
 
+    // Iterate through all chunks and load if not already loaded or empty.
+    for(size_t chunkIndex = 0; chunkIndex < Chunks; ++chunkIndex) {
+        if(m_loadedChunks[chunkIndex] || m_regionHeader->empty(chunkIndex)) {
+            continue;
+        }
+
+        readChunkData(stream, chunkIndex);
+    }
+}
+
+void Region::readChunkData(std::ifstream &filestream, const size_t index)
+{
+    // Seek to beginning of chunk data in the filestream
+    uint32_t offset = m_regionHeader->byteOffset(index);
+    filestream.seekg(offset, std::ios::beg);
 }
 
 bool Region::readRegionHeader(std::ifstream &filestream)

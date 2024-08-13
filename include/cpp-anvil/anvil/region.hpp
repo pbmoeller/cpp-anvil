@@ -3,6 +3,7 @@
 
 // STL
 #include <string>
+#include <vector>
 #include <memory>
 
 namespace anvil {
@@ -11,6 +12,9 @@ class RegionHeader;
 
 class Region
 {
+public:
+    constexpr static size_t Chunks{1024};
+
 public:
     //! @brief Constructs an empty region.
     Region();
@@ -31,12 +35,18 @@ public:
     //! @brief Loads the chunk at specific index.
     //! 
     //! @param index Index of the chunk to be loaded.
-    void loadChunkAt(int index);
+    void loadChunkAt(size_t index);
 
     //! @brief Loads all chunks in the region file.
     void loadAllChunks();
 
 private:
+    //! @brief Reads the chunkdata from \p filestream at chunk \p index 
+    //! 
+    //! @param filestream  The filestream to read the chunk data from.
+    //! @param index       The chunk index to be read.
+    void readChunkData(std::ifstream &filestream, const size_t index);
+
     //! @brief Reads the region header in the region file.
     //! 
     //! @param filestream The filestream to read the data from.
@@ -66,6 +76,9 @@ private:
     int m_x{0};
     int m_z{0};
     std::string m_filename;
+
+    std::vector<bool> m_loadedChunks;
+
     std::unique_ptr<RegionHeader> m_regionHeader;
 };
 
