@@ -1,11 +1,10 @@
 // cpp-anvil
-#include <cpp-anvil/io/compression.hpp>
+#include <cpp-anvil/util/compression.hpp>
 
 // zlib
 #include <zlib.h>
 
 namespace anvil {
-namespace io {
 
 constexpr size_t GzipChunkSize = 32768;
 
@@ -82,5 +81,4 @@ bool deflate_zlib(std::ifstream &strm, std::vector<unsigned char> &data)
     return false;
 }
 
-} // namespace io
 } // namespace anvil

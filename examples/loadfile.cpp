@@ -1,6 +1,5 @@
 // cpp-avil
 #include <cpp-anvil/nbt.hpp>
-#include <cpp-anvil/io/io.hpp>
 
 // STL
 #include <iostream>
@@ -112,11 +111,11 @@ int main(int argc, char **argv)
 
     // auto ctag = nbt::io::loadFile(R"(C:\Users\sonla\Coding\Projects\libAwesomeMC\test\testdata\nbt\bigtest.nbt)");
 
-    auto ctag = anvil::io::readData(bigtestUncompressedData);
+    auto ctag = anvil::readData(bigtestUncompressedData);
 
-    std::cout << anvil::io::printTag(ctag.get());
+    std::cout << anvil::printTag(ctag.get());
 
-    auto writtenBytes = anvil::io::writeData(ctag.get());
+    auto writtenBytes = anvil::writeData(ctag.get());
 
     // Check for equality
     bool error = false;

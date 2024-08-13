@@ -15,7 +15,6 @@
 #include <vector>
 
 namespace anvil {
-namespace io {
 
 class NbtInputByteStream
 {
@@ -239,7 +238,6 @@ private:
     size_type               m_pos;
 };
 
-} // namespace io
 } // namespace anvil
 
 #endif // CPP_ANVIL_IO_NBT_BYTE_STREAM_HPP

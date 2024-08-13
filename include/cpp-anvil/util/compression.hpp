@@ -6,7 +6,6 @@
 #include <vector>
 
 namespace anvil {
-namespace io {
 
 //! @brief The supported compression types.
 enum class CompressionType
@@ -74,7 +73,6 @@ bool inflate_zlib(std::ifstream &strm, std::vector<unsigned char> &data);
 bool deflate_gzip(std::ifstream &strm, std::vector<unsigned char> &data);
 bool deflate_zlib(std::ifstream &strm, std::vector<unsigned char> &data);
 
-} // namespace io
 } // namespace anvil
 
 #endif // CPP_ANVIL_IO_COMPRESSION_HPP

@@ -1,6 +1,7 @@
 // cpp-anvil
-#include <cpp-anvil/io/io.hpp>
-#include <cpp-anvil/io/compression.hpp>
+#include <cpp-anvil/nbt/io.hpp>
+#include <cpp-anvil/util/compression.hpp>
+
 #include "util/nbt_byte_stream.hpp"
 
 // STL
@@ -11,7 +12,6 @@
 #include <vector>
 
 namespace anvil {
-namespace io {
 
 bool readFile(std::ifstream &strm, std::vector<unsigned char> &data)
 {
@@ -523,5 +523,4 @@ std::string printTag(const BasicTag *tag, int indent, bool printArrayContent)
     return sstrm.str();
 }
 
-} // namespace io
 } // namespace anvil

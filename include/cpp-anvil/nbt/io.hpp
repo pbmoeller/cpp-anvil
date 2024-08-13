@@ -3,13 +3,12 @@
 
 // cpp-anvil
 #include <cpp-anvil/nbt.hpp>
-#include <cpp-anvil/io/compression.hpp>
+#include <cpp-anvil/util/compression.hpp>
 
 // STL
 #include <memory>
 
 namespace anvil {
-namespace io {
 
 //! @brief Tries to load a NBT file.
 //! 
@@ -55,7 +54,6 @@ std::vector<unsigned char> writeData(const BasicTag *tag);
 //! @return The printed NBT tags as string.
 std::string printTag(const BasicTag *tag, int indent = 2, bool printArrayContent = false);
 
-} // namespace io
 } // namespace anvil
 
 #endif // CPP_ANVIL_IO_IO_HPP

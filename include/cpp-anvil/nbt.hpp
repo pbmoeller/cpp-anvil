@@ -8,6 +8,7 @@
 #include <cpp-anvil/nbt/list_tag.hpp>
 #include <cpp-anvil/nbt/primitive_tag.hpp>
 #include <cpp-anvil/nbt/types.hpp>
+#include <cpp-anvil/nbt/io.hpp>
 
 // template<typename T, TagType TAG>
 // class ArrayTag : public NamedTag
