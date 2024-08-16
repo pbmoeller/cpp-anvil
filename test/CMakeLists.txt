@@ -8,6 +8,7 @@ add_executable(tests
     "nbt/test_bytetag.cpp"
     "nbt/test_bytearraytag.cpp"
     "nbt/test_listtag.cpp"
+    "util/test_compression.cpp"
 )
 
 target_include_directories(tests
