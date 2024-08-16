@@ -16,7 +16,7 @@ namespace anvil {
 //!                 compression.
 //! 
 //! @return A CompoundTag containing the NBT data.
-std::unique_ptr<CompoundTag> loadFile(const std::string &filename);
+std::unique_ptr<CompoundTag> loadFromFile(const std::string &filename);
  
 //! @brief Tries to load a NBT file and returns \p compressionType of the raw data.
 //! 
@@ -26,8 +26,66 @@ std::unique_ptr<CompoundTag> loadFile(const std::string &filename);
 //!                         original data.
 //! 
 //! @return A CompoundTag containing the NBT data.
-std::unique_ptr<CompoundTag> loadFile(const std::string &filename,
-                                      CompressionType &compressionType);
+std::unique_ptr<CompoundTag> loadFromFile(const std::string &filename,
+                                          CompressionType &compressionType);
+
+//! @brief Writes a byte sequence of data to file.
+//! 
+//! @param filename Filename to writte data to.
+//! @param data     Data to be saved.
+//! 
+//! @return `true` on success, `false` otherwise.
+bool saveToFile(const std::string &filename, std::vector<unsigned char> &data);
+
+//! @brief Writes a byte sequence of data to file.
+//! 
+//! @param filename         Filename to writte data to.
+//! @param data             Data to be saved.
+//! @param compressionType  The compression type if the data should be compressed.
+//! 
+//! @return `true` on success, `false` otherwise.
+bool saveToFile(const std::string &filename, std::vector<unsigned char> &data,
+                CompressionType compressionType);
+
+//! @brief Writes a byte sequence of data to file.
+//! 
+//! @param filename         Filename to writte data to.
+//! @param data             Data to be saved.
+//! @param compressionType  The compression type if the data should be compressed.
+//! @param compressionLevel The level of compression.
+//! 
+//! @return `true` on success, `false` otherwise.
+bool saveToFile(const std::string &filename, std::vector<unsigned char> &data,
+                CompressionType compressionType, int compressionLevel);
+
+//! @brief Serializes the CompoundTag and saves the data to file.
+//! 
+//! @param filename     Filename where the serialized tag is written to.
+//! @param compoundTag  The CompoundTag to be serialized.
+//! 
+//! @return `true` on success, `false` otherwise.
+bool saveToFile(const std::string &filename, const CompoundTag *compoundTag);
+
+//! @brief Serializes the CompoundTag and saves the data to file.
+//! 
+//! @param filename         Filename where the serialized tag is written to.
+//! @param compoundTag      The CompoundTag to be serialized.
+//! @param compressionType  The compression type if the data should be compressed.
+//! 
+//! @return `true` on success, `false` otherwise.
+bool saveToFile(const std::string &filename, const CompoundTag *compoundTag,
+                CompressionType compressionType);
+
+//! @brief Serializes the CompoundTag and saves the data to file.
+//! 
+//! @param filename         Filename where the serialized tag is written to.
+//! @param compoundTag      The CompoundTag to be serialized.
+//! @param compressionType  The compression type if the data should be compressed.
+//! @param compressionLevel The level of compression.
+//! 
+//! @return `true` on success, `false` otherwise.
+bool saveToFile(const std::string &filename, const CompoundTag *compoundTag,
+                CompressionType compressionType, int compressionLevel);
 
 //! @brief Deserializes a sequence of bytes into a NBT CompoundTag.
 //! 

@@ -30,14 +30,14 @@ bool readFile(std::ifstream &strm, std::vector<unsigned char> &data)
     return true;
 }
 
-std::unique_ptr<CompoundTag> loadFile(const std::string &filename)
+std::unique_ptr<CompoundTag> loadFromFile(const std::string &filename)
 {
     CompressionType compressionType;
-    return loadFile(filename, compressionType);
+    return loadFromFile(filename, compressionType);
 }
 
-std::unique_ptr<CompoundTag> loadFile(const std::string &filename,
-                                      CompressionType &compressionType)
+std::unique_ptr<CompoundTag> loadFromFile(const std::string &filename,
+                                          CompressionType &compressionType)
 {
     if(!std::filesystem::exists(filename)) {
         return std::unique_ptr<CompoundTag>();
@@ -81,6 +81,60 @@ std::unique_ptr<CompoundTag> loadFile(const std::string &filename,
     }
 
     return std::unique_ptr<CompoundTag>();
+}
+
+bool saveToFile(const std::string &filename, std::vector<unsigned char> &data)
+{
+    return saveToFile(filename, data, CompressionType::Uncompressed, DefaultCompression);
+}
+
+bool saveToFile(const std::string &filename, std::vector<unsigned char> &data,
+                CompressionType compressionType)
+{
+    return saveToFile(filename, data, compressionType, DefaultCompression);
+}
+
+bool saveToFile(const std::string &filename, std::vector<unsigned char> &data,
+                CompressionType compressionType, int compressionLevel)
+{
+    std::ofstream ofs(filename, std::ios::binary);
+    if(!ofs.is_open()) {
+        return false;
+    }
+
+    int ret = true;
+    switch(compressionType) {
+        case CompressionType::Gzip:
+            ret = deflate_gzip(ofs, data, compressionLevel);
+            break;
+        case CompressionType::Zlib:
+            ret = deflate_zlib(ofs, data, compressionLevel);
+            break;
+        case CompressionType::Uncompressed:
+            ofs.write(reinterpret_cast<const char *>(data.data()), data.size());
+            break;
+    }
+
+    return ret;
+}
+
+bool saveToFile(const std::string &filename, const CompoundTag *compoundTag)
+{
+    return saveToFile(filename, compoundTag, CompressionType::Uncompressed, DefaultCompression);
+}
+
+bool saveToFile(const std::string &filename, const CompoundTag *compoundTag,
+                CompressionType compressionType)
+{
+    return saveToFile(filename, compoundTag, compressionType, DefaultCompression);
+}
+
+bool saveToFile(const std::string &filename, const CompoundTag *compoundTag,
+                CompressionType compressionType, int compressionLevel)
+{
+    std::vector<unsigned char> data = writeData(compoundTag);
+
+    return saveToFile(filename, data, compressionType, compressionLevel);
 }
 
 std::unique_ptr<BasicTag> readChildTag(NbtInputByteStream &byteStream,
