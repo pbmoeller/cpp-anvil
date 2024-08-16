@@ -1,6 +1,8 @@
 // cpp-anvil
 #include <cpp-anvil/anvil/region.hpp>
+#include <cpp-anvil/util/compression.hpp>
 
+#include "util/byte_swap.hpp"
 #include "anvil/region_header.hpp"
 
 // STL
@@ -11,9 +13,9 @@
 namespace anvil {
 
 Region::Region()
-    : m_loadedChunks(Chunks, false)
 {
-
+    m_loadedChunks.fill(false);
+    m_chunkCompression.fill(CompressionType::Uncompressed);
 }
 
 void Region::loadFromFile(const std::string &filename)
@@ -87,11 +89,62 @@ void Region::loadAllChunks()
     }
 }
 
+Chunk& Region::chunkAt(size_t index)
+{
+    if(index >= Chunks) {
+        throw std::out_of_range("Index is out of range.");
+    }
+
+    return m_chunks[index];
+}
+
+const Chunk& Region::chunkAt(size_t index) const
+{
+    if(index >= Chunks) {
+        throw std::out_of_range("Index is out of range.");
+    }
+
+    return m_chunks[index];
+}
+
 void Region::readChunkData(std::ifstream &filestream, const size_t index)
 {
     // Seek to beginning of chunk data in the filestream
-    uint32_t offset = m_regionHeader->byteOffset(index);
+    size_t offset = m_regionHeader->byteOffset(index);
     filestream.seekg(offset, std::ios::beg);
+
+    // Get size of binary data and compression type
+    uint32_t dataSize = 0;
+    filestream.read(reinterpret_cast<char*>(&dataSize), sizeof(uint32_t));
+    dataSize = detail::swapEndian(dataSize);
+    CompressionType compressionType = CompressionType::Uncompressed;
+    filestream.read(reinterpret_cast<char*>(&compressionType), sizeof(char));
+
+    // Read the chunk data
+    std::vector<unsigned char> compressedChunkData(dataSize - 1, 0);
+    filestream.read(reinterpret_cast<char*>(&compressedChunkData[0]), dataSize - 1);
+
+    std::vector<unsigned char> chunkData;
+    switch(compressionType) {
+        case CompressionType::Gzip:
+            if(!inflate_gzip(compressedChunkData, chunkData)) {
+                throw std::runtime_error("Failed to uncompress chunk data (gzip).");
+            }
+            break;
+        case CompressionType::Zlib:
+            if(!inflate_zlib(compressedChunkData, chunkData)) {
+                throw std::runtime_error("Failed to uncompress chunk data (zlib).");
+            }
+            break;
+        case CompressionType::Uncompressed:
+            break;
+        default:
+            throw std::runtime_error("Unknown compression type.");
+    }
+
+    chunkAt(index).setRootTag(readData(chunkData));
+    m_chunkCompression[index] = compressionType;
+    m_loadedChunks[index] = true;
 }
 
 bool Region::readRegionHeader(std::ifstream &filestream)

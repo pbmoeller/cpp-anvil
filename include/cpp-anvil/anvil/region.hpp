@@ -1,10 +1,14 @@
 #ifndef CPP_ANVIL_ANVIL_REGION_HPP
 #define CPP_ANVIL_ANVIL_REGION_HPP
 
+// cpp-anvil
+#include <cpp-anvil/anvil/chunk.hpp>
+
 // STL
 #include <string>
 #include <vector>
 #include <memory>
+#include <array>
 
 namespace anvil {
 
@@ -39,6 +43,20 @@ public:
 
     //! @brief Loads all chunks in the region file.
     void loadAllChunks();
+
+    //! @brief Gets a chunk from the region.
+    //! 
+    //! @param index Index of the requested chunk.
+    //! 
+    //! @return Reference to chunk at \p index
+    Chunk& chunkAt(size_t index);
+
+    //! @brief Gets a chunk from the region.
+    //! 
+    //! @param index Index of the requested chunk.
+    //! 
+    //! @return Const reference to chunk at \p index
+    const Chunk& chunkAt(size_t index) const;
 
 private:
     //! @brief Reads the chunkdata from \p filestream at chunk \p index 
@@ -77,7 +95,9 @@ private:
     int m_z{0};
     std::string m_filename;
 
-    std::vector<bool> m_loadedChunks;
+    std::array<bool, Chunks> m_loadedChunks;
+    std::array<Chunk, Chunks> m_chunks;
+    std::array<CompressionType, Chunks> m_chunkCompression;
 
     std::unique_ptr<RegionHeader> m_regionHeader;
 };
