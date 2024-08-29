@@ -18,6 +18,7 @@ class Region
 {
 public:
     constexpr static size_t Chunks{1024};
+    constexpr static size_t SectorSize{4096};
 
 public:
     //! @brief Constructs an empty region.
@@ -43,6 +44,35 @@ public:
 
     //! @brief Loads all chunks in the region file.
     void loadAllChunks();
+
+    //! @brief Checks if a chunk is already loaded.
+    //! 
+    //! @param index Index of chunk to check.
+    //! 
+    //! @return `true` if chunk is loaded, `false` if not.
+    bool isChunkLoaded(size_t index) const;
+
+    //! @brief Checks if a chunk can be loaded. 
+    //! 
+    //! This functions requires that the FileHeader has been read before. This is done when 
+    //! @ref loadFromFile() or @ref loadPartiallyFromFile() has been called before.
+    //! 
+    //! @param index Index of chunk that shoudl be checked.
+    //! 
+    //! @return `true` if chunk can be loaded, `false` if not.
+    bool isChunkLoadable(size_t index) const;
+
+    //! @brief Saves the region to the file it has been loaded from.
+    //! 
+    //! @return `true` if files was successfully saved, `false` otherwise.
+    bool saveToFile();
+
+    //! @brief Saves the region to the given filename.
+    //! 
+    //! @param filename The filename where the region data should be saved.
+    //! 
+    //! @return `true` if files was successfully saved, `false` otherwise.
+    bool saveToFile(const std::string &filename);
 
     //! @brief Gets a chunk from the region.
     //! 

@@ -2,6 +2,7 @@
 #include <cpp-anvil/anvil/region.hpp>
 #include <cpp-anvil/util/compression.hpp>
 
+
 #include "util/byte_swap.hpp"
 #include "anvil/region_header.hpp"
 
@@ -58,7 +59,7 @@ void Region::loadChunkAt(size_t index)
     }
 
     // If the chunk is already loaded or the chunk is marked as empty, we are done here
-    if(m_loadedChunks[index] || m_regionHeader->empty(index)) {
+    if(isChunkLoaded(index) || !isChunkLoadable(index)) {
         return;
     }
 
@@ -81,12 +82,93 @@ void Region::loadAllChunks()
 
     // Iterate through all chunks and load if not already loaded or empty.
     for(size_t chunkIndex = 0; chunkIndex < Chunks; ++chunkIndex) {
-        if(m_loadedChunks[chunkIndex] || m_regionHeader->empty(chunkIndex)) {
-            continue;
+        if(!isChunkLoaded(chunkIndex) && isChunkLoadable(chunkIndex)) {
+            readChunkData(stream, chunkIndex);
         }
-
-        readChunkData(stream, chunkIndex);
     }
+}
+
+bool Region::isChunkLoaded(size_t index) const
+{
+    return m_loadedChunks[index];
+}
+
+bool Region::isChunkLoadable(size_t index) const
+{
+    return m_regionHeader && !m_regionHeader->empty(index);
+}
+
+bool Region::saveToFile()
+{
+    return saveToFile(m_filename);
+}
+
+bool Region::saveToFile(const std::string &filename)
+{
+    std::vector<unsigned char> regionData(RegionHeader::HeaderSize, 0);
+    size_t storageDataOffset = RegionHeader::HeaderSize;
+    RegionHeader regionHeader;
+
+    for(size_t index = 0; index < Chunks; ++index) {
+        if(m_chunks[index].empty()) {
+            regionHeader.setChunkData(index, 0, 0, 0);
+        } else {
+            CompressionType compression = m_chunkCompression[index];
+            CompoundTag *rootTag = m_chunks[index].getRootTag();
+
+            // Compress the serialized chunk data.
+            std::vector<unsigned char> serializedData = writeData(rootTag);
+            std::vector<unsigned char> chunkData;
+            if(compression == CompressionType::Zlib) {
+                // This is the usual case
+                if(!deflate_zlib(serializedData, chunkData)) {
+                    throw std::runtime_error("Failed to compress chunk data (zlib).");
+                }
+            } else if(compression == CompressionType::Gzip) {
+                // Regions are rarely compressed with gzip. But in case it should, we can do!
+                if(!deflate_gzip(serializedData, chunkData)) {
+                    throw std::runtime_error("Failed to compress chunk data (zlib).");
+                }
+            } else if(compression == CompressionType::Uncompressed) {
+                // This is super rare condition and should usually not occur. 
+                // But we can also handle this.
+                chunkData = std::move(serializedData);
+            }
+
+            // calculate some sizes.
+            size_t length           = 1u + chunkData.size();
+            size_t payload          = 4u + length;
+            size_t sectorPadding    = (((payload % SectorSize) > 0) ? 1 : 0);
+            size_t sectors          = payload / SectorSize + sectorPadding;
+            size_t storageSize      = sectors * SectorSize;
+
+            // Set chunk infos in region header.
+            regionHeader.setChunkData(index, storageDataOffset / SectorSize, sectors, 0);
+
+            // Write the chunk to the region data.
+            regionData.resize(regionData.size() + storageSize, 0);
+            length = detail::swapEndian(length);
+            std::memcpy(&regionData[storageDataOffset], &length, 4u);
+            std::memcpy(&regionData[storageDataOffset + 4], &compression, 1u);
+            std::memcpy(&regionData[storageDataOffset + 5], chunkData.data(), chunkData.size());
+
+            // Increase the data index to beginning of next chunk.
+            storageDataOffset += storageSize;
+        }
+    }
+
+    // After all chunks have been written and the chunk data has been set to the region header, 
+    // we can now also write the region header data.
+    std::memcpy(&regionData[0], regionHeader.headerData(), regionHeader.headerSize());
+
+    std::ofstream stream(filename, std::ios::binary);
+    if(!stream.is_open()) {
+        throw std::runtime_error("Failed to open file.");
+    }
+    stream.write(reinterpret_cast<char*>(regionData.data()), regionData.size());
+    stream.close();
+
+    return true;
 }
 
 Chunk& Region::chunkAt(size_t index)

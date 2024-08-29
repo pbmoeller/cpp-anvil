@@ -14,6 +14,11 @@ const std::array<unsigned char, RegionHeader::HeaderSize>& RegionHeader::data() 
     return m_data;
 }
 
+const unsigned char * RegionHeader::headerData() const
+{
+    return m_data.data();
+}
+
 size_t RegionHeader::chunkCount() const
 {
     size_t count{0};
@@ -70,6 +75,7 @@ void RegionHeader::setChunkData(const size_t index,
 
     dataAsInt[index] = detail::swapEndian(value);
     dataAsInt[Chunks + index] = detail::swapEndian(timestamp);
+
 }
 
 } // namespace anvil

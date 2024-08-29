@@ -18,6 +18,7 @@ public:
     bool loadFromStream(std::ifstream &filestream);
 
     const std::array<unsigned char, HeaderSize>& data() const;
+    const unsigned char* headerData() const;
 
     size_t chunkCount() const;
 
@@ -35,6 +36,9 @@ public:
                       const size_t offset,
                       const size_t size,
                       const uint32_t timestamp);
+
+public:
+    static constexpr size_t headerSize() { return HeaderSize; }
 
 private:
     std::array<unsigned char, HeaderSize> m_data{};
