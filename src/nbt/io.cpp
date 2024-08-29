@@ -67,6 +67,8 @@ std::unique_ptr<CompoundTag> loadFromFile(const std::string &filename,
             ret = readFile(file, data);
         }
 
+        file.close();
+
         // Check if uncompressing or reading file succeeded
         if(!ret) {
             return std::unique_ptr<CompoundTag>();
@@ -114,6 +116,8 @@ bool saveToFile(const std::string &filename, std::vector<unsigned char> &data,
             ofs.write(reinterpret_cast<const char *>(data.data()), data.size());
             break;
     }
+
+    ofs.close();
 
     return ret;
 }
