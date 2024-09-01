@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 
-project(cpp_nbt
+project(cpp_anvil
     VERSION     0.1.0
     LANGUAGES   C CXX
 )
