@@ -79,6 +79,23 @@ public:
         return false;
     }
 
+    std::unique_ptr<BasicTag> takeAt(size_type index) {
+        std::unique_ptr<BasicTag> val = std::move(m_value[index]);
+        eraseAt(index);
+        return val;
+    }
+
+    std::unique_ptr<BasicTag> take(BasicTag *tag) {
+        std::unique_ptr<BasicTag> val;
+        iterator it = std::find_if(m_value.begin(), m_value.end(),
+                                   [tag](const std::unique_ptr<BasicTag> &ptr) { return ptr.get() == tag; });
+        if(it != m_value.end()) {
+            val = std::move(*it);
+            m_value.erase(it);
+        }
+        return val;
+    }
+
 protected:
     virtual bool isEqual(const BasicTag &other) const override
     {

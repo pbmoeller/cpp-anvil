@@ -77,6 +77,42 @@ TEST(ListTag, indexOf)
     EXPECT_EQ(listTag.indexOf(b3_ptr), 2);
 }
 
+TEST(ListTag, takeAt)
+{
+    anvil::ListTag listTag;
+
+    std::unique_ptr<anvil::ByteTag> b1 = std::make_unique<anvil::ByteTag>("ByteTag", 2);
+
+    anvil::ByteTag *b1_ptr = b1.get();
+
+    listTag.push_back(std::move(b1));
+    ASSERT_EQ(listTag.size(), 1);
+    ASSERT_EQ(listTag.indexOf(b1_ptr), 0);
+
+    std::unique_ptr<anvil::BasicTag> b1_take = listTag.takeAt(0);
+    EXPECT_EQ(listTag.size(), 0);
+    EXPECT_EQ(b1_take->type(), anvil::TagType::Byte);
+    EXPECT_STREQ(b1_take->name().c_str(), "ByteTag");
+}
+
+TEST(ListTag, take)
+{
+    anvil::ListTag listTag;
+
+    std::unique_ptr<anvil::ByteTag> b1 = std::make_unique<anvil::ByteTag>("ByteTag", 2);
+
+    anvil::ByteTag *b1_ptr = b1.get();
+
+    listTag.push_back(std::move(b1));
+    ASSERT_EQ(listTag.size(), 1);
+    ASSERT_EQ(listTag.indexOf(b1_ptr), 0);
+
+    std::unique_ptr<anvil::BasicTag> b1_take = listTag.take(b1_ptr);
+    EXPECT_EQ(listTag.size(), 0);
+    EXPECT_EQ(b1_take->type(), anvil::TagType::Byte);
+    EXPECT_STREQ(b1_take->name().c_str(), "ByteTag");
+}
+
 TEST(ListTag, push_back)
 {
     anvil::ListTag listTag;

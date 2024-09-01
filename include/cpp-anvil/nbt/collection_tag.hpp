@@ -135,6 +135,14 @@ public:
         }
     }
 
+    bool erase(BasicTag *tag) {
+        iterator it = std::find(m_value.begin(), m_value.end(), value);
+        if(it != m_value.end()) {
+            m_value.erase(*it);
+            return true;
+        }
+        return false;
+    }
 
     //
     void copy(const ContainerType<T> &otherValue)
@@ -152,6 +160,10 @@ public:
         } else {
             m_value = otherValue;
         }
+    }
+
+    void swap(size_t indexA, size_t indexB) {
+        std::swap(m_value[indexA], m_value[indexB]);
     }
 
 protected:
