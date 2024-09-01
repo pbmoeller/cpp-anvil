@@ -78,12 +78,12 @@ public:
     //! @brief Returns the x coordinate of the region.
     //! 
     //! @return X coordinate.
-    int x() const;
+    int32_t x() const;
 
     //! @brief Returns the z coordinate of the region.
     //! 
     //! @return Z coordinate.
-    int z() const;
+    int32_t z() const;
 
     //! @brief Gets a chunk from the region via index.
     //! 
@@ -153,11 +153,11 @@ public:
     //! @param z        The Z coordinate of the region file.
     //! 
     //! @return `true` if the filename is valid, `false` otherwiese.
-    static bool validateAndParseRegionFilename(const std::string &filename, int &x, int &z);
+    static bool validateAndParseRegionFilename(const std::string &filename, int32_t &x, int32_t &z);
 
 private:
-    int m_x{0};
-    int m_z{0};
+    int32_t m_x{0};
+    int32_t m_z{0};
     std::string m_filename;
 
     std::array<bool, Chunks> m_loadedChunks;

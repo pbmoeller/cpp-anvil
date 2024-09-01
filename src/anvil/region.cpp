@@ -29,8 +29,8 @@ void Region::loadFromFile(const std::string &filename)
 void Region::loadPartiallyFromFile(const std::string &filename)
 {
     // Check if region filename is valid and extract region coordinates
-    int x = 0;
-    int z = 0;
+    int32_t x = 0;
+    int32_t z = 0;
     if(!validateAndParseRegionFilename(filename, x, z)) {
         throw std::runtime_error("Invalid region filename.");
     }
@@ -171,12 +171,12 @@ bool Region::saveToFile(const std::string &filename)
     return true;
 }
 
-int Region::x() const
+int32_t Region::x() const
 {
     return m_x;
 }
 
-int Region::z() const
+int32_t Region::z() const
 {
     return m_z;
 }
@@ -265,12 +265,12 @@ bool Region::readRegionHeader(std::ifstream &filestream)
 
 bool Region::validateRegionFilename(const std::string &filename)
 {
-    int x = 0;
-    int z = 0;
+    int32_t x = 0;
+    int32_t z = 0;
     return validateAndParseRegionFilename(filename, x, z);
 }
 
-bool Region::validateAndParseRegionFilename(const std::string &filename, int &x, int &z)
+bool Region::validateAndParseRegionFilename(const std::string &filename, int32_t &x, int32_t &z)
 {
     // Pattern definition of Minecraft region file.
     const std::regex RegionFilePattern 
