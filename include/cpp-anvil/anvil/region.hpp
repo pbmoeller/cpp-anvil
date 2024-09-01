@@ -17,6 +17,7 @@ class RegionHeader;
 class Region
 {
 public:
+    constexpr static size_t ChunksPerRegionAxis{32};
     constexpr static size_t Chunks{1024};
     constexpr static size_t SectorSize{4096};
 
@@ -74,19 +75,53 @@ public:
     //! @return `true` if files was successfully saved, `false` otherwise.
     bool saveToFile(const std::string &filename);
 
-    //! @brief Gets a chunk from the region.
+    //! @brief Returns the x coordinate of the region.
     //! 
-    //! @param index Index of the requested chunk.
+    //! @return X coordinate.
+    int x() const;
+
+    //! @brief Returns the z coordinate of the region.
+    //! 
+    //! @return Z coordinate.
+    int z() const;
+
+    //! @brief Gets a chunk from the region via index.
+    //! 
+    //! @param index Index of the requested chunk. Must be in range [0, 1024).
     //! 
     //! @return Reference to chunk at \p index
+    //! 
+    //! @throws std::out_of_range If index is out of range.
     Chunk& chunkAt(size_t index);
 
-    //! @brief Gets a chunk from the region.
+    //! @brief Gets a chunk from the region by the chunk coordinate.
+    //! 
+    //! @param x X coordinate of chunk within region. Must be in range [0, 32).
+    //! @param z Y coordinate of chunk within region. Must be in range [0, 32).
+    //! 
+    //! @return Returns chunk at coordinate x|y.
+    //! 
+    //! @throws std::out_of_range If x or z are out of range.
+    Chunk& chunkAt(size_t x, size_t z);
+
+    //! @brief Gets a chunk from the region via index. Must be in range [0, 1024).
     //! 
     //! @param index Index of the requested chunk.
     //! 
     //! @return Const reference to chunk at \p index
+    //! 
+    //! @throws std::out_of_range If index is out of range.
     const Chunk& chunkAt(size_t index) const;
+    
+    //! @brief Gets a chunk from the region by the chunk coordinate.
+    //! 
+    //! @param x X coordinate of chunk within region. Must be in range [0, 32).
+    //! @param z Y coordinate of chunk within region. Must be in range [0, 32).
+    //! 
+    //! @return Returns chunk at coordinate x|y.
+    //! 
+    //! @throws std::out_of_range If x or z are out of range.
+    const Chunk& chunkAt(size_t x, size_t z) const;
 
 private:
     //! @brief Reads the chunkdata from \p filestream at chunk \p index 

@@ -171,6 +171,16 @@ bool Region::saveToFile(const std::string &filename)
     return true;
 }
 
+int Region::x() const
+{
+    return m_x;
+}
+
+int Region::z() const
+{
+    return m_z;
+}
+
 Chunk& Region::chunkAt(size_t index)
 {
     if(index >= Chunks) {
@@ -180,6 +190,15 @@ Chunk& Region::chunkAt(size_t index)
     return m_chunks[index];
 }
 
+Chunk& Region::chunkAt(size_t x, size_t z)
+{
+    if(x >= ChunksPerRegionAxis || z >= ChunksPerRegionAxis) {
+        throw std::out_of_range("Chunk coordinate is out of range.");
+    }
+
+    return m_chunks[x * ChunksPerRegionAxis + z];
+}
+
 const Chunk& Region::chunkAt(size_t index) const
 {
     if(index >= Chunks) {
@@ -187,6 +206,15 @@ const Chunk& Region::chunkAt(size_t index) const
     }
 
     return m_chunks[index];
+}
+
+const Chunk& Region::chunkAt(size_t x, size_t z) const
+{
+    if(x >= ChunksPerRegionAxis || z >= ChunksPerRegionAxis) {
+        throw std::out_of_range("Chunk coordinate is out of range.");
+    }
+
+    return m_chunks[x * ChunksPerRegionAxis + z];
 }
 
 void Region::readChunkData(std::ifstream &filestream, const size_t index)
