@@ -54,6 +54,28 @@ TEST(ListTag, Move_Assign)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(ListTag, indexOf)
+{
+    anvil::ListTag listTag;
+
+    std::unique_ptr<anvil::ByteTag> b1 = std::make_unique<anvil::ByteTag>(2);
+    std::unique_ptr<anvil::ByteTag> b2 = std::make_unique<anvil::ByteTag>(2);
+    std::unique_ptr<anvil::ByteTag> b3 = std::make_unique<anvil::ByteTag>(2);
+
+    anvil::ByteTag *b1_ptr = b1.get();
+    anvil::ByteTag *b2_ptr = b2.get();
+    anvil::ByteTag *b3_ptr = b3.get();
+
+    listTag.push_back(std::move(b1));
+    listTag.push_back(std::move(b2));
+    listTag.push_back(std::move(b3));
+
+    EXPECT_EQ(listTag.size(), 3);
+
+    EXPECT_EQ(listTag.indexOf(b1_ptr), 0);
+    EXPECT_EQ(listTag.indexOf(b2_ptr), 1);
+    EXPECT_EQ(listTag.indexOf(b3_ptr), 2);
+}
 
 TEST(ListTag, push_back)
 {

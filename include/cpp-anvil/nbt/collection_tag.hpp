@@ -71,6 +71,15 @@ public:
     const ContainerType<T>& value() const { return m_value; }
     void setValue(const ContainerType<T> &value) { copy(value); }
 
+    size_t indexOf(BasicTag *value) const {
+        for(size_t idx = 0; idx < size(); ++idx) {
+            if(m_value[idx].get() == value) {
+                return idx;
+            }
+        }
+        return static_cast<size_t>(-1);
+    }
+
     // Iterators
     constexpr iterator begin() noexcept { return m_value.begin(); }
     constexpr const_iterator begin() const noexcept { return m_value.begin(); }
