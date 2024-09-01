@@ -13,6 +13,7 @@ set(CPP_ANVIL_HEADER_PATH "${CPP_ANVIL_SOURCE_DIR}/include")
 set(CPP_ANVIL_HEADERS
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/version.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/anvil/coordinates.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/anvil/chunk.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/anvil/region.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/util/compression.hpp"
@@ -30,6 +31,7 @@ set(CPP_ANVIL_HEADERS
 add_library(cppAnvil SHARED
     ${CPP_ANVIL_HEADERS}
     "anvil/chunk.cpp"
+    "anvil/coordinates.cpp"
     "anvil/region.cpp"
     "anvil/region_header.cpp"
     "util/compression.cpp"

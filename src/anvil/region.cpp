@@ -181,40 +181,69 @@ int32_t Region::z() const
     return m_z;
 }
 
+Vec2 Region::xz() const
+{
+    Vec2 coord;
+    coord.x = m_x;
+    coord.z = m_z;
+    return coord;
+}
+
 Chunk& Region::chunkAt(size_t index)
 {
-    if(index >= Chunks) {
-        throw std::out_of_range("Index is out of range.");
-    }
+    checkRange(index);
 
     return m_chunks[index];
 }
 
-Chunk& Region::chunkAt(size_t x, size_t z)
+Chunk& Region::chunkAt(int32_t x, int32_t z)
 {
-    if(x >= ChunksPerRegionAxis || z >= ChunksPerRegionAxis) {
-        throw std::out_of_range("Chunk coordinate is out of range.");
-    }
+    checkRange(x, z);
 
-    return m_chunks[x * ChunksPerRegionAxis + z];
+    return m_chunks[toIndex(x, z)];
+}
+
+Chunk& Region::chunkAt(const Vec2 &coord)
+{
+    checkRange(coord.x, coord.z);
+
+    return m_chunks[toIndex(coord.x, coord.z)];
 }
 
 const Chunk& Region::chunkAt(size_t index) const
 {
-    if(index >= Chunks) {
-        throw std::out_of_range("Index is out of range.");
-    }
+    checkRange(index);
 
     return m_chunks[index];
 }
 
-const Chunk& Region::chunkAt(size_t x, size_t z) const
+const Chunk& Region::chunkAt(int32_t x, int32_t z) const
 {
-    if(x >= ChunksPerRegionAxis || z >= ChunksPerRegionAxis) {
+    checkRange(x, z);
+
+    return m_chunks[toIndex(x, z)];
+}
+
+const Chunk& Region::chunkAt(const Vec2 &coord) const
+{
+    checkRange(coord.x, coord.z);
+
+    return m_chunks[toIndex(coord.x, coord.z)];
+}
+
+void Region::checkRange(int32_t x, int32_t z) const
+{
+    if(x < 0 || x >= ChunksPerRegionAxis
+       || z < 0 || z >= ChunksPerRegionAxis) {
         throw std::out_of_range("Chunk coordinate is out of range.");
     }
+}
 
-    return m_chunks[x * ChunksPerRegionAxis + z];
+void Region::checkRange(size_t index) const
+{
+    if(index >= Chunks) {
+        throw std::out_of_range("Index is out of range.");
+    }
 }
 
 void Region::readChunkData(std::ifstream &filestream, const size_t index)
@@ -294,6 +323,23 @@ bool Region::validateAndParseRegionFilename(const std::string &filename, int32_t
     x = std::atoi(ref[1].str().c_str());
     z = std::atoi(ref[2].str().c_str());
     return true;
+}
+
+size_t Region::toIndex(int32_t x, int32_t z)
+{
+    return static_cast<size_t>(z) * ChunksPerRegionAxis + static_cast<size_t>(x);
+}
+
+Vec2 Region::fromIndex(size_t index)
+{
+    if(index >= Chunks) {
+        throw std::out_of_range("Index is out of range.");
+    }
+
+    Vec2 coord;
+    coord.x = index % ChunksPerRegionAxis;
+    coord.z = index / ChunksPerRegionAxis;
+    return coord;
 }
 
 } // namespace anvil

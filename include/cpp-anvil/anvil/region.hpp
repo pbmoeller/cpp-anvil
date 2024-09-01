@@ -2,6 +2,7 @@
 #define CPP_ANVIL_ANVIL_REGION_HPP
 
 // cpp-anvil
+#include <cpp-anvil/anvil/coordinates.hpp>
 #include <cpp-anvil/anvil/chunk.hpp>
 
 // STL
@@ -85,6 +86,11 @@ public:
     //! @return Z coordinate.
     int32_t z() const;
 
+    //! @brief Returns coordinate of region within world.
+    //! 
+    //! @return World coordinate of region.
+    Vec2 xz() const;
+
     //! @brief Gets a chunk from the region via index.
     //! 
     //! @param index Index of the requested chunk. Must be in range [0, 1024).
@@ -102,7 +108,14 @@ public:
     //! @return Returns chunk at coordinate x|y.
     //! 
     //! @throws std::out_of_range If x or z are out of range.
-    Chunk& chunkAt(size_t x, size_t z);
+    Chunk& chunkAt(int32_t x, int32_t z);
+
+    //! @brief Gets a chunk from the region by the chunk coordinate.
+    //! 
+    //! @param coord Coordinate of the chunk within the region.
+    //! 
+    //! @return Returns chunk at passed coordinate.
+    Chunk& chunkAt(const Vec2 &coord);
 
     //! @brief Gets a chunk from the region via index. Must be in range [0, 1024).
     //! 
@@ -121,9 +134,26 @@ public:
     //! @return Returns chunk at coordinate x|y.
     //! 
     //! @throws std::out_of_range If x or z are out of range.
-    const Chunk& chunkAt(size_t x, size_t z) const;
+    const Chunk& chunkAt(int32_t x, int32_t z) const;
+
+    //! @brief Gets a chunk from the region by the chunk coordinate.
+    //! 
+    //! @param coord Coordinate of the chunk within the region.
+    //! 
+    //! @return Returns chunk at passed coordinate.
+    const Chunk& chunkAt(const Vec2 &coord) const;
 
 private:
+    //! @brief Checks that the coordinates are in valid range for chunk access.
+    //! @param x X coordinate. Must be in range [0, 32).
+    //! @param z Z coordinate. Must be in range [0, 32).
+    void checkRange(int32_t x, int32_t z) const;
+
+    //! @brief Checks that the index is in valid range for chunk access.
+    //! 
+    //! @param index Index of chunk to access. Must be in range [0, 1024).
+    void checkRange(size_t index) const;
+
     //! @brief Reads the chunkdata from \p filestream at chunk \p index 
     //! 
     //! @param filestream  The filestream to read the chunk data from.
@@ -154,6 +184,21 @@ public:
     //! 
     //! @return `true` if the filename is valid, `false` otherwiese.
     static bool validateAndParseRegionFilename(const std::string &filename, int32_t &x, int32_t &z);
+
+    //! @brief Converts chunk coordinates to chunk index.
+    //! 
+    //! @param x X coordinate of chunk.
+    //! @param z Y coordinate of chunk.
+    //! 
+    //! @return Index of chunk.
+    static size_t toIndex(int32_t x, int32_t z);
+
+    //! @brief Converts chunk index to chunk coordinate.
+    //! 
+    //! @param index Index of chunk.
+    //! 
+    //! @return Coordinate of chunk.
+    static Vec2 fromIndex(size_t index);
 
 private:
     int32_t m_x{0};
