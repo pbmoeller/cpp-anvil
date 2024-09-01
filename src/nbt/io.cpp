@@ -30,6 +30,54 @@ bool readFile(std::ifstream &strm, std::vector<unsigned char> &data)
     return true;
 }
 
+bool isNbtFile(const std::string &filename)
+{
+    if(!std::filesystem::exists(filename)) {
+        return false;
+    }
+
+    std::ifstream file(filename, std::ios::binary);
+    if(file.is_open())
+    {
+        // Read first 2 bytes from binary data. These bytes indicate if the file is uncompressed or
+        // either Zlib or Gzip compressed.
+        std::vector<unsigned char> buffer(2, 0);
+        file.read(reinterpret_cast<char*>(&buffer[0]), 2);
+        if(!file || file.gcount() != 2) {
+            return false;
+        }
+        CompressionType compressionType = testCompression(buffer);
+        file.seekg(0);
+
+        // Uncompress file if compression was found
+        bool ret{true};
+        std::vector<unsigned char> data;
+        if(compressionType == CompressionType::Gzip) {
+            ret = inflate_gzip(file, data);
+        } else if(compressionType == CompressionType::Zlib) {
+            ret = inflate_zlib(file, data);
+        } else {
+            ret = readFile(file, data);
+        }
+
+        file.close();
+
+        // Check if uncompressing or reading file succeeded
+        if(!ret) {
+            return false;
+        }
+
+        // Check if the file starts with a CompoundTag
+        if(data[0] != static_cast<unsigned char>(TagType::Compound)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
 std::unique_ptr<CompoundTag> loadFromFile(const std::string &filename)
 {
     CompressionType compressionType;

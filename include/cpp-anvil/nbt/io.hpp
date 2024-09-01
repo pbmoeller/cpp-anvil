@@ -10,6 +10,20 @@
 
 namespace anvil {
 
+//! @brief Checks if the file contains NBT data.
+//! 
+//! The data is not completely parsed. The functions checks if the file is compressed. If the file
+//! is compressed then the file will be uncompressed and the first byte of the uncompressed
+//! data ist checked. If this indicates a CompounTag the functions returns true.
+//! 
+//! If you plan to parse the file anyway, then just load the file and check if this succeeded. This
+//! will be more fficient than calling this function and the loading afterwards.
+//! 
+//! @param filename The filename to check.
+//! 
+//! @return `true` is file contaisn NBT data, `false` otherwise.
+bool isNbtFile(const std::string &filename);
+
 //! @brief Tries to load a NBT file.
 //! 
 //! @param filename File with NBT content. May be compressed with either `Zlib` or `Gzip` 
