@@ -25,6 +25,7 @@ public:
 public:
     //! @brief Constructs an empty region.
     Region();
+    ~Region();
 
     //! @brief Loads the complete region file.
     //! 

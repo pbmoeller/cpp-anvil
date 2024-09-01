@@ -19,6 +19,8 @@ Region::Region()
     m_chunkCompression.fill(CompressionType::Uncompressed);
 }
 
+Region::~Region() = default;
+
 void Region::loadFromFile(const std::string &filename)
 {
     loadPartiallyFromFile(filename);
