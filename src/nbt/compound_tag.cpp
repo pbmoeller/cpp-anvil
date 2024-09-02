@@ -49,4 +49,40 @@ bool CompoundTag::push_back(BasicTag *value) {
     return false;
 }
 
+bool CompoundTag::push_back(const BasicTag &value)
+{
+    m_value.push_back(value.clone());
+    return true;
+}
+
+std::unique_ptr<BasicTag> CompoundTag::takeAt(size_type index)
+{
+    std::unique_ptr<BasicTag> val = std::move(m_value[index]);
+    eraseAt(index);
+    return val;
+}
+
+std::unique_ptr<BasicTag> CompoundTag::take(BasicTag *tag)
+{
+    std::unique_ptr<BasicTag> val;
+    iterator it = std::find_if(m_value.begin(), m_value.end(),
+                               [tag](const std::unique_ptr<BasicTag> &ptr) { return ptr.get() == tag; });
+    if(it != m_value.end()) {
+        val = std::move(*it);
+        m_value.erase(it);
+    }
+    return val;
+}
+
+bool CompoundTag::erase(BasicTag *tag)
+{
+    iterator it = std::find_if(m_value.begin(), m_value.end(),
+                               [tag](const std::unique_ptr<BasicTag> &ptr) { return ptr.get() == tag; });
+    if(it != m_value.end()) {
+        m_value.erase(it);
+        return true;
+    }
+    return false;
+}
+
 } // namespace anvil

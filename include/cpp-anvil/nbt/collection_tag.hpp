@@ -135,15 +135,6 @@ public:
         }
     }
 
-    bool erase(BasicTag *tag) {
-        iterator it = std::find(m_value.begin(), m_value.end(), value);
-        if(it != m_value.end()) {
-            m_value.erase(*it);
-            return true;
-        }
-        return false;
-    }
-
     //
     void copy(const ContainerType<T> &otherValue)
     {

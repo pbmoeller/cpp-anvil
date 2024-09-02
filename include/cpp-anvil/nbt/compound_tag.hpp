@@ -40,6 +40,12 @@ public:
     //
     bool push_back(std::unique_ptr<BasicTag> value);
     bool push_back(BasicTag *value);
+    bool push_back(const BasicTag &value);
+
+    std::unique_ptr<BasicTag> takeAt(size_type index);
+    std::unique_ptr<BasicTag> take(BasicTag *tag);
+
+    bool erase(BasicTag *tag);
 };
 
 } // namespace anvil
