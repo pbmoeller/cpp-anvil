@@ -312,7 +312,7 @@ bool Region::validateAndParseRegionFilename(const std::string &filename, int32_t
     std::string convertedFilename = filepath.make_preferred().string();
 
     // Extract the filename from the whole path
-    size_t offset = convertedFilename.find_last_of(std::filesystem::path::preferred_separator) + 1;
+    size_t offset = convertedFilename.find_last_of(std::filesystem::path::preferred_separator);
     std::string name = convertedFilename.substr(offset + 1);
 
     // Search for region file pattern : 'r.X.Z.mca'
