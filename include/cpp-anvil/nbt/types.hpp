@@ -1,9 +1,9 @@
 #ifndef CPP_ANVIL_NBT_TYPES_HPP
 #define CPP_ANVIL_NBT_TYPES_HPP
 
-#include <string>
 #include <cstdint>
 #include <memory>
+#include <string>
 #include <string_view>
 #include <vector>
 
@@ -83,6 +83,9 @@ concept IsStringType = std::same_as<T, StringType>;
 //      Functions
 // -------------------------------------------------------------------------------------------------
 
+//! @brief Checks if tag type is a primitive type.
+//! @param type Tag type.
+//! @return `true` if tag type is primitive tag, `false` otherwise.
 constexpr bool isPrimitiveTag(TagType type)
 {
     return type == TagType::Byte
@@ -94,6 +97,9 @@ constexpr bool isPrimitiveTag(TagType type)
         || type == TagType::String;
 }
 
+//! @brief Checks if tag type is a array type.
+//! @param type Tag type.
+//! @return `true` if tag type is array tag, `false` otherwise.
 constexpr bool isArrayTag(TagType type)
 {
     return type == TagType::ByteArray
@@ -101,24 +107,36 @@ constexpr bool isArrayTag(TagType type)
         || type == TagType::LongArray;
 }
 
+//! @brief Checks if tag type is a container type.
+//! @param type Tag type.
+//! @return `true` if tag type is container tag, `false` otherwise.
 constexpr bool isContainerTag(TagType type)
 {
     return type == TagType::List
         || type == TagType::Compound;
 }
 
+//! @brief Checks if tag type is a collection type, i.e. array or container.
+//! @param type Tag type.
+//! @return `true` if tag type is collection tag, `false` otherwise.
 constexpr bool isCollectionTag(TagType type)
 {
     return isArrayTag(type)
         || isContainerTag(type);
 }
 
+//! @brief Checks if the tag type contains a value.
+//! @param type Tag type.
+//! @return `true` if tag type is contains a value, `false` otherwise.
 constexpr bool isValueTag(TagType type)
 {
     return type != TagType::End
         && type != TagType::Unknown;
 }
 
+//! @brief Checks if the tag type is valid.
+//! @param type Tag type.
+//! @return `true` if tag type is valid, `false` otherwise.
 constexpr bool isValidTag(TagType type)
 {
     return type == TagType::End
@@ -136,7 +154,14 @@ constexpr bool isValidTag(TagType type)
         || type == TagType::LongArray;
 }
 
+//! @brief Returns the name of the tag type.
+//! @param type Tag type.
+//! @return Name of tag type. 
 std::string_view getTagTypeName(TagType type);
+
+//! @brief Returns the name of the tag.
+//! @param type Tag type.
+//! @return Name of tag.
 std::string_view getTagName(TagType type);
 
 } // namespace anvil
