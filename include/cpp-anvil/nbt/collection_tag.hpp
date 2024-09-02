@@ -4,6 +4,7 @@
 // cpp-anvil
 #include <cpp-anvil/nbt/basic_tag.hpp>
 #include <cpp-anvil/nbt/types.hpp>
+#include <cpp-anvil/nbt/detail/type_utilities.hpp>
 
 namespace anvil {
 

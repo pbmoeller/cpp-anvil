@@ -46,40 +46,6 @@ template<typename T>
 using ContainerType = std::vector<T>;
 
 // -------------------------------------------------------------------------------------------------
-//      Traits
-// -------------------------------------------------------------------------------------------------
-
-namespace detail {
-
-template<typename T>
-struct IsUniquePtr : std::false_type {};
-template<typename T>
-struct IsUniquePtr<std::unique_ptr<T>> : std::true_type {};
-template<typename T>
-constexpr bool IsUniquePtr_v = IsUniquePtr<T>::value;
-
-} // namespace detail
-
-// -------------------------------------------------------------------------------------------------
-//      Concepts
-// -------------------------------------------------------------------------------------------------
-
-namespace detail {
-
-template<typename, template<typename...> typename>
-inline constexpr bool isSpecialization = false;
-template<template<typename...> typename T, typename... Args>
-inline constexpr bool isSpecialization<T<Args...>, T> = true;
-
-template<typename T>
-concept StdVector = isSpecialization<T, std::vector>;
-
-template<typename T>
-concept IsStringType = std::same_as<T, StringType>;
-
-} // namespace detail
-
-// -------------------------------------------------------------------------------------------------
 //      Functions
 // -------------------------------------------------------------------------------------------------
 

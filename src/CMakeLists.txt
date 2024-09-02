@@ -11,12 +11,14 @@ configure_file(
 
 set(CPP_ANVIL_HEADER_PATH "${CPP_ANVIL_SOURCE_DIR}/include")
 set(CPP_ANVIL_HEADERS
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt.hpp"
+    # anvil
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/version.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/anvil.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/anvil/coordinates.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/anvil/chunk.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/anvil/region.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/util/compression.hpp"
+    # nbt
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/io.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/basic_tag.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/collection_tag.hpp"
@@ -25,6 +27,9 @@ set(CPP_ANVIL_HEADERS
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/primitive_tag.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/types.hpp"
     "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/detail/floating_point.hpp"
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/detail/type_utilities.hpp"
+    # util
+    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/util/compression.hpp"
 )
 
 # lib
@@ -89,4 +94,3 @@ install(FILES
     DESTINATION 
         "lib/${cpp_nbt_VERSION}/${CMAKE_BUILD_TYPE}"
 )
-
