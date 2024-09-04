@@ -109,8 +109,6 @@ int main(int argc, char **argv)
 {
     std::cout << "Load File Example" << std::endl;
 
-    // auto ctag = nbt::io::loadFile(R"(C:\Users\sonla\Coding\Projects\libAwesomeMC\test\testdata\nbt\bigtest.nbt)");
-
     auto ctag = anvil::readData(bigtestUncompressedData);
 
     std::cout << anvil::printTag(ctag.get());
