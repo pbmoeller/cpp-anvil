@@ -50,7 +50,9 @@ using ContainerType = std::vector<T>;
 // -------------------------------------------------------------------------------------------------
 
 //! @brief Checks if tag type is a primitive type.
+//! 
 //! @param type Tag type.
+//! 
 //! @return `true` if tag type is primitive tag, `false` otherwise.
 constexpr bool isPrimitiveTag(TagType type)
 {
@@ -64,7 +66,9 @@ constexpr bool isPrimitiveTag(TagType type)
 }
 
 //! @brief Checks if tag type is a array type.
+//! 
 //! @param type Tag type.
+//! 
 //! @return `true` if tag type is array tag, `false` otherwise.
 constexpr bool isArrayTag(TagType type)
 {
@@ -74,7 +78,9 @@ constexpr bool isArrayTag(TagType type)
 }
 
 //! @brief Checks if tag type is a container type.
+//! 
 //! @param type Tag type.
+//! 
 //! @return `true` if tag type is container tag, `false` otherwise.
 constexpr bool isContainerTag(TagType type)
 {
@@ -83,7 +89,9 @@ constexpr bool isContainerTag(TagType type)
 }
 
 //! @brief Checks if tag type is a collection type, i.e. array or container.
+//! 
 //! @param type Tag type.
+//! 
 //! @return `true` if tag type is collection tag, `false` otherwise.
 constexpr bool isCollectionTag(TagType type)
 {
@@ -92,7 +100,9 @@ constexpr bool isCollectionTag(TagType type)
 }
 
 //! @brief Checks if the tag type contains a value.
+//! 
 //! @param type Tag type.
+//! 
 //! @return `true` if tag type is contains a value, `false` otherwise.
 constexpr bool isValueTag(TagType type)
 {
@@ -101,7 +111,9 @@ constexpr bool isValueTag(TagType type)
 }
 
 //! @brief Checks if the tag type is valid.
+//! 
 //! @param type Tag type.
+//! 
 //! @return `true` if tag type is valid, `false` otherwise.
 constexpr bool isValidTag(TagType type)
 {
@@ -121,12 +133,16 @@ constexpr bool isValidTag(TagType type)
 }
 
 //! @brief Returns the name of the tag type.
+//! 
 //! @param type Tag type.
+//! 
 //! @return Name of tag type. 
 std::string_view getTagTypeName(TagType type);
 
 //! @brief Returns the name of the tag.
+//! 
 //! @param type Tag type.
+//! 
 //! @return Name of tag.
 std::string_view getTagName(TagType type);
 

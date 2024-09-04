@@ -32,7 +32,7 @@ bool isNbtFile(const std::string &filename);
 //! @return A CompoundTag containing the NBT data.
 std::unique_ptr<CompoundTag> loadFromFile(const std::string &filename);
  
-//! @brief Tries to load a NBT file and returns \p compressionType of the raw data.
+//! @brief Tries to load a NBT file and returns @p compressionType of the raw data.
 //! 
 //! @param filename         File with NBT content. May be compressed with either `Zlib` or `Gzip`
 //!                         compression.
@@ -117,7 +117,7 @@ std::unique_ptr<CompoundTag> readData(std::vector<unsigned char> &data);
 //! @return Serialized sequence of bytes.
 std::vector<unsigned char> writeData(const BasicTag *tag);
 
-//! @brief Prints the \p tag and its contents.
+//! @brief Prints the @p tag and its contents.
 //! 
 //! @param tag                  The to be printed.
 //! @param indent               Indentation for inner tags.

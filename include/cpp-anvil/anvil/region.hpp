@@ -96,7 +96,7 @@ public:
     //! 
     //! @param index Index of the requested chunk. Must be in range [0, 1024).
     //! 
-    //! @return Reference to chunk at \p index
+    //! @return Reference to chunk at @p index
     //! 
     //! @throws std::out_of_range If index is out of range.
     Chunk& chunkAt(size_t index);
@@ -122,7 +122,7 @@ public:
     //! 
     //! @param index Index of the requested chunk.
     //! 
-    //! @return Const reference to chunk at \p index
+    //! @return Const reference to chunk at @p index
     //! 
     //! @throws std::out_of_range If index is out of range.
     const Chunk& chunkAt(size_t index) const;
@@ -155,7 +155,7 @@ private:
     //! @param index Index of chunk to access. Must be in range [0, 1024).
     void checkRange(size_t index) const;
 
-    //! @brief Reads the chunkdata from \p filestream at chunk \p index 
+    //! @brief Reads the chunkdata from @p filestream at chunk @p index 
     //! 
     //! @param filestream  The filestream to read the chunk data from.
     //! @param index       The chunk index to be read.

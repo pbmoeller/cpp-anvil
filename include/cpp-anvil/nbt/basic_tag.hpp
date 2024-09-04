@@ -25,19 +25,23 @@ public:
     BasicTag() = default;
 
     //! @brief Copy constructs basic tag.
+    //! 
     //! @param other Other tag.
     BasicTag(const BasicTag &other) = default;
     
     //! @brief Move constructs basic tag.
+    //! 
     //! @param other Other tag.
     BasicTag(BasicTag &&other) noexcept = default;
 
     //! @brief Constructs basic tag with name.
+    //! 
     //! @param name Name to be set.
     explicit BasicTag(const StringType &name)
         : m_name(name) {};
 
     //! @brief Constructs basic tag with name. Moves given aprameter.
+    //! 
     //! @param name NName to be set.
     explicit BasicTag(StringType &&name) noexcept
         : m_name(std::move(name)) {};
@@ -45,13 +49,17 @@ public:
     //! @brief Destroys basic tag.
     virtual ~BasicTag() = default;
 
-    //! @brief Assigns \p other basic tag to this tag.
+    //! @brief Assigns @p other basic tag to this tag.
+    //! 
     //! @param other Other tag to be assigned.
+    //! 
     //! @return Returns reference to this tag.
     BasicTag& operator=(const BasicTag &other) = default;
 
-    //! @brief Move assigns \p other basic tag to this tag.
+    //! @brief Move assigns @p other basic tag to this tag.
+    //! 
     //! @param other Other tag to be moved.
+    //! 
     //! @return Returns reference to this tag.
     BasicTag& operator=(BasicTag &&other) noexcept = default;
 
@@ -64,25 +72,31 @@ public:
         return TagType::Unknown;
     }
 
-    //! @brief Returns a copy of this tag. 
+    //! @brief Returns a copy of this tag.
+    //! 
     //! @return A unique_ptr to copy of this tag.
     virtual std::unique_ptr<BasicTag> clone() const = 0;
 
     //! @brief Returns name of this tag.
+    //! 
     //! @return Tag name.
     StringType name() { return m_name; }
 
     //! @brief Returns constant reference to name of this tag.
+    //! 
     //! @return Tag name.
     const StringType& name() const { return m_name; }
 
     //! @brief Assigns a new name to the tag.
+    //! 
     //! @param name New string to be assigned.
     void setName(const StringType &name) { m_name = name; }
 
 protected:
     //! @brief Compares this tag with an other tag for equality.
+    //! 
     //! @param other Other tag to be compared with.
+    //! 
     //! @return `true` if both tags are equal, `false` otherwise.
     virtual bool isEqual(const BasicTag &other) const {
         if(this == &other) {
@@ -92,19 +106,23 @@ protected:
             && m_name == other.m_name;
     }
 
-    //! @brief Compares two tags with each other for equality.
+    //! \brief Compares two tags with each other for equality.
+    //! 
     //! @param lhs First tag to compare.
     //! @param rhs Second tag to compare.
-    //! @return Returns `true` if \p lhs is equal to \p rhs.
+    //! 
+    //! @return Returns `true` if @p lhs is equal to @p rhs.
     friend bool operator==(const BasicTag &lhs, const BasicTag &rhs) {
         return &lhs == &rhs
             || (typeid(lhs) == typeid(rhs) && lhs.isEqual(rhs));
     }
 
     //! @brief Compares two tags with each other for inequality.
+    //! 
     //! @param lhs First tag to compare.
     //! @param rhs Second tag to compare.
-    //! @return Returns `true` if \p lhs is not equal to \p rhs. 
+    //! 
+    //! @return Returns `true` if @p lhs is not equal to @p rhs. 
     friend bool operator!=(const BasicTag &lhs,
                            const BasicTag &rhs) {
         return !(lhs == rhs);
@@ -121,7 +139,8 @@ private:
 //! 
 //! @tparam T   The target type for the cast.
 //! @param item Pointer to basic tag to be cast.
-//! @return Returns the given tag cast to type \p T if the object is of type T, otherwise returns
+//! 
+//! @return Returns the given tag cast to type @p T if the object is of type T, otherwise returns
 //!         `false`.
 template<typename T>
 inline T tag_cast(BasicTag *item)
@@ -138,7 +157,8 @@ inline T tag_cast(BasicTag *item)
 //! 
 //! @tparam T   The target type for the cast.
 //! @param item Pointer to basic tag to be cast.
-//! @return Returns the given tag cast to type \p T if the object is of type T, otherwise returns
+//! 
+//! @return Returns the given tag cast to type @p T if the object is of type T, otherwise returns
 //!         `false`.
 template<typename T>
 inline T tag_cast(const BasicTag *item)
@@ -159,7 +179,8 @@ inline T tag_cast(const BasicTag *item)
 //! 
 //! @tparam T   The target type for the cast.
 //! @param item Pointer to basic tag to be cast.
-//! @return Returns the given tag cast to type \p T if the object is of type T, otherwise returns
+//! 
+//! @return Returns the given tag cast to type @p T if the object is of type T, otherwise returns
 //!         `false`.
 template<typename T>
 inline std::unique_ptr<T> tag_cast(std::unique_ptr<BasicTag> &&item)
@@ -184,19 +205,23 @@ public:
 
 public:
     //! @brief Returns tag type.
+    //! 
     //! @return TagType::End.
     constexpr virtual TagType type() const override {
         return TagType::End;
     }
 
     //! @brief Returns a copy of this tag. Reimplements clone function from BasicTag.
+    //! 
     //! @return A unique_ptr to copy of this tag.
     virtual std::unique_ptr<BasicTag> clone() const override {
         return std::make_unique<EndTag>(*this);
     }
 
-    //! @brief Compares this tag with an other tag for equality..
+    //! @brief Compares this tag with an other tag for equality.
+    //! 
     //! @param other Other tag to be compared with.
+    //! 
     //! @return `true` if both tags are equal, `false` otherwise.
     virtual bool isEqual(const BasicTag &other) const override {
         if(this == &other) {
