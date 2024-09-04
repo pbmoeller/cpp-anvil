@@ -15,6 +15,7 @@ namespace anvil {
 
 class RegionHeader;
 
+//! @brief Class to store minecraft region data.
 class Region
 {
 public:
@@ -25,6 +26,8 @@ public:
 public:
     //! @brief Constructs an empty region.
     Region();
+
+    //! @brief Destroys the region object.
     ~Region();
 
     //! @brief Loads the complete region file.
@@ -146,6 +149,7 @@ public:
 
 private:
     //! @brief Checks that the coordinates are in valid range for chunk access.
+    //! 
     //! @param x X coordinate. Must be in range [0, 32).
     //! @param z Z coordinate. Must be in range [0, 32).
     void checkRange(int32_t x, int32_t z) const;

@@ -14,12 +14,12 @@ bool Chunk::empty() const
     return m_root == nullptr;
 }
 
-CompoundTag* Chunk::getRootTag()
+CompoundTag* Chunk::rootTag()
 {
     return m_root.get();
 }
 
-const CompoundTag* Chunk::getRootTag() const
+const CompoundTag* Chunk::rootTag() const
 {
     return m_root.get();
 }
