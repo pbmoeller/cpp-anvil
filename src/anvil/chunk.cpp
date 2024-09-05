@@ -1,5 +1,6 @@
 //cpp-anvil
 #include <cpp-anvil/anvil/chunk.hpp>
+#include <cpp-anvil/nbt/compound_tag.hpp>
 
 
 namespace anvil {

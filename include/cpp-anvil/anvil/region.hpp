@@ -4,6 +4,7 @@
 // cpp-anvil
 #include <cpp-anvil/anvil/coordinates.hpp>
 #include <cpp-anvil/anvil/chunk.hpp>
+#include <cpp-anvil/util/compression.hpp>
 
 // STL
 #include <string>

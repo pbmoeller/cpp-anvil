@@ -1,5 +1,6 @@
 // cpp-anvil
 #include <cpp-anvil/anvil/region.hpp>
+#include <cpp-anvil/nbt/io.hpp>
 #include <cpp-anvil/util/compression.hpp>
 
 
@@ -116,7 +117,7 @@ bool Region::saveToFile(const std::string &filename)
             regionHeader.setChunkData(index, 0, 0, 0);
         } else {
             CompressionType compression = m_chunkCompression[index];
-            CompoundTag *rootTag = m_chunks[index].getRootTag();
+            CompoundTag *rootTag = m_chunks[index].rootTag();
 
             // Compress the serialized chunk data.
             std::vector<unsigned char> serializedData = writeData(rootTag);
