@@ -174,9 +174,12 @@ public:
         // Copy string length 
         std::memcpy(&m_buffer[m_pos], &str_len, sizeof(int16_t));
         m_pos += sizeof(int16_t);
+        
         // Copy string content
-        std::copy(str.begin(), str.end(), &m_buffer[m_pos]);
-        m_pos += str.length();
+        if(str_len > 0) {
+            std::copy(str.begin(), str.end(), &m_buffer[m_pos]);
+            m_pos += str.length();
+        }
     }
 
     template<typename T>
