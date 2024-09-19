@@ -21,3 +21,8 @@ TEST(io, load_file_gzip)
                 ::testing::ElementsAreArray(&bigtestUncompressedData[0],
                                             &bigtestUncompressedData[0] + 1544));
 }
+
+TEST(io, save_to_file_gzip)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
