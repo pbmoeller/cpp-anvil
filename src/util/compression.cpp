@@ -158,7 +158,6 @@ bool inflate_zlib(std::ifstream &strm, std::vector<unsigned char> &data)
     } while(ret != Z_STREAM_END);
 
     inflateEnd(&zstrm);
-
     return ret == Z_STREAM_END;
 }
 
@@ -290,11 +289,42 @@ bool deflate_zlib(std::ofstream &strm,
                   const int compressionLevel)
 {
     // Just check that there is actually data
-    if(data.size() == 0) {
+    if(data.empty()) {
         return true;
     }
 
-    return false;
+    // Initialize zstream object
+    z_stream zstrm{};
+    if(deflateInit(&zstrm, compressionLevel) != Z_OK) {
+        return false;
+    }
+    zstrm.next_in = const_cast<Bytef*>(data.data());
+    zstrm.avail_in = static_cast<uInt>(data.size());
+
+    int ret{0};
+    std::vector<unsigned char> buffer(GzipChunkSize, 0);
+    do {
+        zstrm.next_out = reinterpret_cast<Bytef*>(buffer.data());
+        zstrm.avail_out = ZlibChunkSize;
+
+        ret = deflate(&zstrm, Z_FINISH);
+        if(ret == Z_STREAM_ERROR) {
+            deflateEnd(&zstrm);
+            return false;
+        }
+
+        uInt bytes = ZlibChunkSize - zstrm.avail_out;
+        strm.write(reinterpret_cast<const char*>(buffer.data()), bytes);
+
+        if(!strm.good()) {
+            deflateEnd(&zstrm);
+            return false;
+        }
+
+    } while(ret == Z_OK);
+
+    deflateEnd(&zstrm);
+    return ret == Z_STREAM_END;
 }
 
 bool deflate_zlib(const std::vector<unsigned char> &in,
@@ -302,7 +332,7 @@ bool deflate_zlib(const std::vector<unsigned char> &in,
                   const int compressionLevel)
 {
     // Just check that there is actually data
-    if(in.size() == 0) {
+    if(in.empty()) {
         return true;
     }
 
