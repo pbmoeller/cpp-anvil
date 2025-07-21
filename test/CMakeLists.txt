@@ -1,5 +1,28 @@
+####################################################################################################
+### Tests
 enable_testing()
-find_package(GTest REQUIRED)
+
+####################################################################################################
+### Dependencies
+
+if(CPPANVIL_BUILD_GTEST)
+    message(CHECK_START "Fetching GTest")
+    FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG v1.17.0
+        GIT_SHALLOW TRUE
+    )
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    set(INSTALL_GTEST OFF)
+    set(GTEST_HAS_ABSL OFF)
+    FetchContent_MakeAvailable(googletest)
+else()
+    find_package(GTest REQUIRED)
+endif()
+
+####################################################################################################
+### Test Executable
 
 add_executable(tests
     "test_main.cpp"
@@ -23,7 +46,8 @@ target_include_directories(tests
 target_link_libraries(tests 
     PRIVATE
         cppAnvil
-        ${GTEST_LIBRARIES}
+        gtest
+        gmock
 )
 
 set_target_properties(tests 

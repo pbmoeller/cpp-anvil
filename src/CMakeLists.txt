@@ -57,7 +57,7 @@ target_include_directories(cppAnvil
 )
 target_link_libraries(cppAnvil
     PRIVATE
-        ${ZLIB_LIBRARIES}
+        zlibstatic
 )
 
 set_target_properties(cppAnvil 
