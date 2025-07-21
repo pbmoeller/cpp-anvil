@@ -10,6 +10,8 @@
 // STL
 #include <bit>
 #include <concepts>
+#include <cstdint>
+#include <cstring>
 #include <istream>
 #include <string>
 #include <vector>
@@ -66,35 +68,6 @@ public:
         return value;
     }
 
-    template<>
-    TagType read()
-    {
-        if(availableBytes() > 0) {
-            TagType t = static_cast<TagType>(m_buffer[m_pos]);
-            m_pos += 1;
-            if(t <= TagType::LongArray) {
-                return t;
-            }
-        }
-        return TagType::Unknown;
-    }
-
-    template<>
-    StringType read()
-    {
-        uint16_t length = read<uint16_t>();
-        if(availableBytes() < length) {
-            throw std::runtime_error("Unexpected end of stream.");
-        }
-
-        StringType name;
-        name.resize(length);
-        std::memcpy(name.data(), &m_buffer[m_pos], length);
-        m_pos += length;
-
-        return name;
-    }
-
     template<typename T>
     requires anvil::detail::StdVector<T>
     T read() {
@@ -115,6 +88,37 @@ private:
     std::vector<char_type>  &m_buffer;
     size_type               m_pos;
 };
+
+
+
+template<>
+TagType NbtInputByteStream::read()
+{
+    if(availableBytes() > 0) {
+        TagType t = static_cast<TagType>(m_buffer[m_pos]);
+        m_pos += 1;
+        if(t <= TagType::LongArray) {
+            return t;
+        }
+    }
+    return TagType::Unknown;
+}
+
+template<>
+StringType NbtInputByteStream::read()
+{
+    uint16_t length = read<uint16_t>();
+    if(availableBytes() < length) {
+        throw std::runtime_error("Unexpected end of stream.");
+    }
+
+    StringType name;
+    name.resize(length);
+    std::memcpy(name.data(), &m_buffer[m_pos], length);
+    m_pos += length;
+
+    return name;
+}
 
 class NbtOutputByteStream
 {

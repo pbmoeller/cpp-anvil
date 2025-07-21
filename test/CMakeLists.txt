@@ -54,7 +54,3 @@ set_target_properties(tests
     PROPERTIES 
         RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
 )
-
-if(UNIX)
-    target_link_libraries(tests pthread)
-endif()

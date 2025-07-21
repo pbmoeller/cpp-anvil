@@ -1,6 +1,8 @@
 // cpp-avil
 #include <cpp-anvil/nbt/compound_tag.hpp>
 
+#include <algorithm>
+
 namespace anvil {
 
 bool CompoundTag::hasChild(const std::string &name) const

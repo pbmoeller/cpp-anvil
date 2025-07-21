@@ -8,6 +8,7 @@
 #include "anvil/region_header.hpp"
 
 // STL
+#include <cstring>
 #include <regex>
 #include <fstream>
 #include <filesystem>

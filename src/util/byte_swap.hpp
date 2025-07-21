@@ -52,8 +52,8 @@ inline auto bswap(std::floating_point auto value) noexcept {
 #elif defined(__GNUC__)
 inline auto bswap(std::floating_point auto value) noexcept {
     std::conditional_t<sizeof(decltype(value)) <= sizeof(int32_t), int32_t, int64_t> out{
-        detail::bit_cast<decltype(out), decltype(value)>(value)};
-    return detail::bit_cast<decltype(value), decltype(out)>(detail::bswap(static_cast<std::make_unsigned_t<decltype(out)>>(out)));
+        std::bit_cast<decltype(out), decltype(value)>(value)};
+    return std::bit_cast<decltype(value), decltype(out)>(detail::bswap(static_cast<std::make_unsigned_t<decltype(out)>>(out)));
 }
 #endif
 

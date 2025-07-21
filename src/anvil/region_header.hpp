@@ -3,6 +3,7 @@
 
 // STL
 #include <array>
+#include <cstdint>
 #include <fstream>
 
 namespace anvil {

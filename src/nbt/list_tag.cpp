@@ -1,6 +1,8 @@
 // cpp-avil
 #include <cpp-anvil/nbt/list_tag.hpp>
 
+#include <algorithm>
+
 namespace anvil {
 
 bool ListTag::push_back(std::unique_ptr<BasicTag> value)

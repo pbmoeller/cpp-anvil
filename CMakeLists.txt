@@ -23,6 +23,9 @@ set(CPPANVIL_VERSION ${CPPANVIL_VERSION_MAJOR}.${CPPANVIL_VERSION_MINOR}.${CPPAN
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 ####################################################################################################
 ### Dependencies
 
