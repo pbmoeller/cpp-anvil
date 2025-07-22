@@ -6,6 +6,7 @@ namespace anvil {
 unsigned int getCppAnvilVersionMajor();
 unsigned int getCppAnvilVersionMinor();
 unsigned int getCppAnvilVersionPatch();
+unsigned int getCppAnvilVersionTweak();
 
 const char * getCppAnvilVersion();
 

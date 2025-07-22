@@ -5,6 +5,8 @@ enable_testing()
 ####################################################################################################
 ### Dependencies
 
+include(FetchContent)
+
 if(CPPANVIL_BUILD_GTEST)
     message(CHECK_START "Fetching GTest")
     FetchContent_Declare(
@@ -37,6 +39,7 @@ add_executable(tests
 
 target_include_directories(tests
     PRIVATE
+        "${CMAKE_CURRENT_LIST_DIR}"
         "${CPP_ANVIL_SOURCE_DIR}/include"
         "${CPP_ANVIL_SOURCE_DIR}/test"
         ${GTEST_INCLUDE_DIRS}
@@ -45,7 +48,7 @@ target_include_directories(tests
 
 target_link_libraries(tests 
     PRIVATE
-        cppAnvil
+        CppAnvil::CppAnvil
         gtest
         gmock
 )

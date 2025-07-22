@@ -1,40 +1,30 @@
+####################################################################################################
+### Files
 
-if(MSVC)
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-endif()
-
-configure_file(
-    version.cpp.in
-    version.cpp
-    @ONLY
-)
-
-set(CPP_ANVIL_HEADER_PATH "${CPP_ANVIL_SOURCE_DIR}/include")
-set(CPP_ANVIL_HEADERS
+set(CPPANVIL_HEADER_PATH "${PROJECT_SOURCE_DIR}/include")
+set(CPPANVIL_HEADERS
     # anvil
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/version.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/anvil.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/anvil/coordinates.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/anvil/chunk.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/anvil/region.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/version.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/anvil.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/anvil/coordinates.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/anvil/chunk.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/anvil/region.hpp"
     # nbt
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/io.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/basic_tag.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/collection_tag.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/compound_tag.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/list_tag.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/primitive_tag.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/types.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/detail/floating_point.hpp"
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/nbt/detail/type_utilities.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/io.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/basic_tag.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/collection_tag.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/compound_tag.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/list_tag.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/primitive_tag.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/types.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/detail/floating_point.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/detail/type_utilities.hpp"
     # util
-    "${CPP_ANVIL_HEADER_PATH}/cpp-anvil/util/compression.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/util/compression.hpp"
 )
 
-# lib
-add_library(cppAnvil SHARED
-    ${CPP_ANVIL_HEADERS}
+set(CPPANVIL_SOURCES
     "anvil/chunk.cpp"
     "anvil/coordinates.cpp"
     "anvil/region.cpp"
@@ -47,50 +37,93 @@ add_library(cppAnvil SHARED
     "version.cpp"
 )
 
-target_include_directories(cppAnvil
-    PRIVATE 
-        ${ZLIB_INCLUDE_DIRS}
-        ${CMAKE_CURRENT_SOURCE_DIR}
+configure_file(
+    version.cpp.in
+    version.cpp
+    @ONLY
+)
+
+####################################################################################################
+### Library
+
+if(CPPANVIL_BUILD_SHARED)
+    add_library(CppAnvil SHARED
+        ${CPPANVIL_SOURCES}
+    )
+else()
+    add_library(CppAnvil STATIC
+        ${CPPANVIL_SOURCES}
+    )
+endif()
+
+add_library(CppAnvil::CppAnvil ALIAS CppAnvil)
+
+target_include_directories(CppAnvil
     PUBLIC
-        $<BUILD_INTERFACE:${CPP_ANVIL_HEADER_PATH}>
-        $<INSTALL_INTERFACE:${cpp_nbt_INSTALL_INCLUDE_DIR}>
-)
-target_link_libraries(cppAnvil
+        $<BUILD_INTERFACE:${CPPANVIL_HEADER_PATH}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     PRIVATE
-        zlibstatic
+        ${ZLIB_INCLUDE_DIRS}
+        ${CMAKE_CURRENT_LIST_DIR}
 )
 
-set_target_properties(cppAnvil 
-    PROPERTIES 
-        RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
+target_link_libraries(CppAnvil
+    PRIVATE
+        ZLIB::ZLIB
 )
 
+set_target_properties(CppAnvil 
+    PROPERTIES
+        VERSION ${PROJECT_VERSION}
+        SOVERSION ${PROJECT_VERSION_MAJOR}
+        OUTPUT_NAME cppanvil
+)
+
+target_sources(CppAnvil
+    PUBLIC
+        FILE_SET  public_headers
+        TYPE      HEADERS
+        BASE_DIRS ${CPPANVIL_HEADER_PATH}
+        FILES     ${CPPANVIL_HEADERS}
+)
+
+####################################################################################################
 ### Install
-install(TARGETS cppAnvil 
-    EXPORT cppAnvilTargets
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-    RUNTIME DESTINATION bin
-    INCLUDES DESTINATION include
+include(GNUInstallDirs)
+
+install(
+    TARGETS     CppAnvil
+    EXPORT      CppAnvilTargets
+    LIBRARY     DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE     DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME     DESTINATION ${CMAKE_INSTALL_BINDIR}
+    INCLUDES    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    FILE_SET    public_headers
 )
-install(EXPORT cppAnvilTargets
-    FILE cppAnvilTargets.cmake
-    NAMESPACE cppAnvil::
-    DESTINATION "lib/${cpp_nbt_VERSION}/${CMAKE_BUILD_TYPE}"
+
+install(
+    EXPORT      CppAnvilTargets
+    FILE        CppAnvilTargets.cmake
+    NAMESPACE   CppAnvil::
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/cpp-anvil"
 )
+
+# Create Package Configuration File & Package Version File
 include(CMakePackageConfigHelpers)
+configure_package_config_file(
+    "${PROJECT_SOURCE_DIR}/cmake/CppAnvilConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/CppAnvilConfig.cmake"
+    INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/cpp-anvil"
+)
 write_basic_package_version_file(
-    "cppAnvilConfigVersion.cmake"
-    VERSION ${cpp_nbt_VERSION}
+    "${CMAKE_CURRENT_BINARY_DIR}/CppAnvilConfigVersion.cmake"
+    VERSION ${CppAnvil_VERSION}
     COMPATIBILITY AnyNewerVersion
 )
-
-install(DIRECTORY ${CPP_ANVIL_HEADER_PATH}/cpp-anvil
-    DESTINATION include
-)
-install(FILES 
-        "${PROJECT_SOURCE_DIR}/cmake/cppAnvilConfig.cmake"
-        "${PROJECT_BINARY_DIR}/src/cppAnvilConfigVersion.cmake" 
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/CppAnvilConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/CppAnvilConfigVersion.cmake" 
     DESTINATION 
-        "lib/${cpp_nbt_VERSION}/${CMAKE_BUILD_TYPE}"
+        "${CMAKE_INSTALL_LIBDIR}/cmake/cpp-anvil"
 )

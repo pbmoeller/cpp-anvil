@@ -5,22 +5,27 @@ namespace anvil {
 
 unsigned int getCppAnvilVersionMajor()
 {
-    return @CPPANVIL_VERSION_MAJOR@;
+    return @CppAnvil_VERSION_MAJOR@;
 }
 
 unsigned int getCppAnvilVersionMinor()
 {
-    return @CPPANVIL_VERSION_MINOR@;
+    return @CppAnvil_VERSION_MINOR@ +0;
 }
 
 unsigned int getCppAnvilVersionPatch()
 {
-    return @CPPANVIL_VERSION_PATCH@;
+    return @CppAnvil_VERSION_PATCH@ +0;
+}
+
+unsigned int getCppAnvilVersionTweak()
+{
+    return @CppAnvil_VERSION_PATCH@ +0;
 }
 
 const char * getCppAnvilVersion()
 {
-    return "@CPPANVIL_VERSION@";
+    return "@CppAnvil_VERSION@";
 }
 
 } // namespace anvil

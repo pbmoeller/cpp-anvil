@@ -4,7 +4,7 @@ add_executable(loadfile_example
 
 target_link_libraries(loadfile_example 
     PRIVATE
-        cppAnvil
+        CppAnvil::CppAnvil
         ${GTEST_LIBRARIES}
 )
 
@@ -19,7 +19,7 @@ add_executable(test_stuff
 
 target_link_libraries(test_stuff 
     PRIVATE
-        cppAnvil
+        CppAnvil::CppAnvil
         ${GTEST_LIBRARIES}
 )
 
