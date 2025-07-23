@@ -1,13 +1,12 @@
 #ifndef CPP_ANVIL_IO_NBT_BYTE_STREAM_HPP
 #define CPP_ANVIL_IO_NBT_BYTE_STREAM_HPP
 
-// cpp-anvil
-#include <cpp-anvil/nbt.hpp>
-#include <cpp-anvil/nbt/types.hpp>
+#include "cpp-anvil/nbt.hpp"
+#include "cpp-anvil/nbt/types.hpp"
 
+// Internal headers
 #include "util/byte_swap.hpp"
 
-// STL
 #include <bit>
 #include <concepts>
 #include <cstdint>

@@ -1,9 +1,9 @@
 #include <algorithm>
-#include <ostream>
-#include <vector>
 #include <iostream>
+#include <ostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 
 std::vector<unsigned char> bigtestUncompressedData = {

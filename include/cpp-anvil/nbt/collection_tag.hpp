@@ -1,10 +1,9 @@
 #ifndef CPP_ANVIL_NBT_COLLECTION_TAG_HPP
 #define CPP_ANVIL_NBT_COLLECTION_TAG_HPP
 
-// cpp-anvil
-#include <cpp-anvil/nbt/basic_tag.hpp>
-#include <cpp-anvil/nbt/types.hpp>
-#include <cpp-anvil/nbt/detail/type_utilities.hpp>
+#include "cpp-anvil/nbt/basic_tag.hpp"
+#include "cpp-anvil/nbt/detail/type_utilities.hpp"
+#include "cpp-anvil/nbt/types.hpp"
 
 namespace anvil {
 

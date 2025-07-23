@@ -1,7 +1,6 @@
 #ifndef CPP_ANVIL_ANVIL_CHUNK_HPP
 #define CPP_ANVIL_ANVIL_CHUNK_HPP
 
-// STL
 #include <memory>
 
 namespace anvil {

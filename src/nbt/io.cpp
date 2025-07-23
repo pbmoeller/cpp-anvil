@@ -1,12 +1,12 @@
-// cpp-anvil
-#include <cpp-anvil/nbt/io.hpp>
-#include <cpp-anvil/util/compression.hpp>
+#include "cpp-anvil/nbt/io.hpp"
+#include "cpp-anvil/util/compression.hpp"
 
+// Internal headers
 #include "util/nbt_byte_stream.hpp"
 
 // STL
-#include <fstream>
 #include <filesystem>
+#include <fstream>
 #include <iomanip>
 #include <memory>
 #include <vector>

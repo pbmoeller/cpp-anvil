@@ -1,7 +1,6 @@
 #ifndef CPP_ANVIL_ANVIL_REGION_HEADER_HPP
 #define CPP_ANVIL_ANVIL_REGION_HEADER_HPP
 
-// STL
 #include <array>
 #include <cstdint>
 #include <fstream>

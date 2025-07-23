@@ -1,13 +1,11 @@
 #ifndef CPP_ANVIL_NBT_BASIC_TAG_HPP
 #define CPP_ANVIL_NBT_BASIC_TAG_HPP
 
-// cpp-anvil
-#include <cpp-anvil/nbt/types.hpp>
+#include "cpp-anvil/nbt/types.hpp"
 
-// STL
-#include <typeinfo>
-#include <type_traits>
 #include <memory>
+#include <type_traits>
+#include <typeinfo>
 
 namespace anvil {
 

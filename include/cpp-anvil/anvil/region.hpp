@@ -1,16 +1,14 @@
 #ifndef CPP_ANVIL_ANVIL_REGION_HPP
 #define CPP_ANVIL_ANVIL_REGION_HPP
 
-// cpp-anvil
-#include <cpp-anvil/anvil/coordinates.hpp>
-#include <cpp-anvil/anvil/chunk.hpp>
-#include <cpp-anvil/util/compression.hpp>
+#include "cpp-anvil/anvil/chunk.hpp"
+#include "cpp-anvil/anvil/coordinates.hpp"
+#include "cpp-anvil/util/compression.hpp"
 
-// STL
+#include <array>
+#include <memory>
 #include <string>
 #include <vector>
-#include <memory>
-#include <array>
 
 namespace anvil {
 

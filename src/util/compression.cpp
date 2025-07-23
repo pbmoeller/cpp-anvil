@@ -1,7 +1,5 @@
-// cpp-anvil
-#include <cpp-anvil/util/compression.hpp>
+#include "cpp-anvil/util/compression.hpp"
 
-// zlib
 #include <zlib.h>
 
 namespace anvil {

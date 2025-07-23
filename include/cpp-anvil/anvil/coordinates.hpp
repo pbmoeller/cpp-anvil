@@ -1,7 +1,6 @@
 #ifndef CPP_ANVIL_ANVIL_COORDINATES_HPP 
 #define CPP_ANVIL_ANVIL_COORDINATES_HPP 
 
-// STL
 #include <cstdint>
 
 namespace anvil {

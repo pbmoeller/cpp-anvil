@@ -1,5 +1,4 @@
-// cpp-avil
-#include <cpp-anvil/nbt/compound_tag.hpp>
+#include "cpp-anvil/nbt/compound_tag.hpp"
 
 #include <algorithm>
 

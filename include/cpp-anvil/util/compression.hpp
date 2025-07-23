@@ -1,7 +1,6 @@
 #ifndef CPP_ANVIL_IO_COMPRESSION_HPP
 #define CPP_ANVIL_IO_COMPRESSION_HPP
 
-// STL
 #include <fstream>
 #include <vector>
 

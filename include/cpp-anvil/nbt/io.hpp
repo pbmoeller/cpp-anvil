@@ -1,11 +1,9 @@
 #ifndef CPP_ANVIL_IO_IO_HPP
 #define CPP_ANVIL_IO_IO_HPP
 
-// cpp-anvil
-#include <cpp-anvil/nbt.hpp>
-#include <cpp-anvil/util/compression.hpp>
+#include "cpp-anvil/nbt.hpp"
+#include "cpp-anvil/util/compression.hpp"
 
-// STL
 #include <memory>
 
 namespace anvil {

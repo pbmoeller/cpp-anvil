@@ -1,7 +1,6 @@
 #ifndef CPP_ANVIL_UTIL_BYTE_SWAP_HPP
 #define CPP_ANVIL_UTIL_BYTE_SWAP_HPP
 
-// STL
 #include <bit>
 #include <concepts>
 #include <cstdint>

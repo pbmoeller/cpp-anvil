@@ -1,11 +1,9 @@
 #ifndef CPP_ANVIL_NBT_LIST_TAG_HPP
 #define CPP_ANVIL_NBT_LIST_TAG_HPP
 
-// cpp-anvil
-#include <cpp-anvil/nbt/collection_tag.hpp>
-#include <cpp-anvil/nbt/types.hpp>
+#include "cpp-anvil/nbt/collection_tag.hpp"
+#include "cpp-anvil/nbt/types.hpp"
 
-// STL
 #include <stdexcept>
 
 namespace anvil {

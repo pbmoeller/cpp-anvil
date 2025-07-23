@@ -1,5 +1,5 @@
 // cpp-anvil
-#include <cpp-anvil/version.hpp>
+#include "cpp-anvil/version.hpp"
 
 namespace anvil {
 

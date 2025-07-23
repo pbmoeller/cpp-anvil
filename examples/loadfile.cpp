@@ -1,7 +1,5 @@
-// cpp-avil
 #include <cpp-anvil/nbt.hpp>
 
-// STL
 #include <iostream>
 
 std::vector<unsigned char> bigtestUncompressedData = {
