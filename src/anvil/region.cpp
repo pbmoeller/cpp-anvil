@@ -307,7 +307,7 @@ bool Region::validateAndParseRegionFilename(const std::string &filename, int32_t
 {
     // Pattern definition of Minecraft region file.
     const std::regex RegionFilePattern 
-        = std::regex("r\\.(0|[-]?[1-9][0-9]*)\\.(0|[-]?[1-9][0-9]*)\\.mca");
+        = std::regex(R"(r\.(0|[-]?[1-9][0-9]*)\.(0|[-]?[1-9][0-9]*)\.mca)");
 
     // Convert filename so that preferred directory separators are used.
     std::filesystem::path filepath{filename};
