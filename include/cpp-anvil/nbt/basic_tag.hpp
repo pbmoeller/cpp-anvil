@@ -174,23 +174,19 @@ public:
 
 public:
     //! @brief Returns tag type.
-    //! 
     //! @return TagType::End.
     constexpr virtual TagType type() const override {
         return TagType::End;
     }
 
     //! @brief Returns a copy of this tag. Reimplements clone function from BasicTag.
-    //! 
     //! @return A unique_ptr to copy of this tag.
     virtual std::unique_ptr<BasicTag> clone() const override {
         return std::make_unique<EndTag>(*this);
     }
 
     //! @brief Compares this tag with an other tag for equality.
-    //! 
     //! @param other Other tag to be compared with.
-    //! 
     //! @return `true` if both tags are equal, `false` otherwise.
     virtual bool isEqual(const BasicTag &other) const override {
         if(this == &other) {
