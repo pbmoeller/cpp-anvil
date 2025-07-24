@@ -8,7 +8,7 @@ unsigned int getCppAnvilVersionMinor();
 unsigned int getCppAnvilVersionPatch();
 unsigned int getCppAnvilVersionTweak();
 
-const char * getCppAnvilVersion();
+const char* getCppAnvilVersion();
 
 } // namespace anvil
 

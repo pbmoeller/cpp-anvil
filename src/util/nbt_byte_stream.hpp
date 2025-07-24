@@ -20,42 +20,36 @@ namespace anvil {
 class NbtInputByteStream
 {
     using char_type     = unsigned char;
-    using pointer       = char_type *;
-    using const_pointer = const char_type *;
+    using pointer       = char_type*;
+    using const_pointer = const char_type*;
     using size_type     = std::size_t;
 
     static constexpr auto EndOfStream{static_cast<size_type>(0)};
 
 public:
-    explicit NbtInputByteStream(std::vector<char_type> &data)
+    explicit NbtInputByteStream(std::vector<char_type>& data)
         : m_buffer(data)
         , m_pos(0)
     { }
 
-    constexpr size_type size() const noexcept {
-        return m_buffer.size();
-    }
-    constexpr size_type availableBytes() const noexcept {
+    constexpr size_type size() const noexcept { return m_buffer.size(); }
+    constexpr size_type availableBytes() const noexcept
+    {
         if(m_pos >= size()) {
             return EndOfStream;
         } else {
             return size() - m_pos;
         }
     }
-    constexpr bool isEof() const noexcept {
-        return availableBytes() > 0;
-    }
+    constexpr bool isEof() const noexcept { return availableBytes() > 0; }
 
-    size_type getPosition() const noexcept {
-        return m_pos;
-    }
-    void setPosition(size_type pos) noexcept {
-        m_pos = pos;
-    }
+    size_type getPosition() const noexcept { return m_pos; }
+    void setPosition(size_type pos) noexcept { m_pos = pos; }
 
     // Reading
     template<typename T>
-    T read() {
+    T read()
+    {
         constexpr size_type width = sizeof(T);
         if(availableBytes() < width) {
             throw std::runtime_error("Unexpected end of stream.");
@@ -68,8 +62,9 @@ public:
     }
 
     template<typename T>
-    requires anvil::detail::StdVector<T>
-    T read() {
+        requires anvil::detail::StdVector<T>
+    T read()
+    {
         T vec;
 
         int32_t size = read<int32_t>();
@@ -84,11 +79,9 @@ public:
     }
 
 private:
-    std::vector<char_type>  &m_buffer;
-    size_type               m_pos;
+    std::vector<char_type>& m_buffer;
+    size_type m_pos;
 };
-
-
 
 template<>
 TagType NbtInputByteStream::read()
@@ -122,34 +115,27 @@ StringType NbtInputByteStream::read()
 class NbtOutputByteStream
 {
     using char_type     = unsigned char;
-    using pointer       = char_type *;
-    using const_pointer = const char_type *;
+    using pointer       = char_type*;
+    using const_pointer = const char_type*;
     using size_type     = std::size_t;
 
     static constexpr auto EndOfStream{static_cast<size_type>(0)};
 
 public:
-    explicit NbtOutputByteStream(std::vector<char_type> &data)
+    explicit NbtOutputByteStream(std::vector<char_type>& data)
         : m_buffer(data)
         , m_pos(0)
     { }
 
-    constexpr size_type capacity() const noexcept {
-        return m_buffer.size();
-    }
+    constexpr size_type capacity() const noexcept { return m_buffer.size(); }
 
-    constexpr size_type size() const noexcept {
-        return m_pos;
-    }
+    constexpr size_type size() const noexcept { return m_pos; }
 
-    size_type getPosition() const noexcept {
-        return m_pos;
-    }
-    void setPosition(size_type pos) noexcept {
-        m_pos = pos;
-    }
+    size_type getPosition() const noexcept { return m_pos; }
+    void setPosition(size_type pos) noexcept { m_pos = pos; }
 
-    constexpr size_type availableBytes() const noexcept {
+    constexpr size_type availableBytes() const noexcept
+    {
         if(m_pos >= capacity()) {
             return EndOfStream;
         } else {
@@ -157,7 +143,8 @@ public:
         }
     }
 
-    void write(TagType tagType) {
+    void write(TagType tagType)
+    {
         const size_type len = sizeof(TagType);
         if(availableBytes() < len) {
             grow(len);
@@ -166,18 +153,19 @@ public:
         m_pos += len;
     }
 
-    void write(const std::string &str) {
+    void write(const std::string& str)
+    {
         int16_t str_len = static_cast<int16_t>(str.length());
-        str_len = detail::swapEndian(str_len);
+        str_len         = detail::swapEndian(str_len);
 
         const size_type data_len = str.length() + sizeof(int16_t);
         if(availableBytes() < data_len) {
             grow(data_len);
         }
-        // Copy string length 
+        // Copy string length
         std::memcpy(&m_buffer[m_pos], &str_len, sizeof(int16_t));
         m_pos += sizeof(int16_t);
-        
+
         // Copy string content
         if(str_len > 0) {
             std::copy(str.begin(), str.end(), &m_buffer[m_pos]);
@@ -186,8 +174,9 @@ public:
     }
 
     template<typename T>
-    requires std::integral<T>
-    void write(T value) {
+        requires std::integral<T>
+    void write(T value)
+    {
         const size_type len = sizeof(T);
         if(availableBytes() < len) {
             grow(len);
@@ -198,8 +187,9 @@ public:
     }
 
     template<typename T>
-    requires std::floating_point<T>
-    void write(T value) {
+        requires std::floating_point<T>
+    void write(T value)
+    {
         const size_type len = sizeof(T);
         if(availableBytes() < len) {
             grow(len);
@@ -210,7 +200,8 @@ public:
     }
 
 private:
-    size_type calculateGrowth(const size_type newSize) {
+    size_type calculateGrowth(const size_type newSize)
+    {
         const size_type oldCapacity = m_buffer.capacity();
         const size_type maxSize     = m_buffer.max_size();
 
@@ -229,19 +220,20 @@ private:
         return geometric;
     }
 
-    void grow(const size_type count) {
+    void grow(const size_type count)
+    {
         if(count > m_buffer.max_size() - m_buffer.size()) {
             throw std::runtime_error("ByteStream can not grow. Buffer too long.");
         }
 
-        size_type newSize = m_buffer.size() + count;
+        size_type newSize     = m_buffer.size() + count;
         size_type newCapycity = calculateGrowth(newSize);
         m_buffer.resize(newCapycity);
     }
 
 private:
-    std::vector<char_type>  &m_buffer;
-    size_type               m_pos;
+    std::vector<char_type>& m_buffer;
+    size_type m_pos;
 };
 
 } // namespace anvil

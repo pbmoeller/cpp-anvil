@@ -14,8 +14,10 @@ Vec2 chunkRegion2ChunkWorld(Vec2 chunkCoord, Vec2 regionCoord)
 Vec2 chunkWorld2ChunkRegion(Vec2 worldCoords)
 {
     Vec2 regionCoords;
-    regionCoords.x = (Region::ChunksPerRegionAxis + (worldCoords.x % Region::ChunksPerRegionAxis)) & 0x0000001F;
-    regionCoords.z = (Region::ChunksPerRegionAxis + (worldCoords.z % Region::ChunksPerRegionAxis)) & 0x0000001F;
+    regionCoords.x =
+        (Region::ChunksPerRegionAxis + (worldCoords.x % Region::ChunksPerRegionAxis)) & 0x0000001F;
+    regionCoords.z =
+        (Region::ChunksPerRegionAxis + (worldCoords.z % Region::ChunksPerRegionAxis)) & 0x0000001F;
 
     return regionCoords;
 }

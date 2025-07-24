@@ -2,39 +2,13 @@
 
 namespace anvil {
 
-const char * TagTypeNames[14] = {
-    "End",
-    "Byte",
-    "Short",
-    "Int",
-    "Long",
-    "Float",
-    "Double",
-    "ByteArray",
-    "String",
-    "List",
-    "Compound",
-    "IntArray",
-    "LongArray",
-    "Unknown"
-};
+const char* TagTypeNames[14] = {"End",      "Byte",     "Short",     "Int",    "Long",
+                                "Float",    "Double",   "ByteArray", "String", "List",
+                                "Compound", "IntArray", "LongArray", "Unknown"};
 
-const char * TagNames[14] = {
-    "EndTag",
-    "ByteTag",
-    "ShortTag",
-    "IntTag",
-    "LongTag",
-    "FloatTag",
-    "DoubleTag",
-    "ByteArrayTag",
-    "StringTag",
-    "ListTag",
-    "CompoundTag",
-    "IntArrayTag",
-    "LongArrayTag",
-    "UnknownTag"
-};
+const char* TagNames[14] = {"EndTag",      "ByteTag",     "ShortTag",     "IntTag",    "LongTag",
+                            "FloatTag",    "DoubleTag",   "ByteArrayTag", "StringTag", "ListTag",
+                            "CompoundTag", "IntArrayTag", "LongArrayTag", "UnknownTag"};
 
 std::string_view getTagTypeName(TagType type)
 {

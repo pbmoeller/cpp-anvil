@@ -12,9 +12,11 @@ namespace detail {
 // Traits
 
 template<typename T>
-struct IsUniquePtr : std::false_type {};
+struct IsUniquePtr : std::false_type
+{ };
 template<typename T>
-struct IsUniquePtr<std::unique_ptr<T>> : std::true_type {};
+struct IsUniquePtr<std::unique_ptr<T>> : std::true_type
+{ };
 template<typename T>
 constexpr bool IsUniquePtr_v = IsUniquePtr<T>::value;
 

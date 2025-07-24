@@ -8,19 +8,22 @@ namespace anvil {
 namespace detail {
 
 template<size_t size>
-struct SizedIntTypes {
-    using Int   = void;
-    using UInt  = void;
+struct SizedIntTypes
+{
+    using Int  = void;
+    using UInt = void;
 };
 template<>
-struct SizedIntTypes<4> {
-    using Int   = int32_t;
-    using UInt  = uint32_t;
+struct SizedIntTypes<4>
+{
+    using Int  = int32_t;
+    using UInt = uint32_t;
 };
 template<>
-struct SizedIntTypes<8> {
-    using Int   = int64_t;
-    using UInt  = uint64_t;
+struct SizedIntTypes<8>
+{
+    using Int  = int64_t;
+    using UInt = uint64_t;
 };
 
 template<typename FloatingPointType>
@@ -31,23 +34,20 @@ public:
     using Bits = SizedIntTypes<sizeof(FloatingPointType)>::UInt;
 
     // Constants
-    static constexpr size_t BitCount = 8 * sizeof(FloatingPointType);
-    static constexpr size_t FractionBitCount
-        = std::numeric_limits<FloatingPointType>::digits - 1;
+    static constexpr size_t BitCount         = 8 * sizeof(FloatingPointType);
+    static constexpr size_t FractionBitCount = std::numeric_limits<FloatingPointType>::digits - 1;
     static constexpr size_t ExponentBitCount = BitCount - 1 - FractionBitCount;
-    static constexpr Bits SignBitMask = static_cast<Bits>(1) << (BitCount - 1);
-    static constexpr Bits FractionBitMask 
-        = ~static_cast<Bits>(0) >> (ExponentBitCount + 1);
-    static constexpr Bits ExponentBitMask = ~(SignBitMask | FractionBitMask);
+    static constexpr Bits SignBitMask        = static_cast<Bits>(1) << (BitCount - 1);
+    static constexpr Bits FractionBitMask    = ~static_cast<Bits>(0) >> (ExponentBitCount + 1);
+    static constexpr Bits ExponentBitMask    = ~(SignBitMask | FractionBitMask);
 
     static constexpr uint32_t MaxUlps = 4;
 
 public:
-    explicit FloatingPoint(const FloatingPointType& x) { 
-        m_u.value = x;
-    }
+    explicit FloatingPoint(const FloatingPointType& x) { m_u.value = x; }
 
-    static FloatingPointType reinterpretBits(const Bits bits) {
+    static FloatingPointType reinterpretBits(const Bits bits)
+    {
         FloatingPoint fp(0);
         fp.m_u.bits = bits;
         return fp.m_u.value;
@@ -63,11 +63,10 @@ public:
 
     Bits signBit() const { return SignBitMask & m_u.bits; }
 
-    bool isNan() const {
-        return (exponentBits() == ExponentBitMask) && (fractionBits() != 0);
-    }
+    bool isNan() const { return (exponentBits() == ExponentBitMask) && (fractionBits() != 0); }
 
-    bool almostEquals(const FloatingPoint& rhs) const {
+    bool almostEquals(const FloatingPoint& rhs) const
+    {
         // The IEEE standard says that any comparison operation involving
         // a NAN must return false.
         if(isNan() || rhs.isNan()) {
@@ -83,16 +82,17 @@ private:
         Bits bits;
     };
 
-    static Bits signAndMagnitudeToBiased(const Bits& sam) {
+    static Bits signAndMagnitudeToBiased(const Bits& sam)
+    {
         if(SignBitMask & sam) {
-            return ~sam + 1;           // sam = negative number
+            return ~sam + 1; // sam = negative number
         } else {
-            return SignBitMask | sam;  // sam = positive number
+            return SignBitMask | sam; // sam = positive number
         }
     }
 
-    static Bits distanceBetweenSignAndMagnitudeNumbers(const Bits& sam1,
-                                                       const Bits& sam2) {
+    static Bits distanceBetweenSignAndMagnitudeNumbers(const Bits& sam1, const Bits& sam2)
+    {
         const Bits biased1 = signAndMagnitudeToBiased(sam1);
         const Bits biased2 = signAndMagnitudeToBiased(sam2);
         return (biased1 >= biased2) ? (biased1 - biased2) : (biased2 - biased1);
@@ -103,7 +103,8 @@ private:
 };
 
 template<typename T>
-bool almostEqual(T lhsValue, T rhsValue) {
+bool almostEqual(T lhsValue, T rhsValue)
+{
     const FloatingPoint<T> lhs(lhsValue);
     const FloatingPoint<T> rhs(rhsValue);
     return lhs.almostEquals(rhs);

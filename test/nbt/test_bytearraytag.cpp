@@ -110,7 +110,7 @@ TEST(ByteArrayTag, at)
     const std::string name{"Test"};
     const std::vector<anvil::ByteType> vec{10, 20, 30, 40};
     anvil::ByteArrayTag arrayTag(name, vec);
-    
+
     EXPECT_FALSE(arrayTag.empty());
     EXPECT_EQ(arrayTag.size(), 4);
 

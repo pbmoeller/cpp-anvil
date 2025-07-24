@@ -31,15 +31,15 @@ public:
 
     //! @brief Loads the complete region file.
     //! @param filename Filename of the region file to be loaded.
-    void loadFromFile(const std::string &filename);
+    void loadFromFile(const std::string& filename);
 
     //! @brief Loads the region file only partially.
     //! @details
     //! Partial loading of the region file means that only the region header is loaded but not the
     //! chunks.
-    //! 
+    //!
     //! @param filename Region filename to be loaded partially.
-    void loadPartiallyFromFile(const std::string &filename);
+    void loadPartiallyFromFile(const std::string& filename);
 
     //! @brief Loads the chunk at specific index.
     //! @param index Index of the chunk to be loaded.
@@ -53,11 +53,11 @@ public:
     //! @return `true` if chunk is loaded, `false` if not.
     bool isChunkLoaded(size_t index) const;
 
-    //! @brief Checks if a chunk can be loaded. 
+    //! @brief Checks if a chunk can be loaded.
     //! @details
-    //! This functions requires that the FileHeader has been read before. This is done when 
+    //! This functions requires that the FileHeader has been read before. This is done when
     //! @ref loadFromFile() or @ref loadPartiallyFromFile() has been called before.
-    //! 
+    //!
     //! @param index Index of chunk that shoudl be checked.
     //! @return `true` if chunk can be loaded, `false` if not.
     bool isChunkLoadable(size_t index) const;
@@ -69,7 +69,7 @@ public:
     //! @brief Saves the region to the given filename.
     //! @param filename The filename where the region data should be saved.
     //! @return `true` if files was successfully saved, `false` otherwise.
-    bool saveToFile(const std::string &filename);
+    bool saveToFile(const std::string& filename);
 
     //! @brief Returns the x coordinate of the region.
     //! @return X coordinate.
@@ -99,14 +99,14 @@ public:
     //! @brief Gets a chunk from the region by the chunk coordinate.
     //! @param coord Coordinate of the chunk within the region.
     //! @return Returns chunk at passed coordinate.
-    Chunk& chunkAt(const Vec2 &coord);
+    Chunk& chunkAt(const Vec2& coord);
 
     //! @brief Gets a chunk from the region via index. Must be in range [0, 1024).
     //! @param index Index of the requested chunk.
     //! @return Const reference to chunk at @p index
     //! @throws std::out_of_range If index is out of range.
     const Chunk& chunkAt(size_t index) const;
-    
+
     //! @brief Gets a chunk from the region by the chunk coordinate.
     //! @param x X coordinate of chunk within region. Must be in range [0, 32).
     //! @param z Y coordinate of chunk within region. Must be in range [0, 32).
@@ -117,7 +117,7 @@ public:
     //! @brief Gets a chunk from the region by the chunk coordinate.
     //! @param coord Coordinate of the chunk within the region.
     //! @return Returns chunk at passed coordinate.
-    const Chunk& chunkAt(const Vec2 &coord) const;
+    const Chunk& chunkAt(const Vec2& coord) const;
 
 private:
     //! @brief Checks that the coordinates are in valid range for chunk access.
@@ -129,29 +129,29 @@ private:
     //! @param index Index of chunk to access. Must be in range [0, 1024).
     void checkRange(size_t index) const;
 
-    //! @brief Reads the chunkdata from @p filestream at chunk @p index 
+    //! @brief Reads the chunkdata from @p filestream at chunk @p index
     //! @param filestream The filestream to read the chunk data from.
     //! @param index The chunk index to be read.
-    void readChunkData(std::ifstream &filestream, const size_t index);
+    void readChunkData(std::ifstream& filestream, const size_t index);
 
     //! @brief Reads the region header in the region file.
     //! @param filestream The filestream to read the data from.
     //! @return `true` if the region header could be read successfully, `false` otherwise.
-    bool readRegionHeader(std::ifstream &filestream);
+    bool readRegionHeader(std::ifstream& filestream);
 
 public:
     //! @brief Checks if the filename matches a valid Minecraft region filename.
     //! @param filename The filename to be checked.
     //! @return `true` if the filename is valid, `false` otherwiese.
-    static bool validateRegionFilename(const std::string &filename);
+    static bool validateRegionFilename(const std::string& filename);
 
-    //! @brief Checks if the filename matches a valid Minecraft region filename and 
+    //! @brief Checks if the filename matches a valid Minecraft region filename and
     //!        sets the region coordinates.
     //! @param filename The filename to be checked.
     //! @param x The X coordinate of the region file.
     //! @param z The Z coordinate of the region file.
     //! @return `true` if the filename is valid, `false` otherwiese.
-    static bool validateAndParseRegionFilename(const std::string &filename, int32_t &x, int32_t &z);
+    static bool validateAndParseRegionFilename(const std::string& filename, int32_t& x, int32_t& z);
 
     //! @brief Converts chunk coordinates to chunk index.
     //! @param x X coordinate of chunk.

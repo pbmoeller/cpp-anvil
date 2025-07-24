@@ -62,9 +62,9 @@ TEST(ListTag, indexOf)
     std::unique_ptr<anvil::ByteTag> b2 = std::make_unique<anvil::ByteTag>(2);
     std::unique_ptr<anvil::ByteTag> b3 = std::make_unique<anvil::ByteTag>(2);
 
-    anvil::ByteTag *b1_ptr = b1.get();
-    anvil::ByteTag *b2_ptr = b2.get();
-    anvil::ByteTag *b3_ptr = b3.get();
+    anvil::ByteTag* b1_ptr = b1.get();
+    anvil::ByteTag* b2_ptr = b2.get();
+    anvil::ByteTag* b3_ptr = b3.get();
 
     listTag.push_back(std::move(b1));
     listTag.push_back(std::move(b2));
@@ -83,7 +83,7 @@ TEST(ListTag, takeAt)
 
     std::unique_ptr<anvil::ByteTag> b1 = std::make_unique<anvil::ByteTag>("ByteTag", 2);
 
-    anvil::ByteTag *b1_ptr = b1.get();
+    anvil::ByteTag* b1_ptr = b1.get();
 
     listTag.push_back(std::move(b1));
     ASSERT_EQ(listTag.size(), 1);
@@ -101,7 +101,7 @@ TEST(ListTag, take)
 
     std::unique_ptr<anvil::ByteTag> b1 = std::make_unique<anvil::ByteTag>("ByteTag", 2);
 
-    anvil::ByteTag *b1_ptr = b1.get();
+    anvil::ByteTag* b1_ptr = b1.get();
 
     listTag.push_back(std::move(b1));
     ASSERT_EQ(listTag.size(), 1);

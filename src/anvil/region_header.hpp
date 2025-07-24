@@ -15,7 +15,7 @@ public:
     constexpr static size_t SectorSize{4096};
 
 public:
-    bool loadFromStream(std::ifstream &filestream);
+    bool loadFromStream(std::ifstream& filestream);
 
     const std::array<unsigned char, HeaderSize>& data() const;
     const unsigned char* headerData() const;
@@ -32,9 +32,7 @@ public:
 
     uint32_t timestamp(const size_t index) const;
 
-    void setChunkData(const size_t index,
-                      const size_t offset,
-                      const size_t size,
+    void setChunkData(const size_t index, const size_t offset, const size_t size,
                       const uint32_t timestamp);
 
 public:

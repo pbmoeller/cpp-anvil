@@ -4,20 +4,20 @@
 
 TEST(TagType, Types)
 {
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::End),        0);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Byte),       1);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Short),      2);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Int),        3);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Long),       4);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Float),      5);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Double),     6);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::ByteArray),  7);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::String),     8);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::List),       9);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Compound),   10);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::IntArray),   11);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::LongArray),  12);
-    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Unknown),    255);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::End), 0);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Byte), 1);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Short), 2);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Int), 3);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Long), 4);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Float), 5);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Double), 6);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::ByteArray), 7);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::String), 8);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::List), 9);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Compound), 10);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::IntArray), 11);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::LongArray), 12);
+    EXPECT_EQ(static_cast<unsigned char>(anvil::TagType::Unknown), 255);
 }
 
 TEST(TagType, isPrimitiveTag)
@@ -130,36 +130,36 @@ TEST(TagType, isValidTag)
 
 TEST(TagType, getTagTypeName)
 {
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::End),       "End");
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Byte),      "Byte");
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Short),     "Short");
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Int),       "Int");
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Long),      "Long");
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Float),     "Float");
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Double),    "Double");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::End), "End");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Byte), "Byte");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Short), "Short");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Int), "Int");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Long), "Long");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Float), "Float");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Double), "Double");
     EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::ByteArray), "ByteArray");
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::String),    "String");
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::List),      "List");
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Compound),  "Compound");
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::IntArray),  "IntArray");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::String), "String");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::List), "List");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Compound), "Compound");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::IntArray), "IntArray");
     EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::LongArray), "LongArray");
-    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Unknown),   "Unknown");
+    EXPECT_EQ(anvil::getTagTypeName(anvil::TagType::Unknown), "Unknown");
 }
 
 TEST(TagType, getTagName)
 {
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::End),       "EndTag");
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::Byte),      "ByteTag");
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::Short),     "ShortTag");
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::Int),       "IntTag");
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::Long),      "LongTag");
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::Float),     "FloatTag");
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::Double),    "DoubleTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::End), "EndTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::Byte), "ByteTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::Short), "ShortTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::Int), "IntTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::Long), "LongTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::Float), "FloatTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::Double), "DoubleTag");
     EXPECT_EQ(anvil::getTagName(anvil::TagType::ByteArray), "ByteArrayTag");
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::String),    "StringTag");
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::List),      "ListTag");
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::Compound),  "CompoundTag");
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::IntArray),  "IntArrayTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::String), "StringTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::List), "ListTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::Compound), "CompoundTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::IntArray), "IntArrayTag");
     EXPECT_EQ(anvil::getTagName(anvil::TagType::LongArray), "LongArrayTag");
-    EXPECT_EQ(anvil::getTagName(anvil::TagType::Unknown),   "UnknownTag");
+    EXPECT_EQ(anvil::getTagName(anvil::TagType::Unknown), "UnknownTag");
 }

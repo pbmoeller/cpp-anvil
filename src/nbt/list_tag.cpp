@@ -18,7 +18,7 @@ bool ListTag::push_back(std::unique_ptr<BasicTag> value)
     return false;
 }
 
-bool ListTag::push_back(BasicTag *value)
+bool ListTag::push_back(BasicTag* value)
 {
     if(value) {
         if(empty()) {
@@ -32,7 +32,7 @@ bool ListTag::push_back(BasicTag *value)
     return false;
 }
 
-bool ListTag::push_back(const BasicTag &value)
+bool ListTag::push_back(const BasicTag& value)
 {
     if(empty()) {
         m_listType = value.type();
@@ -51,11 +51,12 @@ std::unique_ptr<BasicTag> ListTag::takeAt(size_type index)
     return val;
 }
 
-std::unique_ptr<BasicTag> ListTag::take(BasicTag *tag)
+std::unique_ptr<BasicTag> ListTag::take(BasicTag* tag)
 {
     std::unique_ptr<BasicTag> val;
-    iterator it = std::find_if(m_value.begin(), m_value.end(),
-                               [tag](const std::unique_ptr<BasicTag> &ptr) { return ptr.get() == tag; });
+    iterator it =
+        std::find_if(m_value.begin(), m_value.end(),
+                     [tag](const std::unique_ptr<BasicTag>& ptr) { return ptr.get() == tag; });
     if(it != m_value.end()) {
         val = std::move(*it);
         m_value.erase(it);
@@ -63,10 +64,11 @@ std::unique_ptr<BasicTag> ListTag::take(BasicTag *tag)
     return val;
 }
 
-bool ListTag::erase(BasicTag *tag)
+bool ListTag::erase(BasicTag* tag)
 {
-    iterator it = std::find_if(m_value.begin(), m_value.end(),
-                               [tag](const std::unique_ptr<BasicTag> &ptr) { return ptr.get() == tag; });
+    iterator it =
+        std::find_if(m_value.begin(), m_value.end(),
+                     [tag](const std::unique_ptr<BasicTag>& ptr) { return ptr.get() == tag; });
     if(it != m_value.end()) {
         m_value.erase(it);
         return true;

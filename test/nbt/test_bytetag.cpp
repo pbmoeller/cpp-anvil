@@ -30,7 +30,7 @@ TEST(ByteTag, Constructor_Value)
 
 TEST(ByteTag, Constructor_Name_Value)
 {
-    const std::string name = "Some Other Name";
+    const std::string name      = "Some Other Name";
     const anvil::ByteType value = 0xAB;
     anvil::ByteTag byteTag(name, value);
     EXPECT_EQ(byteTag.type(), anvil::TagType::Byte);
@@ -40,7 +40,7 @@ TEST(ByteTag, Constructor_Name_Value)
 
 TEST(ByteTag, Constructor_Copy)
 {
-    const std::string name = "Copy Test";
+    const std::string name      = "Copy Test";
     const anvil::ByteType value = 0xEF;
     anvil::ByteTag byteTagA(name, value);
     EXPECT_EQ(byteTagA.type(), anvil::TagType::Byte);
@@ -57,7 +57,7 @@ TEST(ByteTag, Constructor_Copy)
 
 TEST(ByteTag, Constructor_Move)
 {
-    const std::string name = "Move Test";
+    const std::string name      = "Move Test";
     const anvil::ByteType value = 0xEF;
     anvil::ByteTag byteTagA(name, value);
     EXPECT_EQ(byteTagA.type(), anvil::TagType::Byte);
@@ -74,8 +74,8 @@ TEST(ByteTag, Constructor_Move)
 
 TEST(ByteTag, Copy_Assign)
 {
-    const std::string nameA = "TagA";
-    const std::string nameB = "TagB";
+    const std::string nameA      = "TagA";
+    const std::string nameB      = "TagB";
     const anvil::ByteType valueA = 0xEF;
     const anvil::ByteType valueB = 0xCD;
     anvil::ByteTag byteTagA(nameA, valueA);
@@ -96,8 +96,8 @@ TEST(ByteTag, Copy_Assign)
 
 TEST(ByteTag, Move_Assign)
 {
-    const std::string nameA = "TagA";
-    const std::string nameB = "TagB";
+    const std::string nameA      = "TagA";
+    const std::string nameB      = "TagB";
     const anvil::ByteType valueA = 0xEF;
     const anvil::ByteType valueB = 0xCD;
     anvil::ByteTag byteTagA(nameA, valueA);
@@ -140,17 +140,17 @@ TEST(ByteTag, Equality)
 {
     anvil::ByteTag byteTagA;
     anvil::ByteTag byteTagB;
-    EXPECT_TRUE(byteTagA == byteTagA);    // Same object
-    EXPECT_TRUE(byteTagA == byteTagB);    // Other object
+    EXPECT_TRUE(byteTagA == byteTagA); // Same object
+    EXPECT_TRUE(byteTagA == byteTagB); // Other object
 }
 
 TEST(ByteTag, tag_cast)
 {
-    const std::string name = "Some Other Name";
+    const std::string name      = "Some Other Name";
     const anvil::ByteType value = 0xAB;
-    anvil::BasicTag *byteTag = new anvil::ByteTag(name, value);
+    anvil::BasicTag* byteTag    = new anvil::ByteTag(name, value);
 
-    anvil::ByteTag *otherTag = anvil::tag_cast<anvil::ByteTag*>(byteTag);
+    anvil::ByteTag* otherTag = anvil::tag_cast<anvil::ByteTag*>(byteTag);
     EXPECT_EQ(otherTag, byteTag);
 
     delete byteTag;

@@ -1,5 +1,5 @@
-#include "cpp-anvil/anvil/chunk.hpp"
 #include "cpp-anvil/anvil/region.hpp"
+#include "cpp-anvil/anvil/chunk.hpp"
 #include "cpp-anvil/nbt/io.hpp"
 #include "cpp-anvil/util/compression.hpp"
 
@@ -22,14 +22,14 @@ Region::Region()
 
 Region::~Region() = default;
 
-void Region::loadFromFile(const std::string &filename)
+void Region::loadFromFile(const std::string& filename)
 {
     loadPartiallyFromFile(filename);
 
     loadAllChunks();
 }
 
-void Region::loadPartiallyFromFile(const std::string &filename)
+void Region::loadPartiallyFromFile(const std::string& filename)
 {
     // Check if region filename is valid and extract region coordinates
     int32_t x = 0;
@@ -50,8 +50,8 @@ void Region::loadPartiallyFromFile(const std::string &filename)
     }
 
     // Store infos of the current region file
-    m_x = x;
-    m_z = z;
+    m_x        = x;
+    m_z        = z;
     m_filename = filename;
 }
 
@@ -106,7 +106,7 @@ bool Region::saveToFile()
     return saveToFile(m_filename);
 }
 
-bool Region::saveToFile(const std::string &filename)
+bool Region::saveToFile(const std::string& filename)
 {
     std::vector<unsigned char> regionData(RegionHeader::HeaderSize, 0);
     size_t storageDataOffset = RegionHeader::HeaderSize;
@@ -117,7 +117,7 @@ bool Region::saveToFile(const std::string &filename)
             regionHeader.setChunkData(index, 0, 0, 0);
         } else {
             CompressionType compression = m_chunkCompression[index];
-            CompoundTag *rootTag = m_chunks[index].rootTag();
+            CompoundTag* rootTag        = m_chunks[index].rootTag();
 
             // Compress the serialized chunk data.
             std::vector<unsigned char> serializedData = writeData(rootTag);
@@ -133,17 +133,17 @@ bool Region::saveToFile(const std::string &filename)
                     throw std::runtime_error("Failed to compress chunk data (zlib).");
                 }
             } else if(compression == CompressionType::Uncompressed) {
-                // This is super rare condition and should usually not occur. 
+                // This is super rare condition and should usually not occur.
                 // But we can also handle this.
                 chunkData = std::move(serializedData);
             }
 
             // calculate some sizes.
-            size_t length           = 1u + chunkData.size();
-            size_t payload          = 4u + length;
-            size_t sectorPadding    = (((payload % SectorSize) > 0) ? 1 : 0);
-            size_t sectors          = payload / SectorSize + sectorPadding;
-            size_t storageSize      = sectors * SectorSize;
+            size_t length        = 1u + chunkData.size();
+            size_t payload       = 4u + length;
+            size_t sectorPadding = (((payload % SectorSize) > 0) ? 1 : 0);
+            size_t sectors       = payload / SectorSize + sectorPadding;
+            size_t storageSize   = sectors * SectorSize;
 
             // Set chunk infos in region header.
             regionHeader.setChunkData(index, storageDataOffset / SectorSize, sectors, 0);
@@ -160,7 +160,7 @@ bool Region::saveToFile(const std::string &filename)
         }
     }
 
-    // After all chunks have been written and the chunk data has been set to the region header, 
+    // After all chunks have been written and the chunk data has been set to the region header,
     // we can now also write the region header data.
     std::memcpy(&regionData[0], regionHeader.headerData(), regionHeader.headerSize());
 
@@ -206,7 +206,7 @@ Chunk& Region::chunkAt(int32_t x, int32_t z)
     return m_chunks[toIndex(x, z)];
 }
 
-Chunk& Region::chunkAt(const Vec2 &coord)
+Chunk& Region::chunkAt(const Vec2& coord)
 {
     checkRange(coord.x, coord.z);
 
@@ -227,7 +227,7 @@ const Chunk& Region::chunkAt(int32_t x, int32_t z) const
     return m_chunks[toIndex(x, z)];
 }
 
-const Chunk& Region::chunkAt(const Vec2 &coord) const
+const Chunk& Region::chunkAt(const Vec2& coord) const
 {
     checkRange(coord.x, coord.z);
 
@@ -236,8 +236,7 @@ const Chunk& Region::chunkAt(const Vec2 &coord) const
 
 void Region::checkRange(int32_t x, int32_t z) const
 {
-    if(x < 0 || x >= ChunksPerRegionAxis
-       || z < 0 || z >= ChunksPerRegionAxis) {
+    if(x < 0 || x >= ChunksPerRegionAxis || z < 0 || z >= ChunksPerRegionAxis) {
         throw std::out_of_range("Chunk coordinate is out of range.");
     }
 }
@@ -249,7 +248,7 @@ void Region::checkRange(size_t index) const
     }
 }
 
-void Region::readChunkData(std::ifstream &filestream, const size_t index)
+void Region::readChunkData(std::ifstream& filestream, const size_t index)
 {
     // Seek to beginning of chunk data in the filestream
     size_t offset = m_regionHeader->byteOffset(index);
@@ -258,7 +257,7 @@ void Region::readChunkData(std::ifstream &filestream, const size_t index)
     // Get size of binary data and compression type
     uint32_t dataSize = 0;
     filestream.read(reinterpret_cast<char*>(&dataSize), sizeof(uint32_t));
-    dataSize = detail::swapEndian(dataSize);
+    dataSize                        = detail::swapEndian(dataSize);
     CompressionType compressionType = CompressionType::Uncompressed;
     filestream.read(reinterpret_cast<char*>(&compressionType), sizeof(char));
 
@@ -286,34 +285,34 @@ void Region::readChunkData(std::ifstream &filestream, const size_t index)
 
     chunkAt(index).setRootTag(readData(chunkData));
     m_chunkCompression[index] = compressionType;
-    m_loadedChunks[index] = true;
+    m_loadedChunks[index]     = true;
 }
 
-bool Region::readRegionHeader(std::ifstream &filestream)
+bool Region::readRegionHeader(std::ifstream& filestream)
 {
     m_regionHeader = std::make_unique<RegionHeader>();
     return m_regionHeader->loadFromStream(filestream);
 }
 
-bool Region::validateRegionFilename(const std::string &filename)
+bool Region::validateRegionFilename(const std::string& filename)
 {
     int32_t x = 0;
     int32_t z = 0;
     return validateAndParseRegionFilename(filename, x, z);
 }
 
-bool Region::validateAndParseRegionFilename(const std::string &filename, int32_t &x, int32_t &z)
+bool Region::validateAndParseRegionFilename(const std::string& filename, int32_t& x, int32_t& z)
 {
     // Pattern definition of Minecraft region file.
-    const std::regex RegionFilePattern 
-        = std::regex(R"(r\.(0|[-]?[1-9][0-9]*)\.(0|[-]?[1-9][0-9]*)\.mca)");
+    const std::regex RegionFilePattern =
+        std::regex(R"(r\.(0|[-]?[1-9][0-9]*)\.(0|[-]?[1-9][0-9]*)\.mca)");
 
     // Convert filename so that preferred directory separators are used.
     std::filesystem::path filepath{filename};
     std::string convertedFilename = filepath.make_preferred().string();
 
     // Extract the filename from the whole path
-    size_t offset = convertedFilename.find_last_of(std::filesystem::path::preferred_separator);
+    size_t offset    = convertedFilename.find_last_of(std::filesystem::path::preferred_separator);
     std::string name = convertedFilename.substr(offset + 1);
 
     // Search for region file pattern : 'r.X.Z.mca'

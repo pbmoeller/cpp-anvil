@@ -29,14 +29,14 @@ public:
     //! @brief Sets a new root CompoundTag to the chunk.
     //! @details
     //! If a root tag is already set, it will be reset during this operation.
-    //! 
+    //!
     //! @param root The new CompoundTag to be be set.
     void setRootTag(std::unique_ptr<CompoundTag> root);
 
     //! @brief Takes ownership of the root CompoundTag.
     //! @details
     //! The chunk is empty after this operation.
-    //! 
+    //!
     //! @return The chunks root CompoundTag.
     std::unique_ptr<CompoundTag> takeRootTag();
 

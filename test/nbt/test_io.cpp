@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include <cpp-anvil/nbt/io.hpp>
 
@@ -16,8 +16,7 @@ TEST(io, load_file_gzip)
 
     std::vector<unsigned char> data = anvil::writeData(ctag.get());
 
-    EXPECT_THAT(std::vector<unsigned char>(data.begin(),
-                                           data.begin() + data.size()),
+    EXPECT_THAT(std::vector<unsigned char>(data.begin(), data.begin() + data.size()),
                 ::testing::ElementsAreArray(&bigtestUncompressedData[0],
                                             &bigtestUncompressedData[0] + 1544));
 }
