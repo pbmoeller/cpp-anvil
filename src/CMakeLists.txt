@@ -77,6 +77,8 @@ set_target_properties(CppAnvil
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
         OUTPUT_NAME cppanvil
+        RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}  # Execuatbles and DLL on windows
+        LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}  # Shared libraries on non windows
 )
 
 target_sources(CppAnvil
