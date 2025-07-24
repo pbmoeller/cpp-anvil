@@ -5,11 +5,6 @@
 #include <cstdint>
 
 namespace anvil {
-
-// -------------------------------------------------------------------------------------------------
-//      FloatingPoint
-// -------------------------------------------------------------------------------------------------
-
 namespace detail {
 
 template<size_t size>
@@ -90,7 +85,7 @@ private:
 
     static Bits signAndMagnitudeToBiased(const Bits& sam) {
         if(SignBitMask & sam) {
-            return ~sam + 1;            // sam = negative number
+            return ~sam + 1;           // sam = negative number
         } else {
             return SignBitMask | sam;  // sam = positive number
         }

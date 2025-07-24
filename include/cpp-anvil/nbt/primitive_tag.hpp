@@ -7,10 +7,6 @@
 
 namespace anvil {
 
-// -------------------------------------------------------------------------------------------------
-//      PrimitiveTag
-// -------------------------------------------------------------------------------------------------
-
 template<typename T, TagType TAG>
 class PrimitiveTag : public BasicTag
 {
@@ -65,9 +61,8 @@ using FloatTag  = PrimitiveTag<FloatType,   TagType::Float>;
 using DoubleTag = PrimitiveTag<DoubleType,  TagType::Double>;
 using StringTag = PrimitiveTag<StringType,  TagType::String>;
 
-// -------------------------------------------------------------------------------------------------
-//      FloatingPoint comparison
-// -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// FloatingPoint comparison
 
 template<>
 inline bool FloatTag::isEqual(const BasicTag &other) const

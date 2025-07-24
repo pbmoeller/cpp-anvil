@@ -6,10 +6,6 @@
 
 namespace anvil {
 
-// -------------------------------------------------------------------------------------------------
-//      CompoundTag
-// -------------------------------------------------------------------------------------------------
-
 class CompoundTag : public CollectionTag<std::unique_ptr<BasicTag>, TagType::Compound>
 {
 public:
@@ -31,12 +27,10 @@ public:
         return std::make_unique<CompoundTag>(*this);
     }
 
-    //
     bool hasChild(const std::string &name) const;
     BasicTag* getChildByName(const std::string &name);
     const BasicTag* getChildByName(const std::string &name) const;
     
-    //
     bool push_back(std::unique_ptr<BasicTag> value);
     bool push_back(BasicTag *value);
     bool push_back(const BasicTag &value);

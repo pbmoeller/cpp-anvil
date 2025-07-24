@@ -7,10 +7,6 @@
 
 namespace anvil {
 
-// -------------------------------------------------------------------------------------------------
-//      CollectionTag
-// -------------------------------------------------------------------------------------------------
-
 template<typename T, TagType TAG>
 class CollectionTag : public BasicTag
 {
@@ -135,7 +131,6 @@ public:
         }
     }
 
-    //
     void copy(const ContainerType<T> &otherValue)
     {
         if constexpr(detail::IsUniquePtr_v<T>) {
