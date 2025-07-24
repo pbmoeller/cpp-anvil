@@ -1,31 +1,28 @@
 #include "cpp-anvil/nbt/types.hpp"
 
+#include <array>
+
 namespace anvil {
 
-const char* TagTypeNames[14] = {"End",      "Byte",     "Short",     "Int",    "Long",
-                                "Float",    "Double",   "ByteArray", "String", "List",
-                                "Compound", "IntArray", "LongArray", "Unknown"};
+constexpr std::array<std::string_view, 14> TagTypeNames = {
+    "End",       "Byte",   "Short", "Int",      "Long",     "Float",     "Double",
+    "ByteArray", "String", "List",  "Compound", "IntArray", "LongArray", "Unknown"};
 
-const char* TagNames[14] = {"EndTag",      "ByteTag",     "ShortTag",     "IntTag",    "LongTag",
-                            "FloatTag",    "DoubleTag",   "ByteArrayTag", "StringTag", "ListTag",
-                            "CompoundTag", "IntArrayTag", "LongArrayTag", "UnknownTag"};
+constexpr std::array<std::string_view, 14> TagNames = {
+    "EndTag",      "ByteTag",     "ShortTag",     "IntTag",    "LongTag",
+    "FloatTag",    "DoubleTag",   "ByteArrayTag", "StringTag", "ListTag",
+    "CompoundTag", "IntArrayTag", "LongArrayTag", "UnknownTag"};
 
 std::string_view getTagTypeName(TagType type)
 {
-    if(static_cast<unsigned char>(type) <= static_cast<unsigned char>(TagType::LongArray)) {
-        return TagTypeNames[static_cast<unsigned char>(type)];
-    } else {
-        return TagTypeNames[13];
-    }
+    auto index = static_cast<unsigned char>(type);
+    return index < TagTypeNames.size() ? TagTypeNames[index] : TagTypeNames.back();
 }
 
 std::string_view getTagName(TagType type)
 {
-    if(static_cast<unsigned char>(type) <= static_cast<unsigned char>(TagType::LongArray)) {
-        return TagNames[static_cast<unsigned char>(type)];
-    } else {
-        return TagNames[13];
-    }
+    auto index = static_cast<unsigned char>(type);
+    return index < TagNames.size() ? TagNames[index] : TagNames.back();
 }
 
 } // namespace anvil

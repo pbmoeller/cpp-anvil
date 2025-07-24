@@ -87,7 +87,7 @@ std::unique_ptr<CompoundTag> loadFromFile(const std::string& filename,
                                           CompressionType& compressionType)
 {
     if(!std::filesystem::exists(filename)) {
-        return std::unique_ptr<CompoundTag>();
+        return {};
     }
 
     std::ifstream file(filename, std::ios::binary);
@@ -97,7 +97,7 @@ std::unique_ptr<CompoundTag> loadFromFile(const std::string& filename,
         std::vector<unsigned char> buffer(2, 0);
         file.read(reinterpret_cast<char*>(&buffer[0]), 2);
         if(!file || file.gcount() != 2) {
-            return std::unique_ptr<CompoundTag>();
+            return {};
         }
         compressionType = testCompression(buffer);
         file.seekg(0);
@@ -117,18 +117,18 @@ std::unique_ptr<CompoundTag> loadFromFile(const std::string& filename,
 
         // Check if uncompressing or reading file succeeded
         if(!ret) {
-            return std::unique_ptr<CompoundTag>();
+            return {};
         }
 
         // Check if the file starts with a CompoundTag
         if(data[0] != static_cast<unsigned char>(TagType::Compound)) {
-            return std::unique_ptr<CompoundTag>();
+            return {};
         }
 
         return readData(data);
     }
 
-    return std::unique_ptr<CompoundTag>();
+    return {};
 }
 
 bool saveToFile(const std::string& filename, std::vector<unsigned char>& data)
@@ -213,59 +213,59 @@ std::unique_ptr<BasicTag> readChildTag(NbtInputByteStream& byteStream, bool isLi
             break;
         case TagType::Byte:
         {
-            ByteType value = byteStream.read<ByteType>();
-            tag            = std::make_unique<ByteTag>(name, value);
+            auto value = byteStream.read<ByteType>();
+            tag        = std::make_unique<ByteTag>(name, value);
             break;
         }
         case TagType::Short:
         {
-            ShortType value = byteStream.read<ShortType>();
-            tag             = std::make_unique<ShortTag>(name, value);
+            auto value = byteStream.read<ShortType>();
+            tag        = std::make_unique<ShortTag>(name, value);
             break;
         }
         case TagType::Int:
         {
-            IntType value = byteStream.read<IntType>();
-            tag           = std::make_unique<IntTag>(name, value);
+            auto value = byteStream.read<IntType>();
+            tag        = std::make_unique<IntTag>(name, value);
             break;
         }
         case TagType::Long:
         {
-            LongType value = byteStream.read<LongType>();
-            tag            = std::make_unique<LongTag>(name, value);
+            auto value = byteStream.read<LongType>();
+            tag        = std::make_unique<LongTag>(name, value);
             break;
         }
         case TagType::Float:
         {
-            FloatType value = byteStream.read<FloatType>();
-            tag             = std::make_unique<FloatTag>(name, value);
+            auto value = byteStream.read<FloatType>();
+            tag        = std::make_unique<FloatTag>(name, value);
             break;
         }
         case TagType::Double:
         {
-            DoubleType value = byteStream.read<DoubleType>();
-            tag              = std::make_unique<DoubleTag>(name, value);
+            auto value = byteStream.read<DoubleType>();
+            tag        = std::make_unique<DoubleTag>(name, value);
             break;
         }
         case TagType::ByteArray:
         {
-            std::vector<ByteType> value = byteStream.read<std::vector<ByteType>>();
-            tag                         = std::make_unique<ByteArrayTag>(name, value);
+            auto value = byteStream.read<std::vector<ByteType>>();
+            tag        = std::make_unique<ByteArrayTag>(name, value);
             break;
         }
         case TagType::String:
         {
-            StringType value = byteStream.read<StringType>();
-            tag              = std::make_unique<StringTag>(name, value);
+            auto value = byteStream.read<StringType>();
+            tag        = std::make_unique<StringTag>(name, value);
             break;
         }
         case TagType::List:
         {
-            TagType listTagType              = byteStream.read<TagType>();
-            std::unique_ptr<ListTag> listTag = std::make_unique<ListTag>(name, listTagType);
+            TagType listTagType = byteStream.read<TagType>();
+            auto listTag        = std::make_unique<ListTag>(name, listTagType);
             std::unique_ptr<BasicTag> childTag;
 
-            int32_t size = byteStream.read<int32_t>();
+            const int32_t size = byteStream.read<int32_t>();
             for(int32_t i = 0; i < size; ++i) {
                 childTag = readChildTag(byteStream, true, listTagType);
                 listTag->push_back(std::move(childTag));
@@ -276,7 +276,7 @@ std::unique_ptr<BasicTag> readChildTag(NbtInputByteStream& byteStream, bool isLi
         }
         case TagType::Compound:
         {
-            std::unique_ptr<CompoundTag> compoundTag = std::make_unique<CompoundTag>(name);
+            auto compoundTag = std::make_unique<CompoundTag>(name);
             TagType childTagType{TagType::Unknown};
             do {
                 std::unique_ptr<BasicTag> childTag = readChildTag(byteStream);
@@ -293,14 +293,14 @@ std::unique_ptr<BasicTag> readChildTag(NbtInputByteStream& byteStream, bool isLi
         }
         case TagType::IntArray:
         {
-            std::vector<IntType> value = byteStream.read<std::vector<IntType>>();
-            tag                        = std::make_unique<IntArrayTag>(name, value);
+            auto value = byteStream.read<std::vector<IntType>>();
+            tag        = std::make_unique<IntArrayTag>(name, value);
             break;
         }
         case TagType::LongArray:
         {
-            std::vector<LongType> value = byteStream.read<std::vector<LongType>>();
-            tag                         = std::make_unique<LongArrayTag>(name, value);
+            auto value = byteStream.read<std::vector<LongType>>();
+            tag        = std::make_unique<LongArrayTag>(name, value);
             break;
         }
         case TagType::Unknown:
@@ -340,7 +340,7 @@ std::unique_ptr<CompoundTag> readData(std::vector<unsigned char>& data)
         return root;
     }
 
-    return std::unique_ptr<CompoundTag>();
+    return {};
 }
 
 void writeTag(NbtOutputByteStream& byteStream, const BasicTag* basicTag, bool isListItem = false,
@@ -363,43 +363,43 @@ void writeTag(NbtOutputByteStream& byteStream, const BasicTag* basicTag, bool is
     switch(tagType) {
         case TagType::Byte:
         {
-            const ByteTag* byteTag = static_cast<const ByteTag*>(basicTag);
+            const auto* byteTag = static_cast<const ByteTag*>(basicTag);
             byteStream.write(byteTag->value());
             break;
         }
         case TagType::Short:
         {
-            const ShortTag* shortTag = static_cast<const ShortTag*>(basicTag);
+            const auto* shortTag = static_cast<const ShortTag*>(basicTag);
             byteStream.write(shortTag->value());
             break;
         }
         case TagType::Int:
         {
-            const IntTag* intTag = static_cast<const IntTag*>(basicTag);
+            const auto* intTag = static_cast<const IntTag*>(basicTag);
             byteStream.write(intTag->value());
             break;
         }
         case TagType::Long:
         {
-            const LongTag* longTag = static_cast<const LongTag*>(basicTag);
+            const auto* longTag = static_cast<const LongTag*>(basicTag);
             byteStream.write(longTag->value());
             break;
         }
         case TagType::Float:
         {
-            const FloatTag* floatTag = static_cast<const FloatTag*>(basicTag);
+            const auto* floatTag = static_cast<const FloatTag*>(basicTag);
             byteStream.write(floatTag->value());
             break;
         }
         case TagType::Double:
         {
-            const DoubleTag* doubleTag = static_cast<const DoubleTag*>(basicTag);
+            const auto* doubleTag = static_cast<const DoubleTag*>(basicTag);
             byteStream.write(doubleTag->value());
             break;
         }
         case TagType::ByteArray:
         {
-            const ByteArrayTag* byteArrayTag = static_cast<const ByteArrayTag*>(basicTag);
+            const auto* byteArrayTag = static_cast<const ByteArrayTag*>(basicTag);
             byteStream.write(static_cast<int32_t>(byteArrayTag->size()));
             for(const auto& value : byteArrayTag->value()) {
                 byteStream.write(value);
@@ -408,13 +408,13 @@ void writeTag(NbtOutputByteStream& byteStream, const BasicTag* basicTag, bool is
         }
         case TagType::String:
         {
-            const StringTag* stringTag = static_cast<const StringTag*>(basicTag);
+            const auto* stringTag = static_cast<const StringTag*>(basicTag);
             byteStream.write(stringTag->value());
             break;
         }
         case TagType::List:
         {
-            const ListTag* listTag = static_cast<const ListTag*>(basicTag);
+            const auto* listTag = static_cast<const ListTag*>(basicTag);
             byteStream.write(listTag->listType());
             byteStream.write(static_cast<int32_t>(listTag->size()));
             for(const auto& value : listTag->value()) {
@@ -424,7 +424,7 @@ void writeTag(NbtOutputByteStream& byteStream, const BasicTag* basicTag, bool is
         }
         case TagType::Compound:
         {
-            const CompoundTag* compoundTag = static_cast<const CompoundTag*>(basicTag);
+            const auto* compoundTag = static_cast<const CompoundTag*>(basicTag);
             for(const auto& value : compoundTag->value()) {
                 writeTag(byteStream, value.get());
             }
@@ -434,7 +434,7 @@ void writeTag(NbtOutputByteStream& byteStream, const BasicTag* basicTag, bool is
         }
         case TagType::IntArray:
         {
-            const IntArrayTag* intArrayTag = static_cast<const IntArrayTag*>(basicTag);
+            const auto* intArrayTag = static_cast<const IntArrayTag*>(basicTag);
             byteStream.write(static_cast<int32_t>(intArrayTag->size()));
             for(const auto& value : intArrayTag->value()) {
                 byteStream.write(value);
@@ -443,7 +443,7 @@ void writeTag(NbtOutputByteStream& byteStream, const BasicTag* basicTag, bool is
         }
         case TagType::LongArray:
         {
-            const LongArrayTag* longArrayTag = static_cast<const LongArrayTag*>(basicTag);
+            const auto* longArrayTag = static_cast<const LongArrayTag*>(basicTag);
             byteStream.write(static_cast<int32_t>(longArrayTag->size()));
             for(const auto& value : longArrayTag->value()) {
                 byteStream.write(value);
@@ -484,43 +484,43 @@ void printChildTag(std::stringstream& sstrm, const BasicTag* tag, int indent,
     switch(tagType) {
         case TagType::Byte:
         {
-            const ByteTag* t = tag_cast<const ByteTag*>(tag);
+            const auto* t = tag_cast<const ByteTag*>(tag);
             sstrm << static_cast<int>(t->value()) << '\n';
             break;
         }
         case TagType::Short:
         {
-            const ShortTag* t = tag_cast<const ShortTag*>(tag);
+            const auto* t = tag_cast<const ShortTag*>(tag);
             sstrm << static_cast<int>(t->value()) << '\n';
             break;
         }
         case TagType::Int:
         {
-            const IntTag* t = tag_cast<const IntTag*>(tag);
+            const auto* t = tag_cast<const IntTag*>(tag);
             sstrm << t->value() << '\n';
             break;
         }
         case TagType::Long:
         {
-            const LongTag* t = tag_cast<const LongTag*>(tag);
+            const auto* t = tag_cast<const LongTag*>(tag);
             sstrm << t->value() << '\n';
             break;
         }
         case TagType::Float:
         {
-            const FloatTag* t = tag_cast<const FloatTag*>(tag);
+            const auto* t = tag_cast<const FloatTag*>(tag);
             sstrm << std::setprecision(8) << t->value() << '\n';
             break;
         }
         case TagType::Double:
         {
-            const DoubleTag* t = tag_cast<const DoubleTag*>(tag);
+            const auto* t = tag_cast<const DoubleTag*>(tag);
             sstrm << std::setprecision(16) << t->value() << '\n';
             break;
         }
         case TagType::ByteArray:
         {
-            const ByteArrayTag* t = tag_cast<const ByteArrayTag*>(tag);
+            const auto* t = tag_cast<const ByteArrayTag*>(tag);
 
             sstrm << t->size() << " entries";
             sstrm << '\n' << indentStr << "[\n";
@@ -538,13 +538,13 @@ void printChildTag(std::stringstream& sstrm, const BasicTag* tag, int indent,
         }
         case TagType::String:
         {
-            const StringTag* t = tag_cast<const StringTag*>(tag);
+            const auto* t = tag_cast<const StringTag*>(tag);
             sstrm << t->value() << '\n';
             break;
         }
         case TagType::List:
         {
-            const ListTag* t = tag_cast<const ListTag*>(tag);
+            const auto* t = tag_cast<const ListTag*>(tag);
 
             sstrm << t->size() << " entries of type " << getTagTypeName(t->listType());
             sstrm << '\n' << indentStr << "{\n";
@@ -557,7 +557,7 @@ void printChildTag(std::stringstream& sstrm, const BasicTag* tag, int indent,
         }
         case TagType::Compound:
         {
-            const CompoundTag* t = tag_cast<const CompoundTag*>(tag);
+            const auto* t = tag_cast<const CompoundTag*>(tag);
 
             sstrm << t->size() << " entries";
             sstrm << '\n' << indentStr << "{\n";
@@ -571,7 +571,7 @@ void printChildTag(std::stringstream& sstrm, const BasicTag* tag, int indent,
         }
         case TagType::IntArray:
         {
-            const IntArrayTag* t = tag_cast<const IntArrayTag*>(tag);
+            const auto* t = tag_cast<const IntArrayTag*>(tag);
 
             sstrm << t->size() << " entries";
             sstrm << '\n' << indentStr << "[\n";
@@ -589,7 +589,7 @@ void printChildTag(std::stringstream& sstrm, const BasicTag* tag, int indent,
         }
         case TagType::LongArray:
         {
-            const LongArrayTag* t = tag_cast<const LongArrayTag*>(tag);
+            const auto* t = tag_cast<const LongArrayTag*>(tag);
 
             sstrm << t->size() << " entries";
             sstrm << '\n' << indentStr << "[\n";

@@ -150,7 +150,7 @@ TEST(ByteTag, tag_cast)
     const anvil::ByteType value = 0xAB;
     anvil::BasicTag* byteTag    = new anvil::ByteTag(name, value);
 
-    anvil::ByteTag* otherTag = anvil::tag_cast<anvil::ByteTag*>(byteTag);
+    auto* otherTag = anvil::tag_cast<anvil::ByteTag*>(byteTag);
     EXPECT_EQ(otherTag, byteTag);
 
     delete byteTag;

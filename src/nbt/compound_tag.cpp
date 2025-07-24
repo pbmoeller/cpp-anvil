@@ -68,7 +68,7 @@ std::unique_ptr<BasicTag> CompoundTag::takeAt(size_type index)
 std::unique_ptr<BasicTag> CompoundTag::take(BasicTag* tag)
 {
     std::unique_ptr<BasicTag> val;
-    iterator it =
+    auto it =
         std::find_if(m_value.begin(), m_value.end(),
                      [tag](const std::unique_ptr<BasicTag>& ptr) { return ptr.get() == tag; });
     if(it != m_value.end()) {
@@ -80,7 +80,7 @@ std::unique_ptr<BasicTag> CompoundTag::take(BasicTag* tag)
 
 bool CompoundTag::erase(BasicTag* tag)
 {
-    iterator it =
+    auto it =
         std::find_if(m_value.begin(), m_value.end(),
                      [tag](const std::unique_ptr<BasicTag>& ptr) { return ptr.get() == tag; });
     if(it != m_value.end()) {

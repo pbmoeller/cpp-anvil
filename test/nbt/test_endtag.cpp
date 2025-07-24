@@ -28,7 +28,7 @@ TEST(EndTag, tag_cast)
 {
     anvil::BasicTag* endTag = new anvil::EndTag();
 
-    anvil::EndTag* otherTag = anvil::tag_cast<anvil::EndTag*>(endTag);
+    auto* otherTag = anvil::tag_cast<anvil::EndTag*>(endTag);
     EXPECT_EQ(otherTag, endTag);
 
     delete endTag;
