@@ -128,7 +128,7 @@ bool inflate_zlib(std::ifstream& strm, std::vector<unsigned char>& data)
     std::vector<char> inBuffer(ZlibChunkSize);
     std::vector<unsigned char> outBuffer(ZlibChunkSize);
 
-    int ret;
+    int ret{0};
     do {
         strm.read(inBuffer.data(), inBuffer.size());
         zstrm.next_in  = reinterpret_cast<Bytef*>(inBuffer.data());
