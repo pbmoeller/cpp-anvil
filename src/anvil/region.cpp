@@ -322,8 +322,8 @@ bool Region::validateAndParseRegionFilename(const std::string& filename, int32_t
     }
 
     // If the pattern was found set X and Z values and return success
-    x = std::atoi(ref[1].str().c_str());
-    z = std::atoi(ref[2].str().c_str());
+    x = static_cast<int32_t>(std::strtol(ref[1].str().c_str(), nullptr, 10));
+    z = static_cast<int32_t>(std::strtol(ref[2].str().c_str(), nullptr, 10));
     return true;
 }
 

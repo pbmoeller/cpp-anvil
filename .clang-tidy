@@ -1,6 +1,8 @@
 ---
 Checks: >
   -*,
+  performance-*,
+  cert-*,
   modernize-*,
   -modernize-use-trailing-return-type
 ...
