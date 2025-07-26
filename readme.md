@@ -1,5 +1,5 @@
-[![cpp-anvil Version v0.1.0](https://img.shields.io/badge/libAwesomeMC-v0.1.0-green)](https://github.com/AwesomeCodingGuy/libAwesomeMC)
-[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://github.com/AwesomeCodingGuy/libAwesomeMC/blob/main/LICENSE)
+[![cpp-anvil Version v0.1.0](https://img.shields.io/badge/cpp-anvil-v0.1.0-green)](https://github.com/pbmoeller/cpp-anvil)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://github.com/pbmoeller/cpp-anvil/LICENSE)
 
 # cpp-anvil
 
