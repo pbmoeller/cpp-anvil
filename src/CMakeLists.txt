@@ -34,7 +34,7 @@ set(CPPANVIL_SOURCES
     "nbt/list_tag.cpp"
     "nbt/compound_tag.cpp"
     "nbt/types.cpp"
-    "version.cpp"
+    "${PROJECT_BINARY_DIR}/src/version.cpp"
 )
 
 configure_file(
