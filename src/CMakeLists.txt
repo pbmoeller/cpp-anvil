@@ -30,6 +30,7 @@ set(CPPANVIL_SOURCES
     "anvil/region.cpp"
     "anvil/region_header.cpp"
     "util/compression.cpp"
+    "nbt/basic_tag.cpp"
     "nbt/io.cpp"
     "nbt/list_tag.cpp"
     "nbt/compound_tag.cpp"
