@@ -25,3 +25,10 @@ TEST(io, save_to_file_gzip)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
+
+TEST(io, isNbtFile)
+{
+    const std::string testFolder =
+        R"(C:\Users\sonla\AppData\Roaming\.minecraft\saves\BOP_Terralith_Test\level.dat)";
+    EXPECT_TRUE(anvil::isNbtFile(testFolder));
+}

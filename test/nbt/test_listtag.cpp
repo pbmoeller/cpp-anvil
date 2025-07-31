@@ -140,3 +140,28 @@ TEST(ListTag, push_back)
     EXPECT_FALSE(listTag.empty());
     EXPECT_EQ(listTag.size(), 2);
 }
+
+TEST(ListTag, ranged_for)
+{
+    anvil::ListTag listTag;
+    listTag.push_back(anvil::ByteTag(0x01));
+    listTag.push_back(anvil::ByteTag(0x02));
+    listTag.push_back(anvil::ByteTag(0x03));
+
+    for(const auto& tag : listTag) {
+        EXPECT_TRUE(tag->isByteTag());
+        //EXPECT_TRUE(tag->va == 10 || *it == 20 || *it == 30 || *it == 40);
+    }
+}
+
+TEST(ListTag, iterator_for)
+{
+    anvil::ListTag listTag;
+    listTag.push_back(anvil::ByteTag(0x01));
+    listTag.push_back(anvil::ByteTag(0x02));
+    listTag.push_back(anvil::ByteTag(0x03));
+
+    for(auto it = listTag.begin(); it != listTag.end(); ++it) {
+        EXPECT_TRUE((*it)->isByteTag());
+    }
+}
