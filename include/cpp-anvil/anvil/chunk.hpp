@@ -1,15 +1,22 @@
 #ifndef CPP_ANVIL_ANVIL_CHUNK_HPP
 #define CPP_ANVIL_ANVIL_CHUNK_HPP
 
+#include "cpp-anvil/anvil/section.hpp"
+#include "cpp-anvil/nbt/types.hpp"
+
 #include <memory>
 
 namespace anvil {
 
+class ListTag;
 class CompoundTag;
 
 //! @brief Class to store minecraft chunk data.
 class Chunk
 {
+public:
+    constexpr static size_t SectionsPerChunk{24};
+
 public:
     //! @brief Resets the chunk data.
     void clear();
@@ -39,6 +46,23 @@ public:
     //!
     //! @return The chunks root CompoundTag.
     std::unique_ptr<CompoundTag> takeRootTag();
+
+    IntType xPos() const;
+    IntType yPos() const;
+    IntType zPos() const;
+    IntType dataVersion() const;
+    LongType inhabitedTime() const;
+    ByteType isLightOn() const;
+    LongType lastUpdate() const;
+    StringType status() const;
+    CompoundTag* heightMaps() const;
+    CompoundTag* structures() const;
+    ListTag* blockEntities() const;
+    ListTag* blockTicks() const;
+    ListTag* fluidTicks() const;
+    ListTag* postProcessing() const;
+    ListTag* sections() const;
+    Section section(size_t index) const;
 
 private:
     std::unique_ptr<CompoundTag> m_root;

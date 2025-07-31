@@ -3,14 +3,16 @@
 
 set(CPPANVIL_HEADER_PATH "${PROJECT_SOURCE_DIR}/include")
 set(CPPANVIL_HEADERS
-    # anvil
-    "${CPPANVIL_HEADER_PATH}/cpp-anvil/version.hpp"
+    # cpp-anvil
     "${CPPANVIL_HEADER_PATH}/cpp-anvil/anvil.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/version.hpp"
+    # anvil
     "${CPPANVIL_HEADER_PATH}/cpp-anvil/anvil/coordinates.hpp"
     "${CPPANVIL_HEADER_PATH}/cpp-anvil/anvil/chunk.hpp"
     "${CPPANVIL_HEADER_PATH}/cpp-anvil/anvil/region.hpp"
+    "${CPPANVIL_HEADER_PATH}/cpp-anvil/anvil/section.hpp"
     # nbt
-    "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt.hpp"
     "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/io.hpp"
     "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/basic_tag.hpp"
     "${CPPANVIL_HEADER_PATH}/cpp-anvil/nbt/collection_tag.hpp"
@@ -29,6 +31,7 @@ set(CPPANVIL_SOURCES
     "anvil/coordinates.cpp"
     "anvil/region.cpp"
     "anvil/region_header.cpp"
+    "anvil/section.cpp"
     "util/compression.cpp"
     "nbt/basic_tag.cpp"
     "nbt/io.cpp"
