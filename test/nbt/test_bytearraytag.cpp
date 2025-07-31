@@ -164,3 +164,25 @@ TEST(ByteArrayTag, clear)
     EXPECT_TRUE(arrayTag.empty());
     EXPECT_EQ(arrayTag.size(), 0);
 }
+
+TEST(ByteArrayTag, ranged_for)
+{
+    const std::string name{"Test"};
+    const std::vector<anvil::ByteType> vec{10, 20, 30, 40};
+    anvil::ByteArrayTag arrayTag(name, vec);
+
+    for(const auto& value : arrayTag) {
+        EXPECT_TRUE(value == 10 || value == 20 || value == 30 || value == 40);
+    }
+}
+
+TEST(ByteArrayTag, iterator_for)
+{
+    const std::string name{"Test"};
+    const std::vector<anvil::ByteType> vec{10, 20, 30, 40};
+    anvil::ByteArrayTag arrayTag(name, vec);
+
+    for(auto it = arrayTag.begin(); it != arrayTag.end(); ++it) {
+        EXPECT_TRUE(*it == 10 || *it == 20 || *it == 30 || *it == 40);
+    }
+}

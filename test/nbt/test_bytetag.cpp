@@ -155,3 +155,19 @@ TEST(ByteTag, tag_cast)
 
     delete byteTag;
 }
+
+TEST(ByteTag, isByteTag)
+{
+    anvil::ByteTag byteTag;
+    EXPECT_TRUE(byteTag.isByteTag());
+    EXPECT_FALSE(byteTag.isIntTag());
+    EXPECT_FALSE(byteTag.isStringTag());
+}
+
+TEST(ByteTag, asByteTag)
+{
+    anvil::BasicTag* basicTag = new anvil::ByteTag("Test", 42);
+
+    EXPECT_NE(basicTag->asByteTag(), nullptr);
+    EXPECT_EQ(basicTag->asEndTag(), nullptr);
+}

@@ -9,6 +9,19 @@
 
 namespace anvil {
 
+template<typename T, TagType TAG>
+class PrimitiveTag;
+
+template<typename T, TagType TAG>
+class CollectionTag;
+
+class EndTag;
+class ListTag;
+class CompoundTag;
+
+template<typename T>
+inline T tag_cast(const BasicTag* item);
+
 class BasicTag
 {
 public:
@@ -74,6 +87,112 @@ public:
     //! @brief Assigns a new name to the tag.
     //! @param name New string to be assigned.
     void setName(const StringType& name) { m_name = name; }
+
+    //! @brief Checks if this tag is an End tag.
+    //! @return `true` if checked tag is an End tag, `false` otherwise.
+    constexpr bool isEndTag() const { return type() == TagType::End; }
+
+    //! @brief Checks if this tag is a Byte tag.
+    //! @return `true` if checked tag is a Byte tag, `false` otherwise.
+    constexpr bool isByteTag() const { return type() == TagType::Byte; }
+
+    //! @brief Checks if this tag is a Short tag.
+    //! @return `true` if checked tag is a Short tag, `false` otherwise.
+    constexpr bool isShortTag() const { return type() == TagType::Short; }
+
+    //! @brief Checks if this tag is an Int tag.
+    //! @return `true` if checked tag is an Int tag, `false` otherwise.
+    constexpr bool isIntTag() const { return type() == TagType::Int; }
+
+    //! @brief Checks if this tag is a Long tag.
+    //! @return `true` if checked tag is a Long tag, `false` otherwise.
+    constexpr bool isLongTag() const { return type() == TagType::Long; }
+
+    //! @brief Checks if this tag is a Float tag.
+    //! @return `true` if checked tag is a Float tag, `false` otherwise.
+    constexpr bool isFloatTag() const { return type() == TagType::Float; }
+
+    //! @brief Checks if this tag is a Double tag.
+    //! @return `true` if checked tag is a Double tag, `false` otherwise.
+    constexpr bool isDoubleTag() const { return type() == TagType::Double; }
+
+    //! @brief Checks if this tag is a ByteArray tag.
+    //! @return `true` if checked tag is a ByteArray tag, `false` otherwise.
+    constexpr bool isByteArrayTag() const { return type() == TagType::ByteArray; }
+
+    //! @brief Checks if this tag is a String tag.
+    //! @return `true` if checked tag is a String tag, `false` otherwise.
+    constexpr bool isStringTag() const { return type() == TagType::String; }
+
+    //! @brief Checks if this tag is a List tag.
+    //! @return `true` if checked tag is a List tag, `false` otherwise.
+    constexpr bool isListTag() const { return type() == TagType::List; }
+
+    //! @brief Checks if the Tag is a Compound tag.
+    //! @return `true` if checked tag is a Compound tag, `false` otherwise.
+    constexpr bool isCompoundTag() const { return type() == TagType::Compound; }
+
+    //! @brief Checks if the Tag is an IntArray.
+    //! @return `true` if checked tag is an IntArray, `false` otherwise.
+    constexpr bool isIntArrayTag() const { return type() == TagType::IntArray; }
+
+    //! @brief Checks if the Tag is a LongArray.
+    //! @return `true` if checked tag is a LongArray, `false` otherwise.
+    constexpr bool isLongArrayTag() const { return type() == TagType::LongArray; }
+
+    //! @brief Converts the current object to an EndTag pointer if possible.
+    //! @return A pointer to an EndTag if the conversion is valid; otherwise, returns `nullptr`.
+    EndTag* asEndTag();
+
+    //! @brief Converts the current object to a ByteTag pointer if possible.
+    //! @return A pointer to a ByteTag if the conversion is valid; otherwise, returns `nullptr`.
+    PrimitiveTag<ByteType, TagType::Byte>* asByteTag();
+
+    //! @brief Converts the current object to a ShortTag pointer if possible.
+    //! @return A pointer to a ShortTag if the conversion is valid; otherwise, returns `nullptr`.
+    PrimitiveTag<ShortType, TagType::Short>* asShortTag();
+
+    //! @brief Converts the current object to an IntTag pointer if possible.
+    //! @return A pointer to an IntTag if the conversion is valid; otherwise, returns `nullptr`.
+    PrimitiveTag<IntType, TagType::Int>* asIntTag();
+
+    //! @brief Converts the current object to a LongTag pointer if possible.
+    //! @return A pointer to a LongTag if the conversion is valid; otherwise, returns `nullptr`.
+    PrimitiveTag<LongType, TagType::Long>* asLongTag();
+
+    //! @brief Converts the current object to a FloatTag pointer if possible.
+    //! @return A pointer to a FloatTag if the conversion is valid; otherwise, returns `nullptr`.
+    PrimitiveTag<FloatType, TagType::Float>* asFloatTag();
+
+    //! @brief Converts the current object to a DoubleTag pointer if possible.
+    //! @return A pointer to a DoubleTag if the conversion is valid; otherwise, returns `nullptr`.
+    PrimitiveTag<DoubleType, TagType::Double>* asDoubleTag();
+
+    //! @brief Converts the current object to a ByteArrayTag pointer if possible.
+    //! @return A pointer to a ByteArrayTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    CollectionTag<ByteType, TagType::ByteArray>* asByteArrayTag();
+
+    //! @brief Converts the current object to a StringTag pointer if possible.
+    //! @return A pointer to a StringTag if the conversion is valid; otherwise, returns `nullptr`.
+    PrimitiveTag<StringType, TagType::String>* asStringTag();
+
+    //! @brief Converts the current object to a IntArrayTag pointer if possible.
+    //! @return A pointer to a IntArrayTag if the conversion is valid; otherwise, returns `nullptr`.
+    CollectionTag<IntType, TagType::IntArray>* asIntArrayTag();
+
+    //! @brief Converts the current object to a LongArrayTag pointer if possible.
+    //! @return A pointer to a LongArrayTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    CollectionTag<LongType, TagType::LongArray>* asLongArrayTag();
+
+    //! @brief Converts the current object to a ListTag pointer if possible.
+    //! @return A pointer to a ListTag if the conversion is valid; otherwise, returns `nullptr`.
+    ListTag* asListTag();
+
+    //! @brief Converts the current object to a CompoundTag pointer if possible.
+    //! @return A pointer to a CompoundTag if the conversion is valid; otherwise, returns `nullptr`.
+    CompoundTag* asCompoundTag();
 
 protected:
     //! @brief Compares this tag with an other tag for equality.
