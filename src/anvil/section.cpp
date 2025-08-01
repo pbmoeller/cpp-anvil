@@ -19,6 +19,21 @@ LongArrayTag* Biomes::data() const
     return m_tag->getChildByName("data")->asLongArrayTag();
 }
 
+CompoundTag* Biomes::tag() const
+{
+    return m_tag;
+}
+
+bool Biomes::isValidBiomes(const CompoundTag* tag)
+{
+    bool hasExpectedChildren = tag->hasChild("palette");
+    bool hasData             = tag->hasChild("data");
+    bool childrenHaveExpectedTypes =
+        tag->getChildByName("palette")->isListTag()
+        && (hasData ? tag->getChildByName("data")->isLongArrayTag() : true);
+    return hasExpectedChildren && childrenHaveExpectedTypes;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// BlockStates
 
@@ -41,7 +56,18 @@ CompoundTag* BlockState::tag() const
     return m_tag;
 }
 
+bool BlockState::isValidBlockState(const CompoundTag* tag)
+{
+    bool hasExpectedChildren = tag->hasChild("Name");
+    bool hasProperties       = tag->hasChild("Properties");
+    bool hasExpectedChildrenTypes =
+        tag->getChildByName("palette")->isListTag()
+        && (hasProperties ? tag->getChildByName("Properties")->isCompoundTag() : true);
+    return hasExpectedChildren && hasExpectedChildrenTypes;
+}
+
 BlockData::BlockData(const LongArrayTag* tag, int bitWidth)
+    : m_data{}
 {
     constexpr int LongSize  = sizeof(LongType);
     const int blocksPerLong = LongSize / bitWidth;
@@ -93,6 +119,16 @@ CompoundTag* BlockStates::tag() const
     return m_tag;
 }
 
+bool BlockStates::isValidBlockStates(const CompoundTag* tag)
+{
+    bool hasExpectedChildren = tag->hasChild("palette");
+    bool hasData             = tag->hasChild("data");
+    bool hasExpectedChildrenTypes =
+        tag->getChildByName("palette")->isListTag()
+        && (hasData ? tag->getChildByName("data")->isLongArrayTag() : true);
+    return hasExpectedChildren && hasExpectedChildrenTypes;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Section
 
@@ -119,6 +155,23 @@ ByteType Section::y() const
 CompoundTag* Section::tag() const
 {
     return m_tag;
+}
+
+bool Section::isValidSection(const CompoundTag* tag)
+{
+    bool hasExpectedChildren =
+        tag->hasChild("biomes") && tag->hasChild("block_states") && tag->hasChild("Y");
+    bool hasBlockLight = tag->hasChild("BlockLight");
+    bool hasExpectedChildrenTypes =
+        tag->getChildByName("biomes")->isCompoundTag()
+        && tag->getChildByName("block_states")->isCompoundTag()
+        && tag->getChildByName("Y")->isByteTag()
+        && (hasBlockLight ? tag->getChildByName("BlockLight")->isByteArrayTag() : true);
+    bool childrenAreValid =
+        Biomes::isValidBiomes(tag->getChildByName("biomes")->asCompoundTag())
+        && BlockStates::isValidBlockStates(tag->getChildByName("block_states")->asCompoundTag());
+
+    return hasExpectedChildren && hasExpectedChildrenTypes && childrenAreValid;
 }
 
 } // namespace anvil

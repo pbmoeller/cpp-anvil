@@ -23,6 +23,8 @@ public:
 
     CompoundTag* tag() const;
 
+    static bool isValidBiomes(const CompoundTag* tag);
+
 private:
     CompoundTag* m_tag{nullptr};
 };
@@ -41,6 +43,8 @@ public:
     CompoundTag* properties() const;
 
     CompoundTag* tag() const;
+
+    static bool isValidBlockState(const CompoundTag* tag);
 
 private:
     CompoundTag* m_tag{nullptr};
@@ -83,6 +87,8 @@ public:
 
     CompoundTag* tag() const;
 
+    static bool isValidBlockStates(const CompoundTag* tag);
+
 private:
     CompoundTag* m_tag{nullptr};
 };
@@ -103,6 +109,8 @@ public:
     ByteType y() const;
 
     CompoundTag* tag() const;
+
+    static bool isValidSection(const CompoundTag *tag);
 
 private:
     CompoundTag* m_tag{nullptr};
