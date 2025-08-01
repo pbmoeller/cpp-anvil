@@ -194,6 +194,71 @@ public:
     //! @return A pointer to a CompoundTag if the conversion is valid; otherwise, returns `nullptr`.
     CompoundTag* asCompoundTag();
 
+    //! @brief Converts the current object to an const EndTag pointer if possible.
+    //! @return A const pointer to an EndTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const EndTag* asEndTag() const;
+
+    //! @brief Converts the current object to a const ByteTag pointer if possible.
+    //! @return A const pointer to a ByteTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const PrimitiveTag<ByteType, TagType::Byte>* asByteTag() const;
+
+    //! @brief Converts the current object to a const ShortTag pointer if possible.
+    //! @return A const pointer to a ShortTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const PrimitiveTag<ShortType, TagType::Short>* asShortTag() const;
+
+    //! @brief Converts the current object to an const IntTag pointer if possible.
+    //! @return A const pointer to an IntTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const PrimitiveTag<IntType, TagType::Int>* asIntTag() const;
+
+    //! @brief Converts the current object to a const LongTag pointer if possible.
+    //! @return A const pointer to a LongTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const PrimitiveTag<LongType, TagType::Long>* asLongTag() const;
+
+    //! @brief Converts the current object to a const FloatTag pointer if possible.
+    //! @return A const pointer to a FloatTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const PrimitiveTag<FloatType, TagType::Float>* asFloatTag() const;
+
+    //! @brief Converts the current object to a const DoubleTag pointer if possible.
+    //! @return A const pointer to a DoubleTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const PrimitiveTag<DoubleType, TagType::Double>* asDoubleTag() const;
+
+    //! @brief Converts the current object to a const ByteArrayTag pointer if possible.
+    //! @return A const pointer to a ByteArrayTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const CollectionTag<ByteType, TagType::ByteArray>* asByteArrayTag() const;
+
+    //! @brief Converts the current object to a const StringTag pointer if possible.
+    //! @return A const pointer to a StringTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const PrimitiveTag<StringType, TagType::String>* asStringTag() const;
+
+    //! @brief Converts the current object to a const IntArrayTag pointer if possible.
+    //! @return A const pointer to a IntArrayTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const CollectionTag<IntType, TagType::IntArray>* asIntArrayTag() const;
+
+    //! @brief Converts the current object to a const LongArrayTag pointer if possible.
+    //! @return A const pointer to a LongArrayTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const CollectionTag<LongType, TagType::LongArray>* asLongArrayTag() const;
+
+    //! @brief Converts the current object to a const ListTag pointer if possible.
+    //! @return A const pointer to a ListTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const ListTag* asListTag() const;
+
+    //! @brief Converts the current object to a const CompoundTag pointer if possible.
+    //! @return A const pointer to a CompoundTag if the conversion is valid; otherwise, returns
+    //! `nullptr`.
+    const CompoundTag* asCompoundTag() const;
+
 protected:
     //! @brief Compares this tag with an other tag for equality.
     //! @param other Other tag to be compared with.
