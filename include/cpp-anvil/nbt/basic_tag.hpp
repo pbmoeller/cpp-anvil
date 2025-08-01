@@ -259,6 +259,24 @@ public:
     //! `nullptr`.
     const CompoundTag* asCompoundTag() const;
 
+    //! @brief Casts the current object to a pointer of the specified type using tag_cast.
+    //! @tparam T The type to cast the current object to.
+    //! @return A pointer to the current object cast to type T*.
+    template<typename T>
+    T* as()
+    {
+        return tag_cast<T*>(this);
+    }
+
+    //! @brief Casts the current object to a const pointer of the specified type using tag_cast.
+    //! @tparam T The type to cast the current object to.
+    //! @return A const pointer to the current object, cast to const T*.
+    template<typename T>
+    const T* as() const
+    {
+        return tag_cast<const T*>(this);
+    }
+
 protected:
     //! @brief Compares this tag with an other tag for equality.
     //! @param other Other tag to be compared with.
@@ -302,7 +320,7 @@ private:
 template<typename T>
 inline T tag_cast(BasicTag* item)
 {
-    typedef typename std::remove_cv<typename std::remove_pointer<T>::type>::type Item;
+    using Item = typename std::remove_cv_t<typename std::remove_pointer_t<T>>;
     return int(Item::Type) == int(BasicTag::Type) || (item && int(Item::Type) == int(item->type()))
              ? static_cast<T>(item)
              : nullptr;
@@ -320,7 +338,7 @@ inline T tag_cast(BasicTag* item)
 template<typename T>
 inline T tag_cast(const BasicTag* item)
 {
-    typedef typename std::remove_cv<typename std::remove_pointer<T>::type>::type Item;
+    using Item = typename std::remove_cv_t<typename std::remove_pointer_t<T>>;
     return int(Item::Type) == int(BasicTag::Type) || (item && int(Item::Type) == int(item->type()))
              ? static_cast<T>(item)
              : nullptr;
@@ -342,7 +360,7 @@ inline T tag_cast(const BasicTag* item)
 template<typename T>
 inline std::unique_ptr<T> tag_cast(std::unique_ptr<BasicTag>&& item)
 {
-    typedef typename std::remove_cv<typename std::remove_pointer<T>::type>::type Item;
+    using Item = typename std::remove_cv_t<typename std::remove_pointer_t<T>>;
     if(int(T::Type) == int(Item::Type) || (item && int(T::Type) == int(item->type()))) {
         T* t = static_cast<T*>(item.release());
         return std::unique_ptr<T>(t);
