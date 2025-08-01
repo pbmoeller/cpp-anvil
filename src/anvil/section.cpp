@@ -147,6 +147,10 @@ ByteArrayTag* Section::blockLight() const
     return m_tag->getChildByName("BlockLight")->asByteArrayTag();
 }
 
+ByteArrayTag* Section::skyLight() const {
+    return m_tag->getChildByName("SkyLight")->asByteArrayTag();
+}
+
 ByteType Section::y() const
 {
     return m_tag->getChildByName("Y")->asByteTag()->value();
@@ -159,17 +163,24 @@ CompoundTag* Section::tag() const
 
 bool Section::isValidSection(const CompoundTag* tag)
 {
-    bool hasExpectedChildren =
-        tag->hasChild("biomes") && tag->hasChild("block_states") && tag->hasChild("Y");
+    bool hasExpectedChildren = tag->hasChild("Y");
+
+    bool hasBiomes      = tag->hasChild("biomes");
+    bool hasBlockStates = tag->hasChild("block_states");
     bool hasBlockLight = tag->hasChild("BlockLight");
+    bool hasSkyLight = tag->hasChild("SkyLight");
+
     bool hasExpectedChildrenTypes =
-        tag->getChildByName("biomes")->isCompoundTag()
-        && tag->getChildByName("block_states")->isCompoundTag()
-        && tag->getChildByName("Y")->isByteTag()
-        && (hasBlockLight ? tag->getChildByName("BlockLight")->isByteArrayTag() : true);
+        tag->getChildByName("Y")->isByteTag()
+        && (hasBiomes ? tag->getChildByName("biomes")->isCompoundTag() : true)
+        && (hasBlockStates ? tag->getChildByName("block_states")->isCompoundTag() : true)
+        && (hasBlockLight ? tag->getChildByName("BlockLight")->isByteArrayTag() : true)
+        && (hasSkyLight ? tag->getChildByName("SkyLight")->isByteArrayTag() : true);
     bool childrenAreValid =
-        Biomes::isValidBiomes(tag->getChildByName("biomes")->asCompoundTag())
-        && BlockStates::isValidBlockStates(tag->getChildByName("block_states")->asCompoundTag());
+        (hasBiomes ? Biomes::isValidBiomes(tag->getChildByName("biomes")->asCompoundTag()) : true)
+        && (hasBlockStates ? BlockStates::isValidBlockStates(
+                                 tag->getChildByName("block_states")->asCompoundTag())
+                           : true);
 
     return hasExpectedChildren && hasExpectedChildrenTypes && childrenAreValid;
 }

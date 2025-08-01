@@ -106,6 +106,7 @@ public:
     Biomes biomes() const;
     BlockStates blockStates() const;
     ByteArrayTag* blockLight() const;
+    ByteArrayTag* skyLight() const;
     ByteType y() const;
 
     CompoundTag* tag() const;
