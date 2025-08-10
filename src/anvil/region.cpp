@@ -44,6 +44,14 @@ void Region::loadPartiallyFromFile(const std::string& filename)
         throw std::runtime_error("Failed to open region file.");
     }
 
+    // Check if the file is not empty and contains at least the header size
+    stream.seekg(0, std::ios::end);
+    std::streampos fileSize = stream.tellg();
+    stream.seekg(0, std::ios::beg);
+    if(fileSize < RegionHeader::HeaderSize) {
+        throw std::runtime_error("Region file is too small to contain a valid header.");
+    }
+
     // Read region file header data
     if(!readRegionHeader(stream)) {
         throw std::runtime_error("Failed to read region header.");

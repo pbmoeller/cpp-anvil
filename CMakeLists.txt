@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.24)
 
 project(CppAnvil
-    VERSION     0.3.0
+    VERSION     0.3.1
     LANGUAGES   CXX
 )
 
